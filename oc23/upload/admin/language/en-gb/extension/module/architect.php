@@ -2,16 +2,25 @@
 $_['heading_title'            ] = 'Architect';
 
 $_['text_modules']              = 'Modules';
-$_['text_close']                = 'Close';
-$_['text_save']                 = 'Save';
+$_['text_manage']               = 'Manage';
 $_['text_setting']              = 'Setting';
 $_['text_help']                 = 'Help';
+
+$_['text_insert']               = 'Insert';
+$_['text_save']                 = 'Save';
+$_['text_close']                = 'Close';
+$_['text_edit']                 = 'Edit';
+$_['text_delete']               = 'Delete';
 
 $_['text_controller']           = 'Controller';
 $_['text_model']                = 'Model';
 $_['text_template']             = 'Template';
 $_['text_modification']         = 'Modification';
 $_['text_event']                = 'Event';
+
+$_['text_click_to_disable']     = 'Click to disable';
+$_['text_click_to_enable']      = 'Click to enable';
+$_['text_pagination']           = 'Show %d to %d of %d (%d Pages)';
 
 // Form
 $_['entry_name']                = 'Name';

@@ -2,13 +2,9 @@
 <modification>
     <name>Architect by iSenseLabs</name>
     <version>2.0.0-alpha.1</version>
-    <link>https://github.com/iSenseLabs/architect</link>
     <author>iSenseLabs</author>
     <code>isenselabs_architect</code>
-
-    <!-- OpenCart v3.x -->
-
-    <!-- OpenCart v2.3.x -->
+    <link>https://github.com/iSenseLabs/architect</link>
 
     <file path="admin/controller/common/column_left.php">
         <operation error="log" info="">

@@ -20,8 +20,6 @@
 defined('ARCHITECT') or define('ARCHITECT', '2.0.0-alpha.1');
 defined('ARC_CATALOG') or define('ARC_CATALOG', realpath(DIR_APPLICATION . './../') . '/catalog/');
 
-$opencart = version_compare(VERSION, '3.0.0', '>=') ? 30 : 23;
-
 $_['architect'] = array(
     'title'           => 'Architect',
     'version'         => ARCHITECT,
@@ -31,12 +29,10 @@ $_['architect'] = array(
     'path_module'     => 'extension/module/architect',
 
     // Environment
-    'opencart'        => $opencart,
-    'token_part'      => 'user_token',
-    'token_url'       => 'user_token=%s',
-    'url_extension'   => 'marketplace/extension',
+    'token_part'      => 'token',
+    'token_url'       => 'token=%s',
+    'url_extension'   => 'extension/extension',
     'ext_type'        => '&type=module',
-    'ext_template'    => '.twig',
 
     // Default Setting
     'setting'         => array(
@@ -106,12 +102,3 @@ class {model_class} extends Model
         'event'         => '',
     )
 );
-
-// OpenCart 2.3 compatibility
-if ($opencart < 30) {
-    $_['architect']['token_part']    = 'token';
-    $_['architect']['token_url']     = 'token=%s';
-    $_['architect']['url_extension'] = 'extension/extension';
-    $_['architect']['ext_type']      = '&type=module';
-    $_['architect']['ext_template']  = '.tpl';
-}

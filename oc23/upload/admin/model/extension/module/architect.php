@@ -11,13 +11,10 @@ class ModelExtensionModuleArchitect extends Model
         $this->config->load('architect');
         $this->arc = $this->config->get('architect');
 
-        if ($this->arc['opencart'] >= 30) {
-            $this->load->model('setting/module');
-            $this->model_extension = $this->model_setting_module;
-        } else {
-            $this->load->model('extension/module');
-            $this->model_extension = $this->model_extension_module;
-        }
+        $this->arc['url_token'] = sprintf($this->arc['token_url'], $this->session->data[$this->arc['token_part']]);
+
+        $this->load->model('extension/module');
+        $this->model_extension = $this->model_extension_module;
 
         $this->load->language($this->arc['path_module']);
     }
@@ -84,7 +81,7 @@ class ModelExtensionModuleArchitect extends Model
 
         if (!$error && $template = trim($data['template'])) {
             $error = !$this->saveToFile(
-                ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $data['identifier'] . $this->arc['ext_template'],
+                ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $data['identifier'] . '.tpl',
                 str_replace($tags_search, $tags_replace, $template . "\n")
             );
         }
@@ -160,13 +157,13 @@ class ModelExtensionModuleArchitect extends Model
      * Delete architect database entry and files
      *
      * @param  int  $module_id
-     * @param  bool $chain      True if it's chained with controller hookDelete()
+     * @param  bool $chain      Delete module before architect sub-module
      *
      * @return bool             True on success
      */
-    public function deleteModule($module_id, $chain = false)
+    public function deleteModule($module_id, $chain = true)
     {
-        if (!$chain) {
+        if ($chain) {
             $this->model_extension->deleteModule($module_id);
         }
 
@@ -182,7 +179,7 @@ class ModelExtensionModuleArchitect extends Model
                 ARC_CATALOG . 'model/extension/architect/' . $data['identifier'] . '.php',
                 ARC_CATALOG . 'controller/extension/architect/' . $data['identifier'] . '.php',
                 ARC_CATALOG . 'controller/extension/architect/event/' . $data['identifier'] . '.php',
-                ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $data['identifier'] . $this->arc['ext_template'],
+                ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $data['identifier'] . '.tpl',
             );
 
             foreach ($files as $file) {
@@ -224,10 +221,10 @@ class ModelExtensionModuleArchitect extends Model
                 `template`      = '" . $this->db->escape($data['template']) . "',
                 `modification`  = '" . $this->db->escape($data['modification']) . "',
                 `event`         = '" . $this->db->escape($data['event']) . "',
-                `filter`        = '" . $this->db->escape(json_encode(array())) . "',
+                `option`        = '" . $this->db->escape(json_encode(array())) . "',
                 `meta`          = '" . $this->db->escape(json_encode(array(
                     'author'    => $this->user->getUserName(),
-                    'note'      => $data['note']
+                    'note'      => $this->db->escape($data['note'])
                 ))) . "',
                 `status`        = '" . (int)$data['status'] . "',
                 `updated`       = NOW()
@@ -235,6 +232,48 @@ class ModelExtensionModuleArchitect extends Model
         }
 
         return false;
+    }
+
+    public function getItems($param)
+    {
+        $items = array();
+
+        $results = $this->db->query(
+            "SELECT *
+            FROM `" . DB_PREFIX . "module` m
+                LEFT JOIN `" . DB_PREFIX . "architect` a ON a.module_id = m.module_id
+            WHERE m.code = 'architect'
+            ORDER BY `architect_id` ASC
+            LIMIT " . (int)$param['start'] . "," . (int)$param['limit']
+        );
+
+        foreach ($results->rows as $key => $value) {
+            $items[$key] = $this->prepareItem($value);
+        }
+
+        return $items;
+    }
+
+    public function getTotalItems()
+    {
+
+    }
+
+    public function prepareItem($itemValues)
+    {
+        $item    = $itemValues;
+        $decodes = array('option', 'meta');
+
+        foreach ($itemValues as $key => $value) {
+            if (in_array($key, $decodes)) {
+                $temp_val = json_decode($value, true);
+                $item[$key] = is_array($temp_val) ? $temp_val : array();
+            }
+        }
+
+        $item['url_edit'] = $this->url->link($this->arc['path_module'], $this->arc['url_token'] . '&module_id=' . $item['module_id'], true);
+
+        return $item;
     }
 
     // ================ Setup ================
@@ -248,7 +287,7 @@ class ModelExtensionModuleArchitect extends Model
         if (!$this->checkTable('architect')) {
             $this->db->query(
                 "CREATE TABLE `" . DB_PREFIX . "architect` (
-                    `arc_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                    `architect_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                     `module_id` INT(11) UNSIGNED NOT NULL,
                     `identifier` VARCHAR(255) NOT NULL,
                     `name` VARCHAR(255) NOT NULL,
@@ -257,12 +296,12 @@ class ModelExtensionModuleArchitect extends Model
                     `template` MEDIUMTEXT NOT NULL,
                     `modification` MEDIUMTEXT NOT NULL,
                     `event` TEXT NOT NULL COMMENT 'encoded',
-                    `filter` TEXT NOT NULL COMMENT 'encoded',
+                    `option` TEXT NOT NULL COMMENT 'encoded',
                     `meta` TEXT NOT NULL COMMENT 'encoded',
                     `status` TINYINT(1) NOT NULL,
                     `created` DATETIME NULL DEFAULT NULL,
                     `updated` DATETIME NULL DEFAULT NULL,
-                    PRIMARY KEY (`arc_id`),
+                    PRIMARY KEY (`architect_id`),
                     INDEX `module_status` (`module_id`, `status`)
                 )
                 COLLATE='utf8mb4_general_ci' ENGINE=MyISAM"
@@ -294,7 +333,7 @@ class ModelExtensionModuleArchitect extends Model
             ARC_CATALOG . 'model/extension/architect/*.php',
             ARC_CATALOG . 'controller/extension/architect/*.php',
             ARC_CATALOG . 'controller/extension/architect/event/*.php',
-            ARC_CATALOG . 'view/theme/default/template/extension/architect/*' . $this->arc['ext_template'],
+            ARC_CATALOG . 'view/theme/default/template/extension/architect/*.tpl',
         );
 
         foreach ($paths as $path) {

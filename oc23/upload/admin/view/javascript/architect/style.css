@@ -26,6 +26,10 @@ h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
     color: #333;
 }
+h1 span {
+    font-weight: normal;
+    font-size: 21px;
+}
 p {
     margin: 0;
 }
@@ -35,6 +39,18 @@ p {
 hr {
     border-color: #ddd;
     margin: 15px 0;
+}
+
+.panel-default {
+    border: 1px solid #dcdcdc;
+    border-top: 2px solid #bbb;
+}
+.panel-body {
+    padding: 20px;
+}
+.panel-body .panel-heading {
+    font-weight: bold;
+    font-size: 14px;
 }
 
 form {
@@ -123,16 +139,18 @@ textarea.form-control {
 }
 
 .btn {
+    color: #333;
     font-size: 12px;
+    font-weight: 600;
     line-height: 16px;
-    padding: 6px 24px;
+    padding: 7px 24px;
     border-radius: 0;
 }
-.btn.narrow-15 {
-    padding: 6px 15px;
-}
-.btn.narrow-10 {
-    padding: 6px 15px;
+.btn-sm {
+    padding: 3px 7px;
+    font-size: 12px;
+    line-height: 1.3;
+    border-radius: 2px;
 }
 
 .btn:active,
@@ -145,18 +163,7 @@ textarea.form-control {
 .btn.focus {
     outline: none !important;
 }
-.btn-primary {
-    color: #fff;
-    background-color: #1e87f0;
-    border: 1px solid #1e87f0 !important;
-}
-.btn-primary:hover,
-.btn-primary:focus {
-    background-color: #0e73d7;
-    color: #fff;
-}
 .btn-default {
-    color: #333;
     background-color: #fff;
     border-color: #ddd;
 }
@@ -166,6 +173,43 @@ textarea.form-control {
     background-color: #f4f4f4;
     border-color: #d2d2d2;
 }
+.btn-primary, .btn-success, .btn-warning, .btn-danger {
+    color: #fff;
+    border: 1px solid transparent !important;
+}
+.btn-primary:hover, .btn-success:hover, .btn-warning:hover, .btn-danger:hover,
+.btn-primary:focus, .btn-success:focus, .btn-warning:focus, .btn-danger:focus {
+    color: #fff;
+}
+.btn-primary {
+    background-color: #1e87f0;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #0e73d7;
+}
+.btn-success {
+    background-color: #40bb45;
+}
+.btn-success:hover,
+.btn-success:focus {
+    background-color: #39a83e;
+}
+.btn-warning {
+    background-color: #ff9800;
+}
+.btn-warning:hover,
+.btn-warning:focus {
+    background-color: #e68900;
+}
+.btn-danger {
+    background-color: #f53123;
+}
+.btn-danger:hover,
+.btn-danger:focus {
+    background-color: #e5190a;
+}
+
 
 .btn-radio input {
     display: none;
@@ -204,6 +248,11 @@ textarea.form-control {
     border-bottom-right-radius: 2px !important;
 }
 
+.pagination-info {
+    font-size: 12px;
+}
+
+
 /* ===== Head & Layouts ===== */
 
 .arc-flex {
@@ -216,12 +265,14 @@ textarea.form-control {
 
 .content-head {
     border: 0;
-    padding: 10px 10px 10px;
+    padding: 10px 10px;
     margin: 0;
-    border-bottom: 1px solid #d8d8d8;
-    box-shadow: 0 0 3px rgba(0,0,0,.15);
     z-index: 30;
     position: relative;
+}
+.arc-base .content-head {
+    margin: 10px 0 20px;
+    padding: 10px 0;
 }
 .content-head h1 {
     color: #444;
@@ -230,12 +281,8 @@ textarea.form-control {
     margin: 0;
     display: inline-block;
 }
-h1 span {
-    font-weight: normal;
-    font-size: 21px;
-}
-.content-head .pull-right {
-    margin-top: 2px;
+.head-shadow {
+    box-shadow: 0 0 2px rgba(0,0,0,.35);
 }
 
 .content-body {}
@@ -254,7 +301,7 @@ h1 span {
     z-index: 20;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 900px) {
     .panel-sidebar {
         width: 100%;
         padding: 15px;
@@ -269,7 +316,7 @@ h1 span {
     width: 100%;
     min-width: 1px;
     max-width: 100%;
-    min-height: calc(100vh - 52px);
+    /* min-height: calc(100vh - 54px); */
     background: #f4f6f7;
     z-index: 10;
 }
@@ -280,29 +327,63 @@ h1 span {
 .tab-navigation {
     position: relative;
 }
-.main-nav {
+.arc-base .tab-navigation {
+    margin-bottom: 25px;
+}
+
+.arc-nav-base {
+    background: #f2f2f2;
+    padding: 8px 15px 0 15px;
+    margin: -20px -20px 0;
+    border-bottom: 1px solid #d2d2d2;
+}
+.arc-nav-base > li + li {
+    margin-left: 5px;
+}
+.arc-nav-base > li > a {
+    color: #888;
+    padding: 9px 20px;
+    min-width: 100px;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+}
+.arc-nav-base > li > a:hover,
+.arc-nav-base > li > a:focus {
+    color: #444;
+    background-color: #e4e4e4;
+    border-color: #e4e4e4 #e4e4e4 #d2d2d2;
+}
+.arc-nav-base > li.active > a,
+.arc-nav-base > li.active > a:hover,
+.arc-nav-base > li.active > a:focus {
+    font-weight: 600;
+    border-color: #ccc;
+    border-bottom-color: transparent;
+}
+
+.arc-nav-editor {
     background: #fff;
     margin: 0;
     margin-left: -1px;
     border-bottom: 1px solid #ddd;
 }
-.main-nav > li > a {
+.arc-nav-editor > li > a {
     margin: 0;
     color: #888;
-    padding: 6px 12px;
-    min-width: 110px;
+    padding: 7px 10px;
+    min-width: 100px;
     text-align: center;
 }
-.main-nav > li > a:hover,
-.main-nav > li > a:focus {
+.arc-nav-editor > li > a:hover,
+.arc-nav-editor > li > a:focus {
     color: #444;
     background: #fff;
     border-color: transparent;
     border-bottom-color: #ddd;
 }
-.main-nav > li.active > a,
-.main-nav > li.active > a:hover,
-.main-nav > li.active > a:focus {
+.arc-nav-editor > li.active > a,
+.arc-nav-editor > li.active > a:hover,
+.arc-nav-editor > li.active > a:focus {
     font-weight: 600;
     background: #f4f6f7;
     border-top-color: transparent;
@@ -314,16 +395,17 @@ h1 span {
 /* ===== Specific element ===== */
 
 .arc-visit {
-    color: #ffe200 !important;
+    color: #a1d613 !important;
+    color: #ffd706 !important;
 }
 .arc-note {
     resize: vertical;
     font-size: 12px;
 }
 
-.arc-info {
+.arc-help-editor {
     position: absolute;
-    top: 4px;
+    top: 5px;
     right: 10px;
     cursor: pointer;
 
@@ -332,18 +414,18 @@ h1 span {
     background-color: transparent !important;
     border-color: transparent !important;
 }
-.arc-info:hover {
+.arc-help-editor:hover {
     color: #0e73d7
 }
 
-.arc-info-modal {
+.arc-help-editor-modal {
     font-family: arial;
 }
-.arc-info-modal .modal-body {
+.arc-help-editor-modal .modal-body {
     padding: 15px 25px;
 }
 @media (min-width: 768px) {
-    .arc-info-modal .modal-dialog {
+    .arc-help-editor-modal .modal-dialog {
         width: 420px;
     }
 }
@@ -366,7 +448,7 @@ h1 span {
     background: transparent;
 }
 .CodeMirror-scroll {
-    height: calc(100vh - 84px);
+    height: calc(100vh - 86px);
 }
 .CodeMirror pre {
     font-size: 12px;

@@ -13,16 +13,14 @@ $.ajaxSetup ({
 $(document).ready(function()
 {
     $('html').addClass('architect');
-    console.log(architect);
 
-    if ($('#menu-architects').length === 0) {
+    if ($('#menu-architect').length === 0) {
         var message = architect.i18n.notify_arch_ocmod + '<br>' + architect.msg_ocmod_refresh;
         notify('danger', message);
-
     }
 
     // Refresh editor per tab open
-    $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+    $('.arc-nav-editor a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
         var editor = $('.tab-content .active').find('.CodeMirror')[0];
 
         if (editor && editor.CodeMirror) {
@@ -58,7 +56,7 @@ $(document).ready(function()
         }
 
         editors[param.id] = CodeMirror.fromTextArea(document.getElementById(param.id), {
-            mode                            : param.mode,
+            mode            : param.mode,
             indentUnit      : 4,
             lineNumbers     : true,
             lineWrapping    : true,
@@ -95,7 +93,7 @@ $(document).ready(function()
                 type     : 'POST',
                 dataType : 'json',
                 cache    : false,
-                url      : architect.url_save.replace('&amp;', '&'),
+                url      : architect.url_module_save.replace('&amp;', '&'),
                 data     : $('#form-architect').serialize(),
                 beforeSend :    function(xhr, param) {
                     var error = false;

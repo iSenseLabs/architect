@@ -18,13 +18,13 @@ class ControllerExtensionModuleArchitect extends Controller
 
         $this->i18n = $this->load->language($this->arc['path_module']);
 
-        $this->arc['url_token']     = sprintf($this->arc['token_url'], $this->session->data[$this->arc['token_part']]);
-        $this->arc['url_module']    = $this->url->link($this->arc['path_module'], $this->arc['url_token'], true);
-        $this->arc['url_save']      = $this->url->link($this->arc['path_module'] . '/save', $this->arc['url_token'], true);
-        $this->arc['url_extension'] = $this->url->link($this->arc['url_extension'], $this->arc['url_token'] .  $this->arc['ext_type'], true);
+        $this->arc['url_token']         = sprintf($this->arc['token_url'], $this->session->data[$this->arc['token_part']]);
+        $this->arc['url_module']        = $this->url->link($this->arc['path_module'], $this->arc['url_token'], true);
+        $this->arc['url_module_manage'] = $this->url->link($this->arc['path_module'] . '/manage', $this->arc['url_token'], true);
+        $this->arc['url_module_save']   = $this->url->link($this->arc['path_module'] . '/save', $this->arc['url_token'], true);
+        $this->arc['url_extension']     = $this->url->link($this->arc['url_extension'], $this->arc['url_token'] .  $this->arc['ext_type'], true);
 
-        $ocmod_refresh_path = $this->arc['opencart'] >= 30 ? 'marketplace/modification/refresh' : 'extension/modification/refresh';
-        $this->arc['url_ocmod_refresh'] = $this->url->link($ocmod_refresh_path, $this->arc['url_token'], true);
+        $this->arc['url_ocmod_refresh'] = $this->url->link('extension/modification/refresh', $this->arc['url_token'], true);
         $this->arc['msg_ocmod_refresh'] = sprintf($this->i18n['notify_ocmod_refresh'], $this->arc['url_ocmod_refresh']);
     }
 
@@ -32,29 +32,29 @@ class ControllerExtensionModuleArchitect extends Controller
     {
         $this->document->setTitle($this->arc['title']);
 
-        $this->document->addStyle('view/asset/architect/codemirror/codemirror.css');
-        $this->document->addStyle('view/asset/architect/codemirror/addon/fold/foldgutter.css');
-        $this->document->addScript('view/asset/architect/codemirror/codemirror.js');
+        $this->document->addStyle('view/javascript/architect/codemirror/codemirror.css');
+        $this->document->addStyle('view/javascript/architect/codemirror/addon/fold/foldgutter.css');
+        $this->document->addScript('view/javascript/architect/codemirror/codemirror.js');
 
-        $this->document->addScript('view/asset/architect/codemirror/addon/selection/active-line.js');
-        $this->document->addScript('view/asset/architect/codemirror/addon/edit/matchbrackets.js');
-        $this->document->addScript('view/asset/architect/codemirror/addon/fold/foldcode.js');
-        $this->document->addScript('view/asset/architect/codemirror/addon/fold/foldgutter.js');
-        $this->document->addScript('view/asset/architect/codemirror/addon/fold/brace-fold.js');
-        $this->document->addScript('view/asset/architect/codemirror/addon/fold/xml-fold.js');
-        $this->document->addScript('view/asset/architect/codemirror/addon/fold/indent-fold.js');
-        $this->document->addScript('view/asset/architect/codemirror/addon/fold/markdown-fold.js');
-        $this->document->addScript('view/asset/architect/codemirror/addon/fold/comment-fold.js');
+        $this->document->addScript('view/javascript/architect/codemirror/addon/selection/active-line.js');
+        $this->document->addScript('view/javascript/architect/codemirror/addon/edit/matchbrackets.js');
+        $this->document->addScript('view/javascript/architect/codemirror/addon/fold/foldcode.js');
+        $this->document->addScript('view/javascript/architect/codemirror/addon/fold/foldgutter.js');
+        $this->document->addScript('view/javascript/architect/codemirror/addon/fold/brace-fold.js');
+        $this->document->addScript('view/javascript/architect/codemirror/addon/fold/xml-fold.js');
+        $this->document->addScript('view/javascript/architect/codemirror/addon/fold/indent-fold.js');
+        $this->document->addScript('view/javascript/architect/codemirror/addon/fold/markdown-fold.js');
+        $this->document->addScript('view/javascript/architect/codemirror/addon/fold/comment-fold.js');
 
-        $this->document->addScript('view/asset/architect/codemirror/mode/xml/xml.js');
-        $this->document->addScript('view/asset/architect/codemirror/mode/javascript/javascript.js');
-        $this->document->addScript('view/asset/architect/codemirror/mode/css/css.js');
-        $this->document->addScript('view/asset/architect/codemirror/mode/htmlmixed/htmlmixed.js');
-        $this->document->addScript('view/asset/architect/codemirror/mode/clike/clike.js');
-        $this->document->addScript('view/asset/architect/codemirror/mode/php/php.js');
+        $this->document->addScript('view/javascript/architect/codemirror/mode/xml/xml.js');
+        $this->document->addScript('view/javascript/architect/codemirror/mode/javascript/javascript.js');
+        $this->document->addScript('view/javascript/architect/codemirror/mode/css/css.js');
+        $this->document->addScript('view/javascript/architect/codemirror/mode/htmlmixed/htmlmixed.js');
+        $this->document->addScript('view/javascript/architect/codemirror/mode/clike/clike.js');
+        $this->document->addScript('view/javascript/architect/codemirror/mode/php/php.js');
 
-        $this->document->addStyle('view/asset/architect/style.css');
-        $this->document->addScript('view/asset/architect/script.js');
+        $this->document->addStyle('view/javascript/architect/style.css');
+        $this->document->addScript('view/javascript/architect/script.js');
 
         $data = array(
             'i18n'          => $this->i18n,
@@ -69,11 +69,15 @@ class ControllerExtensionModuleArchitect extends Controller
             ),
             array(
                 'text'  => $data['i18n']['text_modules'],
-                'href'  =>  $this->arc['url_extension']
+                'href'  => $this->arc['url_extension']
             ),
             array(
-                'text'  =>  $this->arc['title'],
-                'href'  =>  $this->arc['url_module']
+                'text'  => $this->arc['title'],
+                'href'  => $this->arc['url_module_manage']
+            ),
+            array(
+                'text'  => $this->arc['setting']['module_id'] ? $data['i18n']['text_edit'] . ' #' . $this->arc['setting']['module_id'] : $data['i18n']['text_insert'],
+                'href'  => $this->arc['url_module'] . '&module_id=' . $this->arc['setting']['module_id']
             )
         );
 
@@ -84,6 +88,47 @@ class ControllerExtensionModuleArchitect extends Controller
                 $this->arc['model']->getModule($this->arc['setting']['module_id'])
             );
         }
+
+        // === Page element
+        $data['header']      = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer']      = $this->load->controller('common/footer');
+
+        $this->response->setOutput($this->load->view($this->arc['path_module'] . '/editor', $data));
+    }
+
+    public function manage()
+    {
+        $this->document->setTitle($this->arc['title']);
+
+        $this->document->addStyle('view/javascript/architect/style.css');
+        $this->document->addScript('view/javascript/architect/script.js');
+
+        $data = array(
+            'i18n'          => $this->i18n,
+            'architect'     => $this->arc,
+            'notifications' => array()
+        );
+
+        $data['breadcrumbs'] = array(
+            array(
+                'text'  => $data['i18n']['text_home'],
+                'href'  => $this->url->link('common/dashboard', $this->arc['url_token'], true)
+            ),
+            array(
+                'text'  => $data['i18n']['text_modules'],
+                'href'  => $this->arc['url_extension']
+            ),
+            array(
+                'text'  => $this->arc['title'],
+                'href'  => $this->arc['url_module_manage']
+            )
+        );
+
+        // === Content
+        $data['tab_list']    = $this->load->view($this->arc['path_module'] .'/tab_list', $data);
+        $data['tab_setting'] = $this->load->view($this->arc['path_module'] .'/tab_setting', $data);
+        $data['tab_help']    = $this->load->view($this->arc['path_module'] .'/tab_help', $data);
 
         // === Page element
         $data['header']      = $this->load->controller('common/header');
@@ -118,6 +163,45 @@ class ControllerExtensionModuleArchitect extends Controller
         $this->response->setOutput(json_encode($response));
     }
 
+    public function itemlist()
+    {
+        $limit  = 25;
+        $page   = isset($this->request->get) && (int)$this->request->get > 0 ? (int)$this->request->get : 1;
+        $data   = array(
+            'i18n'          => $this->i18n,
+            'architect'     => $this->arc
+        );
+        $params = array(
+            'page'  => $page,
+            'limit' => $limit,
+            'start' => ($page - 1) * $limit,
+        );
+
+        $data['items']     = $this->arc['model']->getItems($params);
+        $total_item        = $this->arc['model']->getTotalItems($params);
+        $total_item        = 1;
+
+        $pagination        = new Pagination();
+        $pagination->total = $total_item;
+        $pagination->page  = $page;
+        $pagination->limit = $limit;
+        $pagination->url   = $this->url->link($this->arc['path_module'] . '/itemList', $this->arc['url_token'] . '&page={page}', true);
+
+        $data['output']          = $this->load->view($this->arc['path_module'] . '/module_list', $data);
+        $data['pagination']      = $pagination->render();
+        $data['pagination_info'] = sprintf($this->language->get('text_pagination'), ($total_item) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total_item - $limit)) ? $total_item : ((($page - 1) * $limit) + $limit), $total_item, ceil($total_item / $limit));
+
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($data));
+    }
+
+    public function itemUpdate()
+    {
+
+    }
+
+
     // ================ Misc ================
 
     /**
@@ -134,7 +218,7 @@ class ControllerExtensionModuleArchitect extends Controller
                 'id'       => 'menu-architect',
                 'icon'     => 'fa-buysellads fw arc-visit" style="font-size:18px;color:#fff;" attr="',
                 'name'     => 'Architect',
-                'href'     => $this->arc['url_module'],
+                'href'     => $this->arc['url_module_manage'],
                 'children' => array()
             );
         }
@@ -152,7 +236,7 @@ class ControllerExtensionModuleArchitect extends Controller
     public function hookDelete($params = array())
     {
         if ($this->config->get('architect_install') && !empty($params['module_id'])) {
-            $this->arc['model']->deleteModule($params['module_id'], true);
+            $this->arc['model']->deleteModule($params['module_id'], false);
         }
     }
 
