@@ -46,7 +46,7 @@ $(document).ready(function()
             cache: false,
             beforeSend: function() {
                 if (elData.action == 'delete') {
-                    if (!confirm("Are you sure you want to delete promo item?")) {
+                    if (!confirm(architect.i18n.confirm_delete)) {
                         return false;
                     }
                     el.after('<i class="fa fa-spinner fa-spin spinner-' + elData.id + '"></i>');
@@ -68,11 +68,10 @@ function fetchList(url) {
         dataType: 'json',
         cache: false,
         beforeSend: function() {
-            $('#architect-list').html('<tr><td class="text-center" colspan="4" style="padding:20px 10px;"><i class="fa fa-spinner fa-spin"></i> Processing..</td></tr>');
+            $('#architect-list').html('<tr><td class="text-center" colspan="4" style="padding:20px 10px;"><i class="fa fa-spinner fa-spin"></i> ' + architect.i18n.text_processing + '</td></tr>');
             $('.pagination-wrapper').hide(10);
         },
         success: function(data) {
-            console.log(data);
             if (data.output) {
                 $('#architect-list').html(data.output);
 

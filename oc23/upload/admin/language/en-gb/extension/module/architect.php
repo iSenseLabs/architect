@@ -30,6 +30,8 @@ $_['entry_note']                = 'Note';
 $_['placeholder_note']          = 'A bit description would help..';
 
 // Notification
+$_['confirm_delete']            = 'Are you sure want to delete? This action cannot be undone.';
+
 $_['notify_success']            = 'Great, the module successfully saved!';
 $_['notify_arch_ocmod']         = 'Archited OcMod not yet applied!';
 $_['notify_ocmod_refresh']      = 'Apply modification by click <a href="%s" target="_blank">refresh <i class="fa fa-external-link" style="font-size:11px;"></i></a>.';
