@@ -39,8 +39,12 @@ $_['architect'] = array(
         'module_id'     => 0,
         'identifier'    => uniqid('arc'),
         'name'          => '',
-        'note'          => '',
+        'meta'          => array(
+            'author'    => '',
+            'note'      => '',
+        ),
         'status'        => 0,
+        'options'       => array(),
 
         // Editor
         'controller'    => '<?php

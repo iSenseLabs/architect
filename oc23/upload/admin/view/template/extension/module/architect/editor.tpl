@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label"><?php echo $i18n['entry_note']; ?></label>
-                        <textarea name="note" cols="50" rows="6" class="form-control arc-note" placeholder="<?php echo $i18n['placeholder_note']; ?>"><?php echo $architect['setting']['note']; ?></textarea>
+                        <textarea name="meta[note]" cols="50" rows="6" class="form-control arc-note" placeholder="<?php echo $i18n['placeholder_note']; ?>"><?php echo $architect['setting']['meta']['note']; ?></textarea>
                     </div>
                     <div class="form-group">
                         <label class="control-label"><?php echo $i18n['entry_status']; ?></label>
