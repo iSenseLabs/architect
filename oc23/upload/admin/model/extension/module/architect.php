@@ -176,10 +176,10 @@ class ModelExtensionModuleArchitect extends Model
             $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = '" . $this->db->escape($arc['identifier']) . "'");
 
             $files = array(
-                ARC_CATALOG . 'model/extension/architect/' . $data['identifier'] . '.php',
-                ARC_CATALOG . 'controller/extension/architect/' . $data['identifier'] . '.php',
-                ARC_CATALOG . 'controller/extension/architect/event/' . $data['identifier'] . '.php',
-                ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $data['identifier'] . '.tpl',
+                ARC_CATALOG . 'model/extension/architect/' . $arc['identifier'] . '.php',
+                ARC_CATALOG . 'controller/extension/architect/' . $arc['identifier'] . '.php',
+                ARC_CATALOG . 'controller/extension/architect/event/' . $arc['identifier'] . '.php',
+                ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $arc['identifier'] . '.tpl',
             );
 
             foreach ($files as $file) {
