@@ -208,6 +208,10 @@ class ControllerExtensionModuleArchitect extends Controller
             case 'delete':
                 $this->arc['model']->deleteModule($post['module_id']);
                 break;
+
+            default:
+                $response['error'] = $this->i18n['error_action_type'];
+                break;
         }
 
         $this->response->addHeader('Content-Type: application/json');

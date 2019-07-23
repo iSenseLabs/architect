@@ -45,6 +45,8 @@ $(document).ready(function()
             data: elData,
             cache: false,
             beforeSend: function() {
+                $('.beforeUpdate').trigger('click'); // close .arc-alert.beforeUpdate
+
                 if (elData.action == 'delete') {
                     if (!confirm(architect.i18n.confirm_delete)) {
                         return false;
@@ -55,6 +57,8 @@ $(document).ready(function()
             success: function(data) {
                 if (!data.error) {
                     fetchList(urlList);
+                } else {
+                    notify('danger beforeUpdate', data.error);
                 }
             }
         });
