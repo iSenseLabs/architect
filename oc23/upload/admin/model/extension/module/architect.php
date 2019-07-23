@@ -21,7 +21,7 @@ class ModelExtensionModuleArchitect extends Model
 
     public function getModule($module_id)
     {
-        return $this->db->query("SELECT * FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'")->row;
+        return $this->prepareItem($this->db->query("SELECT * FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'")->row);
     }
 
     public function editModule($data)
@@ -206,12 +206,14 @@ class ModelExtensionModuleArchitect extends Model
             return array(
                 'identifier' => $data['identifier'],
                 'name'       => $data['name'],
-                'note'       => $data['note'],
+                'note'       => $data['meta']['note'],
                 'status'     => $data['status']
             );
         }
 
         if ($type == 'architect') {
+            $data['meta']['author'] = $this->user->getUserName();
+
             return "
                 `module_id`     = '" . (int)$data['module_id'] . "',
                 `identifier`    = '" . $this->db->escape($data['identifier']) . "',
@@ -222,10 +224,7 @@ class ModelExtensionModuleArchitect extends Model
                 `modification`  = '" . $this->db->escape($data['modification']) . "',
                 `event`         = '" . $this->db->escape($data['event']) . "',
                 `option`        = '" . $this->db->escape(json_encode(array())) . "',
-                `meta`          = '" . $this->db->escape(json_encode(array(
-                    'author'    => $this->user->getUserName(),
-                    'note'      => $this->db->escape($data['note'])
-                ))) . "',
+                `meta`          = '" . $this->db->escape(json_encode($data['meta'])) . "',
                 `status`        = '" . (int)$data['status'] . "',
                 `updated`       = NOW()
             ";
