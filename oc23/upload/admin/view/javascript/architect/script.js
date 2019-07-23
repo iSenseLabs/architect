@@ -102,14 +102,14 @@ $(document).ready(function()
                     if ($('input[name="name"]').val().length < 3) {
                         error = true;
                         $('input[name="name"]').parents('.required').addClass('has-error');
-                        notify('danger beforeSend', 'Module name must be at least 3 characters!');
+                        notify('danger beforeSend', architect.i18n.validate_name);
                     }
 
                     if (error) {
                         return false;
                     }
 
-                    notify('primary beforeSend', 'Processing..');
+                    notify('primary beforeSend', architect.i18n.text_processing);
                 },
                 complete : function(xhr) {
                     $('.beforeSend').trigger('click'); // close .arc-alert.beforeSend

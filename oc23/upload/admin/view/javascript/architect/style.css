@@ -53,6 +53,10 @@ hr {
     font-size: 14px;
 }
 
+.table-striped {
+    border-bottom: 1px solid #ddd;
+}
+
 form {
     margin: 0;
 }

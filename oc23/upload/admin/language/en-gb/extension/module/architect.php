@@ -18,6 +18,7 @@ $_['text_template']             = 'Template';
 $_['text_modification']         = 'Modification';
 $_['text_event']                = 'Event';
 
+$_['text_processing']           = 'Processing..';
 $_['text_click_to_disable']     = 'Click to disable';
 $_['text_click_to_enable']      = 'Click to enable';
 $_['text_pagination']           = 'Show %d to %d of %d (%d Pages)';
@@ -30,6 +31,8 @@ $_['entry_note']                = 'Note';
 $_['placeholder_note']          = 'A bit description would help..';
 
 // Notification
+$_['validate_name']             = 'Sub-module name must be at least 3 characters!';
+
 $_['confirm_delete']            = 'Are you sure want to delete? This action cannot be undone.';
 
 $_['notify_success']            = 'Great, the module successfully saved!';
