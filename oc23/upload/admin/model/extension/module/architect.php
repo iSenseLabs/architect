@@ -255,7 +255,7 @@ class ModelExtensionModuleArchitect extends Model
 
     public function getTotalItems()
     {
-
+        return $this->db->query("SELECT COUNT(DISTINCT architect_id) AS total FROM `" . DB_PREFIX . "architect`")->row['total'];
     }
 
     public function prepareItem($itemValues)
