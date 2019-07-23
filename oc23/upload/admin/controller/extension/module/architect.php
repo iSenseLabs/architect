@@ -165,21 +165,20 @@ class ControllerExtensionModuleArchitect extends Controller
 
     public function itemlist()
     {
-        $limit  = 25;
-        $page   = isset($this->request->get) && (int)$this->request->get > 0 ? (int)$this->request->get : 1;
-        $data   = array(
-            'i18n'          => $this->i18n,
-            'architect'     => $this->arc
-        );
-        $params = array(
+        $limit      = 25;
+        $page       = isset($this->request->get) && (int)$this->request->get > 0 ? (int)$this->request->get : 1;
+        $response   = array();
+        $params     = array(
             'page'  => $page,
             'limit' => $limit,
             'start' => ($page - 1) * $limit,
         );
+        $data       = array(
+            'i18n'  => $this->i18n,
+            'items' => $this->arc['model']->getItems($params),
+        );
 
-        $data['items']     = $this->arc['model']->getItems($params);
-        $total_item        = $this->arc['model']->getTotalItems($params);
-        $total_item        = 1;
+        $total_item = $this->arc['model']->getTotalItems($params);
 
         $pagination        = new Pagination();
         $pagination->total = $total_item;
@@ -187,13 +186,13 @@ class ControllerExtensionModuleArchitect extends Controller
         $pagination->limit = $limit;
         $pagination->url   = $this->url->link($this->arc['path_module'] . '/itemList', $this->arc['url_token'] . '&page={page}', true);
 
-        $data['output']          = $this->load->view($this->arc['path_module'] . '/module_list', $data);
-        $data['pagination']      = $pagination->render();
-        $data['pagination_info'] = sprintf($this->language->get('text_pagination'), ($total_item) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total_item - $limit)) ? $total_item : ((($page - 1) * $limit) + $limit), $total_item, ceil($total_item / $limit));
+        $response['output']          = $this->load->view($this->arc['path_module'] . '/module_list', $data);
+        $response['pagination']      = $pagination->render();
+        $response['pagination_info'] = sprintf($this->language->get('text_pagination'), ($total_item) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total_item - $limit)) ? $total_item : ((($page - 1) * $limit) + $limit), $total_item, ceil($total_item / $limit));
 
 
         $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($data));
+        $this->response->setOutput(json_encode($response));
     }
 
     public function itemUpdate()
