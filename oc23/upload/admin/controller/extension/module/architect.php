@@ -126,8 +126,9 @@ class ControllerExtensionModuleArchitect extends Controller
         );
 
         // === Content
+        $data['urlTicketSupport'] = 'https://isenselabs.com/tickets/open/' . base64_encode('Support Request').'/'.base64_encode('414').'/'. base64_encode($_SERVER['SERVER_NAME']);
+
         $data['tab_list']    = $this->load->view($this->arc['path_module'] .'/tab_list', $data);
-        $data['tab_setting'] = $this->load->view($this->arc['path_module'] .'/tab_setting', $data);
         $data['tab_help']    = $this->load->view($this->arc['path_module'] .'/tab_help', $data);
 
         // === Page element

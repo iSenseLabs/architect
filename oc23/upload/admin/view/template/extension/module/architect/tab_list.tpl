@@ -1,4 +1,3 @@
-<div>
 <table class="table table-striped table-hover">
     <thead>
         <tr>
@@ -15,8 +14,6 @@
     <div class="col-sm-7 pagination-number"></div>
     <div class="col-sm-5 text-right pagination-info"></div>
 </div>
-</div>
-
 
 <script>
 var urlList   = 'index.php?route=<?php echo $architect["path_module"]; ?>/itemList&<?php echo $architect["url_token"]; ?>',

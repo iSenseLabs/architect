@@ -26,14 +26,12 @@
             <div class="tab-navigation" style="position:relative">
                 <ul class="nav nav-tabs arc-nav-base" id="main-tabs">
                     <li class="active"><a href="#tab-list" data-toggle="tab"><?php echo $i18n['text_manage']; ?></a></li>
-                    <li><a href="#tab-setting" data-toggle="tab"><?php echo $i18n['text_setting']; ?></a></li>
                     <li><a href="#tab-help" data-toggle="tab"><?php echo $i18n['text_help']; ?></a></li>
                 </ul>
             </div>
 
             <div class="tab-content">
                 <div id="tab-list" class="tab-pane fade active in"><?php echo $tab_list; ?></div>
-                <div id="tab-setting" class="tab-pane fade"><?php echo $tab_setting; ?></div>
                 <div id="tab-help" class="tab-pane fade"><?php echo $tab_help; ?></div>
             </div>
 
