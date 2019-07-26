@@ -40,6 +40,10 @@ hr {
     border-color: #ddd;
     margin: 15px 0;
 }
+.hr {
+    border-top: 1px solid #ccc;
+    border-bottom: 5px solid #f4f4f4;
+}
 
 .panel-default {
     border: 1px solid #dcdcdc;
@@ -78,6 +82,16 @@ form {
     color: inherit;
     font-weight: 600;
     padding-left: 0;
+}
+
+.legend {
+    margin-bottom: 10px;
+}
+* + .legend {
+    margin-top: 30px;
+}
+.legend + .hr {
+    margin: 0 0 30px;
 }
 
 .form-control {
@@ -268,6 +282,10 @@ textarea.form-control {
     font-size: 12px;
 }
 
+/* Helper */
+.mt-10 { margin-top: 10px; }
+.mt-20 { margin-top: 20px; }
+
 
 /* ===== Head & Layouts ===== */
 
@@ -439,11 +457,6 @@ textarea.form-control {
 }
 .arc-help-editor-modal .modal-body {
     padding: 15px 25px;
-}
-@media (min-width: 768px) {
-    .arc-help-editor-modal .modal-dialog {
-        width: 420px;
-    }
 }
 
 .arc-notification {
