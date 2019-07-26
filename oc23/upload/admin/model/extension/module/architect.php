@@ -50,15 +50,15 @@ class ModelExtensionModuleArchitect extends Model
             '{identifier}'       => $data['identifier'],
             '{author}'           => $this->user->getUserName(),
             // ---
-            '{controller_class}' => 'ControllerExtensionArchitect' . str_replace('_', '', $data['identifier']),
-            '{model_class}'      => 'ModelExtensionArchitect' . str_replace('_', '', $data['identifier']),
+            '{controller_class}' => 'ControllerExtensionArchitect' . $data['identifier'],
+            '{model_class}'      => 'ModelExtensionArchitect' . $data['identifier'],
             '{model_path}'       => 'extension/architect/' . $data['identifier'],
             '{model_call}'       => 'extension_architect_' . $data['identifier'],
             '{template_path}'    => 'extension/architect/' . $data['identifier'],
             // ---
             '{ocmod_name}'       => 'Architect #' . $data['module_id'] . ' - ' . $data['name'],
             '{ocmod_code}'       => $data['identifier'],
-            '{event_class}'      => 'EventArchitect' . str_replace('_', '', $data['identifier']),
+            '{event_class}'      => 'EventArchitect' . $data['identifier'],
             '{event_path}'       => 'event/architect/' . $data['identifier']
         );
 
