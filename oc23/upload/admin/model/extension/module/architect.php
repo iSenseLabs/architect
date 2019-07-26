@@ -58,8 +58,8 @@ class ModelExtensionModuleArchitect extends Model
             // ---
             '{ocmod_name}'       => 'Architect #' . $data['module_id'] . ' - ' . $data['name'],
             '{ocmod_code}'       => $data['identifier'],
-            '{event_class}'      => 'EventArchitect' . $data['identifier'],
-            '{event_path}'       => 'event/architect/' . $data['identifier']
+            '{event_class}'      => 'ControllerExtensionArchitectEvent' . $data['identifier'],
+            '{event_path}'       => 'extension/architect/event/' . $data['identifier']
         );
 
         $tags_search  = array_keys($codetags);
