@@ -81,34 +81,49 @@ class ModelExtensionModuleArchitect extends Model
         if (!$data['meta']['editor']['event']) {
             $data['event'] = '';
         }
+
+        // Save
+
+        $path_controller = ARC_CATALOG . 'controller/extension/architect/' . $data['identifier'] . '.php';
+
         if ($controller = trim($data['controller'])) {
             $error = !$this->saveToFile(
-                ARC_CATALOG . 'controller/extension/architect/' . $data['identifier'] . '.php',
+                $path_controller,
                 str_replace($tags_search, $tags_replace, $controller . "\n")
             );
+        } elseif (file_exists($path_controller)) {
+            unlink($path_controller);
         }
+
+        $path_model = ARC_CATALOG . 'model/extension/architect/' . $data['identifier'] . '.php';
 
         if (!$error && $model = trim($data['model'])) {
             $error = !$this->saveToFile(
-                ARC_CATALOG . 'model/extension/architect/' . $data['identifier'] . '.php',
+                $path_model,
                 str_replace($tags_search, $tags_replace, $model . "\n")
             );
+        } elseif (file_exists($path_model)) {
+            unlink($path_model);
         }
+
+        $path_template = ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $data['identifier'] . '.tpl';
 
         if (!$error && $template = trim($data['template'])) {
             $error = !$this->saveToFile(
-                ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $data['identifier'] . '.tpl',
+                $path_template,
                 str_replace($tags_search, $tags_replace, $template . "\n")
             );
+        } elseif (file_exists($path_template)) {
+            unlink($path_template);
         }
+
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = '" . $this->db->escape($data['identifier']) . "'");
 
         if (!$error && $modification = trim($data['modification'])) {
             $modification = html_entity_decode(str_replace($tags_search, $tags_replace, $modification . "\n"), ENT_COMPAT, 'UTF-8');
-            $ocmod        = $this->getOcmodInfo($modification);
-            $error        = $ocmod['error'];
+            $ocmod        = $this->getOcmodInfo($modification, $data['identifier']);
 
-            if (!$error) {
-                $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = '" . $this->db->escape($ocmod['code']) . "'");
+            if (!$ocmod['error']) {
                 $this->db->query(
                     "INSERT INTO `" . DB_PREFIX . "modification`
                     SET `name`        = '" . $this->db->escape($ocmod['name']) . "',
@@ -123,19 +138,20 @@ class ModelExtensionModuleArchitect extends Model
             }
         }
 
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($data['identifier']) . "'");
+        $path_event = ARC_CATALOG . 'controller/extension/architect/event/' . $data['identifier'] . '.php';
+
         if (!$error && $event = trim($data['event'])) {
             $event  = html_entity_decode(str_replace($tags_search, $tags_replace, $event . "\n"), ENT_COMPAT, 'UTF-8');
             $events = $this->getEventAnnotation($event);
 
             if ($events) {
                 $error = !$this->saveToFile(
-                    ARC_CATALOG . 'controller/extension/architect/event/' . $data['identifier'] . '.php',
+                    $path_event,
                     str_replace($tags_search, $tags_replace, $event . "\n")
                 );
 
                 if (!$error) {
-                    $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($data['identifier']) . "'");
-
                     foreach ($events as $event) {
                         if ($event['trigger'] && $event['action']) {
                             $this->db->query(
@@ -150,6 +166,8 @@ class ModelExtensionModuleArchitect extends Model
                     }
                 }
             }
+        } elseif (file_exists($path_event)) {
+            unlink($path_event);
         }
 
         /**
@@ -416,13 +434,6 @@ class ModelExtensionModuleArchitect extends Model
      */
     public function saveToFile($target, $content)
     {
-        if (!$content) {
-            if (file_exists($target)) {
-                unlink($target);
-            }
-            return true; // empty content is not an error
-        }
-
         if (!@file_put_contents($target, html_entity_decode($content, ENT_QUOTES, 'UTF-8'))) {
             if (file_exists($target)) {
                 unlink($target);
@@ -440,9 +451,10 @@ class ModelExtensionModuleArchitect extends Model
      *
      * @return array
      */
-    public function getOcmodInfo($xml)
+    public function getOcmodInfo($xml, $identifier)
     {
         $data = array(
+            'code'  => $identifier,
             'error' => false,
         );
 
@@ -454,7 +466,6 @@ class ModelExtensionModuleArchitect extends Model
             $data['version'] = $dom->getElementsByTagName('version')->item(0)->nodeValue;
             $data['author']  = $dom->getElementsByTagName('author')->item(0)->nodeValue;
             $data['link']    = $dom->getElementsByTagName('link')->item(0)->nodeValue;
-            $data['code']    = $dom->getElementsByTagName('code')->item(0)->nodeValue;
         } catch (\Exception $exception) {
             $data['error'] = true;
         }
