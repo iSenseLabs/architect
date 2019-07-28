@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <?php echo $column_left; ?>
 
-<div id="content" class="arc-module arc-editor">
+<div id="content" class="arc-module js-editor">
     <?php $architect['i18n'] = $i18n; ?>
     <script>var architect = <?php echo json_encode($architect); ?>; delete architect.model;</script>
 
@@ -37,6 +37,26 @@
                         <textarea name="meta[note]" cols="50" rows="6" class="form-control arc-note" placeholder="<?php echo $i18n['placeholder_note']; ?>"><?php echo $architect['setting']['meta']['note']; ?></textarea>
                     </div>
                     <div class="form-group">
+                        <label class="control-label"><?php echo $i18n['entry_editor']; ?></label>
+                        <div class="ml-10">
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="meta[editor][controller]" value="1" <?php echo $architect['setting']['meta']['editor']['controller'] ? 'checked' : ''; ?> data-arc-tab-visible='controller'> <?php echo $i18n['text_controller']; ?></label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="meta[editor][model]" value="1" <?php echo $architect['setting']['meta']['editor']['model'] ? 'checked' : ''; ?> data-arc-tab-visible='model'> <?php echo $i18n['text_model']; ?></label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="meta[editor][template]" value="1" <?php echo $architect['setting']['meta']['editor']['template'] ? 'checked' : ''; ?> data-arc-tab-visible='template'> <?php echo $i18n['text_template']; ?></label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="meta[editor][modification]" value="1" <?php echo $architect['setting']['meta']['editor']['modification'] ? 'checked' : ''; ?> data-arc-tab-visible='modification'> <?php echo $i18n['text_modification']; ?></label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="meta[editor][event]" value="1" <?php echo $architect['setting']['meta']['editor']['event'] ? 'checked' : ''; ?> data-arc-tab-visible='event'> <?php echo $i18n['text_event']; ?></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label"><?php echo $i18n['entry_status']; ?></label>
                         <div>
                             <div class="btn-group btn-radio">
@@ -53,12 +73,25 @@
                     <div class="panel-content">
 
                         <div class="tab-navigation">
-                            <ul class="nav nav-tabs arc-nav-editor">
-                                <li class="active"><a href="#tab-controller" data-toggle="tab"><?php echo $i18n['text_controller']; ?></a></li>
-                                <li><a href="#tab-model" data-toggle="tab"><?php echo $i18n['text_model']; ?></a></li>
-                                <li><a href="#tab-template" data-toggle="tab"><?php echo $i18n['text_template']; ?></a></li>
-                                <li><a href="#tab-modification" data-toggle="tab"><?php echo $i18n['text_modification']; ?></a></li>
-                                <li><a href="#tab-event" data-toggle="tab"><?php echo $i18n['text_event']; ?></a></li>
+                            <ul class="nav nav-tabs arc-nav-editor js-nav-editor">
+                                <li style="<?php echo !$architect['setting']['meta']['editor']['controller'] ? 'display:none' : ''; ?>">
+                                    <a href="#tab-controller" data-toggle="tab" class="js-editor-controller"><?php echo $i18n['text_controller']; ?></a>
+                                </li>
+                                <li style="<?php echo !$architect['setting']['meta']['editor']['model'] ? 'display:none' : ''; ?>">
+                                    <a href="#tab-model" data-toggle="tab" class="js-editor-model"><?php echo $i18n['text_model']; ?></a>
+                                </li>
+                                <li style="<?php echo !$architect['setting']['meta']['editor']['template'] ? 'display:none' : ''; ?>">
+                                    <a href="#tab-template" data-toggle="tab" class="js-editor-template"><?php echo $i18n['text_template']; ?></a>
+                                </li>
+                                <li style="<?php echo !$architect['setting']['meta']['editor']['modification'] ? 'display:none' : ''; ?>">
+                                    <a href="#tab-modification" data-toggle="tab" class="js-editor-modification"><?php echo $i18n['text_modification']; ?></a>
+                                </li>
+                                <li style="<?php echo !$architect['setting']['meta']['editor']['event'] ? 'display:none' : ''; ?>">
+                                    <a href="#tab-event" data-toggle="tab" class="js-editor-event"><?php echo $i18n['text_event']; ?></a>
+                                </li>
+                                <li>
+                                    <a href="#tab-option" data-toggle="tab" class="js-editor-option"><?php echo $i18n['text_options']; ?></a>
+                                </li>
                             </ul>
 
                             <div class="pull-right">
@@ -67,7 +100,7 @@
                         </div>
 
                         <div class="tab-content">
-                            <div id="tab-controller" class="tab-pane fade active in">
+                            <div id="tab-controller" class="tab-pane fade">
                                 <textarea name="controller" id="cm-controller" cols="50" rows="10" class="form-control" data-arc-codemirror='{"mode":"application/x-httpd-php"}'><?php echo $architect['setting']['controller']; ?></textarea>
                             </div>
                             <div id="tab-model" class="tab-pane fade">

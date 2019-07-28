@@ -20,7 +20,8 @@ $(document).ready(function()
     }
 
     // Refresh editor per tab open
-    $('.arc-nav-editor a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+    $('.js-nav-editor').find('li:visible:first a').tab('show');
+    $('.js-nav-editor a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
         var editor = $('.tab-content .active').find('.CodeMirror')[0];
 
         if (editor && editor.CodeMirror) {
@@ -29,6 +30,22 @@ $(document).ready(function()
             }, 100);
         }
     });
+
+    // Tab editor visibility
+    $('[data-arc-tab-visible]').on('change checked', function (e) {
+        var target = $(this).data('arc-tab-visible'),
+            eltab  = $('.js-editor-' + target).parent();
+
+        if ($(this).is(':checked')) {
+            eltab.show();
+        } else {
+            if (eltab.hasClass('active')) {
+                eltab.nextAll(':visible:first').find('a').tab('show');
+            }
+            eltab.hide();
+        }
+    });
+
 
     /**
      * IIDE CodeMirror

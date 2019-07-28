@@ -32,8 +32,9 @@ $_['text_pre_sale_info']        = 'Have a brilliant idea for your webstore? Our 
 
 // Form
 $_['entry_name']                = 'Name';
-$_['entry_status']              = 'Status';
 $_['entry_note']                = 'Note';
+$_['entry_editor']              = 'Editor';
+$_['entry_status']              = 'Status';
 
 $_['placeholder_note']          = 'A bit description would help..';
 

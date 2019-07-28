@@ -27,6 +27,7 @@ class ModelExtensionModuleArchitect extends Model
     public function editModule($data)
     {
         $error = false;
+        $data  = array_replace_recursive($this->arc['setting'], $data);
 
         /**
          * Part 1: Save to database
@@ -49,13 +50,11 @@ class ModelExtensionModuleArchitect extends Model
             '{module_id}'        => $data['module_id'],
             '{identifier}'       => $data['identifier'],
             '{author}'           => $this->user->getUserName(),
-            // ---
             '{controller_class}' => 'ControllerExtensionArchitect' . $data['identifier'],
             '{model_class}'      => 'ModelExtensionArchitect' . $data['identifier'],
             '{model_path}'       => 'extension/architect/' . $data['identifier'],
             '{model_call}'       => 'extension_architect_' . $data['identifier'],
             '{template_path}'    => 'extension/architect/' . $data['identifier'],
-            // ---
             '{ocmod_name}'       => 'Architect #' . $data['module_id'] . ' - ' . $data['name'],
             '{ocmod_code}'       => $data['identifier'],
             '{event_class}'      => 'ControllerExtensionArchitectEvent' . $data['identifier'],
@@ -65,6 +64,23 @@ class ModelExtensionModuleArchitect extends Model
         $tags_search  = array_keys($codetags);
         $tags_replace = array_values($codetags);
 
+        // Validate editor state
+
+        if (!$data['meta']['editor']['controller']) {
+            $data['controller'] = '';
+        }
+        if (!$data['meta']['editor']['model']) {
+            $data['model'] = '';
+        }
+        if (!$data['meta']['editor']['template']) {
+            $data['template'] = '';
+        }
+        if (!$data['meta']['editor']['modification']) {
+            $data['modification'] = '';
+        }
+        if (!$data['meta']['editor']['event']) {
+            $data['event'] = '';
+        }
         if ($controller = trim($data['controller'])) {
             $error = !$this->saveToFile(
                 ARC_CATALOG . 'controller/extension/architect/' . $data['identifier'] . '.php',

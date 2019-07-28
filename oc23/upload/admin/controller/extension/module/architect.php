@@ -87,6 +87,8 @@ class ControllerExtensionModuleArchitect extends Controller
                 $this->arc['setting'],
                 $this->arc['model']->getModule($this->arc['setting']['module_id'])
             );
+        } else {
+            $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
         }
 
         // === Page element

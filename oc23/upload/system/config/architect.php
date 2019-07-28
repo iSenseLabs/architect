@@ -42,6 +42,13 @@ $_['architect'] = array(
         'meta'          => array(
             'author'    => '',
             'note'      => '',
+            'editor'    => array(
+                'controller'   => 0,
+                'model'        => 0,
+                'template'     => 0,
+                'modification' => 0,
+                'event'        => 0
+            )
         ),
         'status'        => 0,
         'options'       => array(),
