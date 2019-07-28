@@ -51,7 +51,7 @@ $_['architect'] = array(
             )
         ),
         'status'        => 0,
-        'options'       => array(),
+        'option'        => array(),
 
         // Editor
         'controller'    => '<?php

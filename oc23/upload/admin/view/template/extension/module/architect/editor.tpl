@@ -115,6 +115,9 @@
                             <div id="tab-event" class="tab-pane fade">
                                 <textarea name="event" id="cm-event" cols="50" rows="10" class="form-control" data-arc-codemirror='{"mode":"application/x-httpd-php"}'><?php echo $architect['setting']['event']; ?></textarea>
                             </div>
+                            <div id="tab-option" class="tab-pane fade">
+                                <?php echo $tab_option; ?>
+                            </div>
                         </div>
 
                     </div>

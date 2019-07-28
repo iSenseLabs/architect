@@ -307,6 +307,8 @@ label input[type="checkbox"] {
 /* Helper */
 .mt-10 { margin-top: 10px; }
 .mt-20 { margin-top: 20px; }
+.ml-10 { margin-left: 10px; }
+.ml-20 { margin-left: 20px; }
 
 
 /* ===== Head & Layouts ===== */
@@ -356,8 +358,11 @@ label input[type="checkbox"] {
     border-left: 1px solid rgba(0,0,0,0.15);
     z-index: 20;
 }
+.panel-sidebar .control-label {
+    text-shadow: 0 1px 1px rgba(0,0,0,.4);
+}
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
     .panel-sidebar {
         width: 100%;
         padding: 15px;
@@ -426,7 +431,7 @@ label input[type="checkbox"] {
 .arc-nav-editor > li > a {
     margin: 0;
     color: #888;
-    padding: 7px 10px;
+    padding: 7px 5px;
     min-width: 100px;
     text-align: center;
 }
@@ -447,6 +452,16 @@ label input[type="checkbox"] {
 
 .tab-content {}
 
+.tab-panel {
+    background: #fff;
+    padding: 15px 20px;
+    margin-top: 4px;
+    min-height: calc(100vh - 90px);
+}
+
+.editor-min-height {
+    min-height: calc(100vh - 86px); /* .CodeMirror-scroll */
+}
 
 /* ===== Specific element ===== */
 

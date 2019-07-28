@@ -17,6 +17,7 @@ $_['text_model']                = 'Model';
 $_['text_template']             = 'Template';
 $_['text_modification']         = 'Modification';
 $_['text_event']                = 'Event';
+$_['text_options']              = 'Options';
 
 $_['text_processing']           = 'Processing..';
 $_['text_no_data']              = 'Data not available!';

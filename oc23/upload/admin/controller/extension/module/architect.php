@@ -95,7 +95,9 @@ class ControllerExtensionModuleArchitect extends Controller
             $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
         }
 
+        $data['tab_option']  = $this->load->view($this->arc['path_module'] . '/option', $data);
         $data['quick_reff']  = $this->load->view($this->arc['path_module'] . '/quick_reff', $data);
+
         // === Page element
         $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -198,7 +200,6 @@ class ControllerExtensionModuleArchitect extends Controller
         $response['output']          = $this->load->view($this->arc['path_module'] . '/module_list', $data);
         $response['pagination']      = $pagination->render();
         $response['pagination_info'] = sprintf($this->language->get('text_pagination'), ($total_item) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total_item - $limit)) ? $total_item : ((($page - 1) * $limit) + $limit), $total_item, ceil($total_item / $limit));
-
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($response));
