@@ -3,7 +3,7 @@
         <h1><?php echo $architect['title']; ?></h1>
         <p>Architect is an OpenCart module for rapid extension development. It can be considered as low-level extension which provide access to OpenCart API to make prototype, build minimum viable product or specifically custom function.</p>
         <hr style="margin:20px 0;">
-        <p class="text-center">
+        <p class="text-center mb-20">
             v<?php echo $architect['version']; ?> •
             <a href="https://github.com/iSenseLabs/architect" target="_blank">Project</a> •
             <a href="https://github.com/iSenseLabs/architect/wiki" target="_blank">Wiki</a> •
@@ -14,7 +14,7 @@
 
     <div class="col-md-7">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-6">
                 <div class="thumbnail">
                     <img src="view/javascript/architect/image/tickets.png">
                     <div class="caption" style="text-align:center;padding-top:0px;">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-sm-6">
                 <div class="thumbnail">
                     <img alt="Pre-sale support" style="width: 300px;" src="view/javascript/architect/image/pre-sale.png">
                     <div class="caption" style="text-align:center;padding-top:0px;">
