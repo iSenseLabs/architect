@@ -1,4 +1,4 @@
-<h2 class=" text-center">Quick Refference</h2>
+<h2 class=" text-center">Quick Reference</h2>
 <hr class="hr">
 
 <p>For complete documentation, please refer to the project <a href="https://github.com/iSenseLabs/architect/wiki" target="_blank">Wiki</a>.</p>
@@ -28,12 +28,12 @@
         </tr>
         <tr>
             <td>Modification</td>
-            <td>Saved to database</td>
+            <td>Database table <code>modification</code></td>
         </tr>
         <tr>
             <td>Event</td>
             <td>
-                Saved to database<br>
+                Database table <code>event</code><br>
                 catalog/controller/extension/architect/event/<code>arc101</code>.php
             </td>
         </tr>
@@ -102,3 +102,8 @@
         </tr>
     </tbody>
 </table>
+
+<p>Notes:</p>
+<ul>
+    <li>For consistency and predictability, Modification and Event <code>code</code> always replaced with prefixed sub-module identifier.</li>
+</ul>

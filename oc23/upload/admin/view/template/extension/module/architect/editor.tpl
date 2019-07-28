@@ -133,7 +133,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content modal-body">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <?php echo $quick_reff; ?>
+                <?php echo $quick_reference; ?>
             </div>
         </div>
     </div>

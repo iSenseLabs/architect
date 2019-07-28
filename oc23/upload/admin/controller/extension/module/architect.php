@@ -95,8 +95,8 @@ class ControllerExtensionModuleArchitect extends Controller
             $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
         }
 
-        $data['tab_option']  = $this->load->view($this->arc['path_module'] . '/option', $data);
-        $data['quick_reff']  = $this->load->view($this->arc['path_module'] . '/quick_reff', $data);
+        $data['tab_option'] = $this->load->view($this->arc['path_module'] . '/option', $data);
+        $data['quick_reference'] = $this->load->view($this->arc['path_module'] . '/quick_reference', $data);
 
         // === Page element
         $data['header']      = $this->load->controller('common/header');
