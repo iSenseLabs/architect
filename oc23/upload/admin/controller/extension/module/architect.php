@@ -82,6 +82,11 @@ class ControllerExtensionModuleArchitect extends Controller
         );
 
         // === Content
+        $data['docs'] = array(
+            'module_id'  => '00',
+            'identifier' => $this->arc['setting']['identifier']
+        );
+
         if ($this->arc['setting']['module_id']) {
             $data['architect']['setting'] = array_replace_recursive(
                 $this->arc['setting'],
@@ -91,6 +96,11 @@ class ControllerExtensionModuleArchitect extends Controller
             if (empty($module['module_id'])) {
                 $this->response->redirect($this->arc['url_module']);
             }
+
+            $data['docs'] = array(
+                'module_id'     => $data['architect']['setting']['module_id'],
+                'identifier'    => $data['architect']['setting']['identifier']
+            );
         } else {
             $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
         }
