@@ -137,7 +137,7 @@ class ControllerExtensionModuleArchitect extends Controller
         // === Content
         $data['urlTicketSupport'] = 'https://isenselabs.com/tickets/open/' . base64_encode('Support Request').'/'.base64_encode('414').'/'. base64_encode($_SERVER['SERVER_NAME']);
 
-        $data['tab_list']    = $this->load->view($this->arc['path_module'] .'/tab_list', $data);
+        $data['tab_manage']  = $this->load->view($this->arc['path_module'] .'/tab_manage', $data);
         $data['tab_help']    = $this->load->view($this->arc['path_module'] .'/tab_help', $data);
 
         // === Page element
@@ -173,7 +173,7 @@ class ControllerExtensionModuleArchitect extends Controller
         $this->response->setOutput(json_encode($response));
     }
 
-    public function itemlist()
+    public function manageList()
     {
         $limit      = 25;
         $page       = isset($this->request->get) && (int)$this->request->get > 0 ? (int)$this->request->get : 1;
@@ -194,10 +194,10 @@ class ControllerExtensionModuleArchitect extends Controller
         $pagination->total = $total_item;
         $pagination->page  = $page;
         $pagination->limit = $limit;
-        $pagination->url   = $this->url->link($this->arc['path_module'] . '/itemList', $this->arc['url_token'] . '&page={page}', true);
+        $pagination->url   = $this->url->link($this->arc['path_module'] . '/manageList', $this->arc['url_token'] . '&page={page}', true);
 
         $response['items']           = count($data['items']);
-        $response['output']          = $this->load->view($this->arc['path_module'] . '/module_list', $data);
+        $response['output']          = $this->load->view($this->arc['path_module'] . '/manage_list', $data);
         $response['pagination']      = $pagination->render();
         $response['pagination_info'] = sprintf($this->language->get('text_pagination'), ($total_item) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total_item - $limit)) ? $total_item : ((($page - 1) * $limit) + $limit), $total_item, ceil($total_item / $limit));
 
@@ -205,7 +205,7 @@ class ControllerExtensionModuleArchitect extends Controller
         $this->response->setOutput(json_encode($response));
     }
 
-    public function itemUpdate()
+    public function manageUpdate()
     {
         $post = $this->request->post;
         $response = $post;

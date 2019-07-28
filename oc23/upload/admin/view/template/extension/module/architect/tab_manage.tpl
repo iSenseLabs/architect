@@ -1,13 +1,16 @@
 <table class="table table-striped table-hover">
     <thead>
-        <tr class="text-center">
-            <th style="width:80px">ID</th>
+        <tr>
+            <th class="text-center" style="width:80px">ID</th>
             <th class="text-left" style="min-width:200px">Name</th>
-            <th style="width:80px">Status</th>
-            <th style="width:110px">Action</th>
+            <th class="text-center" style="width:80px">Status</th>
+            <th class="text-center" style="width:110px">
+                Action
+                <a href="#" class="ml-5 js-manage-refresh" data-toggle="tooltip" title="Reload list"><i class="fa fa-refresh"></i></a>
+            </th>
         </tr>
     </thead>
-    <tbody id="architect-list"></tbody>
+    <tbody id="manage-list"></tbody>
 </table>
 
 <div class="row pagination-wrapper" style="display:hidden;">
@@ -16,27 +19,31 @@
 </div>
 
 <script>
-var urlList   = 'index.php?route=<?php echo $architect["path_module"]; ?>/itemList&<?php echo $architect["url_token"]; ?>',
-    urlUpdate = 'index.php?route=<?php echo $architect["path_module"]; ?>/itemUpdate&<?php echo $architect["url_token"]; ?>';
+var urlManageList   = 'index.php?route=<?php echo $architect["path_module"]; ?>/manageList&<?php echo $architect["url_token"]; ?>',
+    urlManageUpdate = 'index.php?route=<?php echo $architect["path_module"]; ?>/manageUpdate&<?php echo $architect["url_token"]; ?>';
 
 $(document).ready(function()
 {
-    fetchList(urlList);
-
-    $('.pagination-number').on('click', 'a', function(e) {
+    fetchManageList(urlManageList);
+    $('.js-manage-refresh').on('click', function(e) {
         e.preventDefault();
-        fetchList($(this).attr('href'));
+        fetchManageList(urlManageList);
+    });
+
+    $('#tab-manage .pagination-number').on('click', 'a', function(e) {
+        e.preventDefault();
+        fetchManageList($(this).attr('href'));
     });
 
     // Update item
-    $('#architect-list').on('click', '[data-arc-update]', function(e) {
+    $('#manage-list').on('click', '[data-arc-update]', function(e) {
         e.preventDefault();
 
         var el = $(this),
             elData = el.data('arc-update');
 
         $.ajax({
-            url: urlUpdate + '&_='+ new Date().getTime(),
+            url: urlManageUpdate + '&_='+ new Date().getTime(),
             type: 'POST',
             dataType: 'json',
             data: elData,
@@ -53,7 +60,7 @@ $(document).ready(function()
             },
             success: function(data) {
                 if (!data.error) {
-                    fetchList(urlList);
+                    fetchManageList(urlManageList);
                 } else {
                     notify('danger beforeUpdate', data.error);
                 }
@@ -62,23 +69,25 @@ $(document).ready(function()
     });
 });
 
-function fetchList(url) {
+function fetchManageList(url) {
     $.ajax({
         url: url + '&_='+ new Date().getTime(),
         type: 'POST',
         dataType: 'json',
         cache: false,
         beforeSend: function() {
-            $('#architect-list').html('<tr><td class="text-center" colspan="4" style="padding:20px 10px;"><i class="fa fa-spinner fa-spin"></i> ' + architect.i18n.text_processing + '</td></tr>');
+            $('#manage-list').html('<tr><td class="text-center" colspan="4" style="padding:25px 10px;"><i class="fa fa-spinner fa-spin"></i> ' + architect.i18n.text_processing + '</td></tr>');
             $('.pagination-wrapper').hide(10);
         },
         success: function(data) {
-            $('#architect-list').html(data.output);
-
             if (data.items) {
+                $('#manage-list').html(data.output);
+
                 $('.pagination-number').html(data.pagination);
                 $('.pagination-info').html(data.pagination_info);
                 $('.pagination-wrapper').show();
+            } else {
+                $('#manage-list').html('<tr><td class="text-center" colspan="4" style="padding:25px 10px;">' + architect.i18n.text_no_data + '</td></tr>');
             }
         }
     });

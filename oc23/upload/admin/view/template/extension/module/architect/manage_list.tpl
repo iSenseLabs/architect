@@ -20,9 +20,3 @@
         </td>
     </tr>
 <?php } ?>
-
-<?php if (!$items) { ?>
-    <tr class="text-center">
-        <td colspan="4" style="padding:25px;"><?php echo $i18n['text_no_data']; ?></td>
-    </tr>
-<?php } ?>
