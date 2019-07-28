@@ -6,7 +6,7 @@
         <p class="text-center">
             v<?php echo $architect['version']; ?> •
             <a href="https://github.com/iSenseLabs/architect" target="_blank">Project</a> •
-            <a href="https://github.com/iSenseLabs/architect/wiki" target="_blank">Docs</a> •
+            <a href="https://github.com/iSenseLabs/architect/wiki" target="_blank">Wiki</a> •
             <a href="https://github.com/iSenseLabs/architect/issues" target="_blank">Issues</a> •
             <a href="https://github.com/iSenseLabs/architect/blob/master/LICENSE" target="_blank">GPLv3+</a>
         </p>

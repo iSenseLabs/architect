@@ -91,6 +91,7 @@ class ControllerExtensionModuleArchitect extends Controller
             $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
         }
 
+        $data['quick_reff']  = $this->load->view($this->arc['path_module'] . '/quick_reff', $data);
         // === Page element
         $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
