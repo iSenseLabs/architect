@@ -279,14 +279,16 @@ class ModelExtensionModuleArchitect extends Model
         $item    = $itemValues;
         $decodes = array('option', 'meta');
 
-        foreach ($itemValues as $key => $value) {
-            if (in_array($key, $decodes)) {
-                $temp_val = json_decode($value, true);
-                $item[$key] = is_array($temp_val) ? $temp_val : array();
+        if ($item) {
+            foreach ($itemValues as $key => $value) {
+                if (in_array($key, $decodes)) {
+                    $temp_val = json_decode($value, true);
+                    $item[$key] = is_array($temp_val) ? $temp_val : array();
+                }
             }
-        }
 
-        $item['url_edit'] = $this->url->link($this->arc['path_module'], $this->arc['url_token'] . '&module_id=' . $item['module_id'], true);
+            $item['url_edit'] = $this->url->link($this->arc['path_module'], $this->arc['url_token'] . '&module_id=' . $item['module_id'], true);
+        }
 
         return $item;
     }

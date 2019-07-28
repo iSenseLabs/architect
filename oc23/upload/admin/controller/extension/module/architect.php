@@ -194,6 +194,7 @@ class ControllerExtensionModuleArchitect extends Controller
         $pagination->limit = $limit;
         $pagination->url   = $this->url->link($this->arc['path_module'] . '/itemList', $this->arc['url_token'] . '&page={page}', true);
 
+        $response['items']           = count($data['items']);
         $response['output']          = $this->load->view($this->arc['path_module'] . '/module_list', $data);
         $response['pagination']      = $pagination->render();
         $response['pagination_info'] = sprintf($this->language->get('text_pagination'), ($total_item) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total_item - $limit)) ? $total_item : ((($page - 1) * $limit) + $limit), $total_item, ceil($total_item / $limit));

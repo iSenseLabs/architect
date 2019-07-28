@@ -1,10 +1,10 @@
 <table class="table table-striped table-hover">
     <thead>
-        <tr>
-            <th class="text-center" style="width:80px">ID</th>
-            <th class="text-center" style="min-width:200px">Name</th>
-            <th class="text-center" style="width:80px">Status</th>
-            <th class="text-center" style="width:110px">Action</th>
+        <tr class="text-center">
+            <th style="width:80px">ID</th>
+            <th class="text-left" style="min-width:200px">Name</th>
+            <th style="width:80px">Status</th>
+            <th style="width:110px">Action</th>
         </tr>
     </thead>
     <tbody id="architect-list"></tbody>
@@ -73,14 +73,12 @@ function fetchList(url) {
             $('.pagination-wrapper').hide(10);
         },
         success: function(data) {
-            if (data.output) {
-                $('#architect-list').html(data.output);
+            $('#architect-list').html(data.output);
 
-                if (data.pagination_info) {
-                    $('.pagination-number').html(data.pagination);
-                    $('.pagination-info').html(data.pagination_info);
-                    $('.pagination-wrapper').show();
-                }
+            if (data.items) {
+                $('.pagination-number').html(data.pagination);
+                $('.pagination-info').html(data.pagination_info);
+                $('.pagination-wrapper').show();
             }
         }
     });
