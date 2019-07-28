@@ -400,33 +400,36 @@ label input[type="checkbox"] {
 }
 
 .arc-nav-base {
-    background: #f2f2f2;
+    background: #435058;
     padding: 8px 15px 0 15px;
-    margin: -20px -20px 0;
-    border-bottom: 1px solid #d2d2d2;
+    margin: -21px -21px 0;
+    border: 0;
+}
+.arc-nav-base > li {
+    margin-bottom: 0;
 }
 .arc-nav-base > li + li {
     margin-left: 5px;
 }
 .arc-nav-base > li > a {
-    color: #888;
+    color: #d8d8d8;
     padding: 9px 20px;
     min-width: 100px;
     text-align: center;
     border-radius: 5px 5px 0 0;
+    border: 0;
 }
 .arc-nav-base > li > a:hover,
 .arc-nav-base > li > a:focus {
-    color: #444;
-    background-color: #e4e4e4;
-    border-color: #e4e4e4 #e4e4e4 #d2d2d2;
+    color: #fff;
+    border: 0;
+    background: transparent;
 }
 .arc-nav-base > li.active > a,
 .arc-nav-base > li.active > a:hover,
 .arc-nav-base > li.active > a:focus {
     font-weight: 600;
-    border-color: #ccc;
-    border-bottom-color: transparent;
+    border: 0;
 }
 
 .arc-nav-editor {
