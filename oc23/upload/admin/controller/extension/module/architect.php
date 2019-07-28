@@ -14,7 +14,7 @@ class ControllerExtensionModuleArchitect extends Controller
 
         $this->load->model($this->arc['path_module']);
         $this->arc['model'] = $this->{$this->arc['model']};
-        $this->arc['setting']['module_id'] = isset($this->request->get['module_id']) ? $this->request->get['module_id'] : 0;
+        $this->arc['setting']['module_id'] = isset($this->request->get['module_id']) ? (int)$this->request->get['module_id'] : 0;
 
         $this->i18n = $this->load->language($this->arc['path_module']);
 
@@ -85,8 +85,12 @@ class ControllerExtensionModuleArchitect extends Controller
         if ($this->arc['setting']['module_id']) {
             $data['architect']['setting'] = array_replace_recursive(
                 $this->arc['setting'],
-                $this->arc['model']->getModule($this->arc['setting']['module_id'])
+                $module = $this->arc['model']->getModule($this->arc['setting']['module_id'])
             );
+
+            if (empty($module['module_id'])) {
+                $this->response->redirect($this->arc['url_module']);
+            }
         } else {
             $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
         }
