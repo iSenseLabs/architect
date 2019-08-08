@@ -117,7 +117,7 @@ class ModelExtensionModuleArchitect extends Model
             unlink($path_template);
         }
 
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = '" . $this->db->escape($data['identifier']) . "'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
 
         if (!$error && $modification = trim($data['modification'])) {
             $modification = html_entity_decode(str_replace($tags_search, $tags_replace, $modification . "\n"), ENT_COMPAT, 'UTF-8');
@@ -127,7 +127,7 @@ class ModelExtensionModuleArchitect extends Model
                 $this->db->query(
                     "INSERT INTO `" . DB_PREFIX . "modification`
                     SET `name`        = '" . $this->db->escape($ocmod['name']) . "',
-                        `code`        = '" . $this->db->escape($ocmod['code']) . "',
+                        `code`        = 'architect_" . $this->db->escape($ocmod['code']) . "',
                         `author`      = '" . $this->db->escape($ocmod['author']) . "',
                         `version`     = '" . $this->db->escape($ocmod['version']) . "',
                         `link`        = '" . $this->db->escape($ocmod['link']) . "',
@@ -138,7 +138,7 @@ class ModelExtensionModuleArchitect extends Model
             }
         }
 
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($data['identifier']) . "'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
         $path_event = ARC_CATALOG . 'controller/extension/architect/event/' . $data['identifier'] . '.php';
 
         if (!$error && $event = trim($data['event'])) {
@@ -156,7 +156,7 @@ class ModelExtensionModuleArchitect extends Model
                         if ($event['trigger'] && $event['action']) {
                             $this->db->query(
                                 "INSERT INTO `" . DB_PREFIX . "event`
-                                SET `code`        = '" . $this->db->escape($data['identifier']) . "',
+                                SET `code`        = 'architect_" . $this->db->escape($data['identifier']) . "',
                                     `trigger`     = '" . $this->db->escape($event['trigger']) . "',
                                     `action`      = '" . $this->db->escape($event['action']) . "',
                                     `status`      = '" . (int)$data['status'] . "',
@@ -206,8 +206,8 @@ class ModelExtensionModuleArchitect extends Model
         $this->db->query("DELETE FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'");
 
         if (!empty($arc['identifier'])) {
-            $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($arc['identifier']) . "'");
-            $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = '" . $this->db->escape($arc['identifier']) . "'");
+            $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($arc['identifier']) . "'");
+            $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($arc['identifier']) . "'");
 
             $files = array(
                 ARC_CATALOG . 'model/extension/architect/' . $arc['identifier'] . '.php',
@@ -257,7 +257,7 @@ class ModelExtensionModuleArchitect extends Model
                 `template`      = '" . $this->db->escape($data['template']) . "',
                 `modification`  = '" . $this->db->escape($data['modification']) . "',
                 `event`         = '" . $this->db->escape($data['event']) . "',
-                `option`        = '" . $this->db->escape(json_encode(array())) . "',
+                `option`        = '" . $this->db->escape(json_encode($data['option'])) . "',
                 `meta`          = '" . $this->db->escape(json_encode($data['meta'])) . "',
                 `status`        = '" . (int)$data['status'] . "',
                 `updated`       = NOW()
@@ -361,8 +361,8 @@ class ModelExtensionModuleArchitect extends Model
         $this->model_setting_setting->deleteSetting('architect');
 
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "architect`");
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` LIKE 'arc%'");
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` LIKE 'arc%'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` LIKE 'architect_arc%'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` LIKE 'architect_arc%'");
 
         $paths = array(
             ARC_CATALOG . 'model/extension/architect/*.php',

@@ -28,12 +28,12 @@
         </tr>
         <tr>
             <td>Modification</td>
-            <td>Database table <code>modification</code></td>
+            <td>Database table <code>modification</code> with "code" identifier <code>architect_<?php echo $docs['identifier']; ?></code></td>
         </tr>
         <tr>
             <td>Event</td>
             <td>
-                Database table <code>event</code><br>
+                Database table <code>event</code> with "code" identifier <code>architect_<?php echo $docs['identifier']; ?></code><br>
                 catalog/controller/extension/architect/event/<code><?php echo $docs['identifier']; ?></code>.php
             </td>
         </tr>
