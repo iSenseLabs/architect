@@ -42,7 +42,7 @@
 
 
 <h3 class="legend">Codetags</h3>
-<p>Custom tags that replaced when save sub-module and available to all editors.</p>
+<p>Custom tags that replaced when save sub-module and it's available to all editors.</p>
 
 <table class="table table-striped mt-10">
     <thead>
@@ -62,7 +62,7 @@
         </tr>
         <tr>
             <td>{author}</td>
-            <td>johndoe</td>
+            <td><?php echo $docs['author']; ?></td>
         </tr>
         <tr>
             <td>{controller_class}</td>

@@ -84,6 +84,7 @@ class ControllerExtensionModuleArchitect extends Controller
         // === Content
         $data['docs'] = array(
             'module_id'  => '00',
+            'author'     => 'johndoe',
             'identifier' => $this->arc['setting']['identifier']
         );
 
@@ -98,8 +99,9 @@ class ControllerExtensionModuleArchitect extends Controller
             }
 
             $data['docs'] = array(
-                'module_id'     => $data['architect']['setting']['module_id'],
-                'identifier'    => $data['architect']['setting']['identifier']
+                'module_id'  => $data['architect']['setting']['module_id'],
+                'identifier' => $data['architect']['setting']['identifier'],
+                'author'     => $data['architect']['setting']['meta']['author']
             );
         } else {
             $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
