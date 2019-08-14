@@ -15,7 +15,7 @@
         </ul>
 
         <div class="pull-right">
-            <button type="button" form="form-architect" class="btn btn-primary arc-save"><?php echo $i18n['text_save']; ?></button>
+            <button type="button" form="form-architect" class="btn btn-primary js-save"><?php echo $i18n['text_save']; ?></button>
             <a href="<?php echo $architect['url_module_manage']; ?>" class="btn btn-default"><?php echo $i18n['text_close']; ?></a>
         </div>
     </div> <!-- /.content-head -->

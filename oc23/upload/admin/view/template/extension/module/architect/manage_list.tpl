@@ -4,7 +4,7 @@
         <td class="text-left">
             <a href="<?php echo $item['url_edit']; ?>"><?php echo $item['name']; ?></a>
             <?php if (!empty($item['meta']['note'])) { ?>
-                <span class="small text-muted" style="margin-left:5px;" data-toggle="tooltip" title="<?php echo $item['meta']['note']; ?>"><i class="fa fa-file-text-o"></i></span>
+                <div class="small text-muted"><?php echo $item['meta']['note']; ?></div>
             <?php } ?>
         </td>
         <td>

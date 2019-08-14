@@ -82,11 +82,6 @@ class ControllerExtensionModuleArchitect extends Controller
         );
 
         // === Content
-        $data['docs'] = array(
-            'module_id'  => '00',
-            'author'     => 'johndoe',
-            'identifier' => $this->arc['setting']['identifier']
-        );
 
         if ($this->arc['setting']['module_id']) {
             $data['architect']['setting'] = array_replace_recursive(
@@ -106,6 +101,19 @@ class ControllerExtensionModuleArchitect extends Controller
         } else {
             $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
         }
+
+        // Options
+        $this->load->model('customer/customer_group');
+
+        $data['default_cust_group'] = $this->config->get('config_customer_group_id');
+        $data['customer_groups']    = $this->model_customer_customer_group->getCustomerGroups();
+
+        // Quick Refference
+        $data['docs'] = array(
+            'module_id'  => '00',
+            'author'     => 'johndoe',
+            'identifier' => $this->arc['setting']['identifier']
+        );
 
         $data['tab_option'] = $this->load->view($this->arc['path_module'] . '/option', $data);
         $data['quick_reference'] = $this->load->view($this->arc['path_module'] . '/quick_reference', $data);
@@ -147,7 +155,8 @@ class ControllerExtensionModuleArchitect extends Controller
         );
 
         // === Content
-        $data['urlTicketSupport'] = 'https://isenselabs.com/tickets/open/' . base64_encode('Support Request').'/'.base64_encode('414').'/'. base64_encode($_SERVER['SERVER_NAME']);
+
+        $data['urlTicketSupport']   = 'https://isenselabs.com/tickets/open/' . base64_encode('Support Request').'/'.base64_encode('414').'/'. base64_encode($_SERVER['SERVER_NAME']);
 
         $data['tab_manage']  = $this->load->view($this->arc['path_module'] .'/tab_manage', $data);
         $data['tab_help']    = $this->load->view($this->arc['path_module'] .'/tab_help', $data);
@@ -165,8 +174,7 @@ class ControllerExtensionModuleArchitect extends Controller
         $post     = $this->request->post;
         $response = array(
             'module_id' => $post['module_id'],
-            'error' => '',
-            // 'post'  => $post
+            'error' => ''
         );
 
         if (!isset($post['module_id'])) {

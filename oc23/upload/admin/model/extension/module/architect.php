@@ -260,6 +260,8 @@ class ModelExtensionModuleArchitect extends Model
                 `option`        = '" . $this->db->escape(json_encode($data['option'])) . "',
                 `meta`          = '" . $this->db->escape(json_encode($data['meta'])) . "',
                 `status`        = '" . (int)$data['status'] . "',
+                `publish`       = '" . $this->db->escape($data['publish']) . "',
+                `unpublish`     = '" . $this->db->escape($data['unpublish']) . "',
                 `updated`       = NOW()
             ";
         }
@@ -305,11 +307,18 @@ class ModelExtensionModuleArchitect extends Model
                 }
             }
 
-            $item['url_edit'] = $this->url->link($this->arc['path_module'], $this->arc['url_token'] . '&module_id=' . $item['module_id'], true);
+            $item['publish']          = $item['publish'] != '0000-00-00 00:00:00' ? $item['publish'] : date('Y-m-d H:i:s');
+            $item['unpublish']        = $item['unpublish'] != '0000-00-00 00:00:00' ? $item['unpublish'] : '';
+
+            $item['publish_format']   = $item['publish'] ? date('M d, Y', strtotime($item['publish'])) : '';
+            $item['unpublish_format'] = $item['unpublish']   ? date('M d, Y', strtotime($item['unpublish'])) : '';
+
+            $item['url_edit']         = $this->url->link($this->arc['path_module'], $this->arc['url_token'] . '&module_id=' . $item['module_id'], true);
         }
 
         return $item;
     }
+
 
     // ================ Setup ================
 
@@ -381,6 +390,7 @@ class ModelExtensionModuleArchitect extends Model
             }
         }
     }
+
 
     // ================ Helper ================
 

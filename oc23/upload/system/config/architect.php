@@ -39,6 +39,11 @@ $_['architect'] = array(
         'module_id'     => 0,
         'identifier'    => uniqid('arc'),
         'name'          => '',
+        'status'        => 0,
+        'option'        => array(
+            'customer_group'     => 0,
+            'customer_group_ids' => array()
+        ),
         'meta'          => array(
             'author'    => '',
             'note'      => '',
@@ -50,8 +55,8 @@ $_['architect'] = array(
                 'event'        => 0
             )
         ),
-        'status'        => 0,
-        'option'        => array(),
+        'publish'       => date('Y-m-d'),
+        'unpublish'     => '',
 
         // Editor
         'controller'    => '<?php

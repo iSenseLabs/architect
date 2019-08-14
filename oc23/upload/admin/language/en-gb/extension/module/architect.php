@@ -11,6 +11,7 @@ $_['text_save']                 = 'Save';
 $_['text_close']                = 'Close';
 $_['text_edit']                 = 'Edit';
 $_['text_delete']               = 'Delete';
+$_['text_default']              = 'Default';
 
 $_['text_controller']           = 'Controller';
 $_['text_model']                = 'Model';
@@ -39,6 +40,16 @@ $_['entry_editor']              = 'Editor';
 $_['entry_status']              = 'Status';
 
 $_['placeholder_note']          = 'A bit description would help..';
+
+// Options tab
+$_['entry_customer_profile']    = 'Customer Profile';
+$_['entry_customer_group']      = 'Customer Group';
+$_['entry_date_duration']       = 'Date Duration';
+
+$_['text_all_customer']            = 'All customers.';
+$_['text_guest_visitor']           = 'Guest visitor';
+$_['text_selected_customer_group'] = 'Customers within the following customer groups.';
+
 
 // Notification
 $_['validate_name']             = 'Sub-module name must be at least 3 characters!';

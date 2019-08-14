@@ -46,6 +46,27 @@ $(document).ready(function()
         }
     });
 
+    // Date chooser
+    $('.js-date').datetimepicker({
+        pickTime: false
+    });
+    $('.js-date').on('focus', 'input', function(e) {
+        $(this).parent().find('button').trigger('click');
+    });
+
+    // Radio toggle: customer groups
+    $('.js-toggle').on('change', 'input[type=radio]', function (e) {
+        var el = this;
+
+        $(el).closest('.js-toggle').find('.js-toggle-target').hide();
+        if ($(el).is(':checked')) {
+            $(el).closest('.radio').find('.js-toggle-target').slideDown('fast');
+        }
+    });
+    setTimeout(function() {
+        $('.js-toggle').trigger('change');
+    }, 100);
+
 
     /**
      * IIDE CodeMirror
@@ -85,10 +106,10 @@ $(document).ready(function()
             extraKeys       : {
                 'Tab'    : cmSpaceTab,
                 'Ctrl-S' : function(instance) {
-                    $('.arc-save').trigger('click');
+                    $('.js-save').trigger('click');
                 },
                 'Cmd-S'  : function(instance) {
-                    $('.arc-save').trigger('click');
+                    $('.js-save').trigger('click');
                 },
             }
         });
@@ -97,7 +118,7 @@ $(document).ready(function()
     /**
      * Saving module data
      */
-    $('.arc-save').on('click', function(e) {
+    $('.js-save').on('click', function(e) {
         e.preventDefault();
         $('.arc-alert').trigger('click'); // close all notify
 
