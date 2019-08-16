@@ -82,7 +82,7 @@ class {controller_class} extends Controller
         'model'         => '<?php
 class {model_class} extends Model
 {
-    public function get($setting = array())
+    public function get($param = array())
     {
         $data = array();
 
@@ -115,6 +115,26 @@ class {model_class} extends Model
         </operation>
     </file>
 </modification>',
-        'event'         => '',
+        'event'         => '<?php
+class {event_class} extends Controller
+{
+    /**
+     * @trigger  catalog/controller/commmon/footer/before
+     * @action   {event_path}/foo
+     */
+    public function foo(&$route, &$data)
+    {
+        // Your code here..
+    }
+
+    /**
+     * @trigger  catalog/view/default/template/common/footer/after
+     * @action   {event_path}/bar
+     */
+    public function bar(&$route, &$data, &$output)
+    {
+        // Your code here..
+    }
+}',
     )
 );
