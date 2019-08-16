@@ -82,8 +82,9 @@ class ModelExtensionModuleArchitect extends Model
             $data['event'] = '';
         }
 
-        // Save
+        // === Save
 
+        // Controller
         $path_controller = ARC_CATALOG . 'controller/extension/architect/' . $data['identifier'] . '.php';
 
         if ($controller = trim($data['controller'])) {
@@ -95,6 +96,7 @@ class ModelExtensionModuleArchitect extends Model
             unlink($path_controller);
         }
 
+        // Model
         $path_model = ARC_CATALOG . 'model/extension/architect/' . $data['identifier'] . '.php';
 
         if (!$error && $model = trim($data['model'])) {
@@ -106,6 +108,7 @@ class ModelExtensionModuleArchitect extends Model
             unlink($path_model);
         }
 
+        // Template
         $path_template = ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $data['identifier'] . '.tpl';
 
         if (!$error && $template = trim($data['template'])) {
@@ -117,6 +120,7 @@ class ModelExtensionModuleArchitect extends Model
             unlink($path_template);
         }
 
+        // Modification
         $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
 
         if (!$error && $modification = trim($data['modification'])) {
@@ -138,8 +142,9 @@ class ModelExtensionModuleArchitect extends Model
             }
         }
 
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
+        // Event
         $path_event = ARC_CATALOG . 'controller/extension/architect/event/' . $data['identifier'] . '.php';
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
 
         if (!$error && $event = trim($data['event'])) {
             $event  = html_entity_decode(str_replace($tags_search, $tags_replace, $event . "\n"), ENT_COMPAT, 'UTF-8');
@@ -171,7 +176,7 @@ class ModelExtensionModuleArchitect extends Model
         }
 
         /**
-         * Part 3: "Rollback" on error
+         * Part 3: Remove on error
          */
 
         if ($error) {
