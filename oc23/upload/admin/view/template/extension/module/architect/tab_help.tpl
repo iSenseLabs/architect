@@ -1,7 +1,8 @@
 <div class="row">
     <div class="col-md-5">
         <h1><?php echo $architect['title']; ?></h1>
-        <p>Architect is an OpenCart module for rapid extension development. It can be considered as low-level extension which provide access to OpenCart API to make prototype, build minimum viable product or specifically custom function.</p>
+        <?php echo $i18n['tab_help_info']; ?>
+
         <hr style="margin:20px 0;">
         <p class="text-center mb-20">
             v<?php echo $architect['version']; ?> •

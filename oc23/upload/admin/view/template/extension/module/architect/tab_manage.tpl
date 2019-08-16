@@ -1,11 +1,11 @@
 <table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th class="text-center" style="width:80px">ID</th>
-            <th class="text-left" style="min-width:200px">Name</th>
-            <th class="text-center" style="width:80px">Status</th>
+            <th class="text-center" style="width:80px"><?php echo $i18n['text_id']; ?></th>
+            <th class="text-left" style="min-width:200px"><?php echo $i18n['text_name']; ?></th>
+            <th class="text-center" style="width:80px"><?php echo $i18n['text_status']; ?></th>
             <th class="text-center" style="width:110px">
-                Action
+                <?php echo $i18n['text_action']; ?>
                 <a href="#" class="ml-5 js-manage-refresh" data-toggle="tooltip" title="Reload list"><i class="fa fa-refresh"></i></a>
             </th>
         </tr>

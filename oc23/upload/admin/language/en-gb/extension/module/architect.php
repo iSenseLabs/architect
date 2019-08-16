@@ -6,19 +6,25 @@ $_['text_manage']               = 'Manage';
 $_['text_setting']              = 'Setting';
 $_['text_help']                 = 'Help';
 
-$_['text_insert']               = 'Insert';
-$_['text_save']                 = 'Save';
-$_['text_close']                = 'Close';
-$_['text_edit']                 = 'Edit';
-$_['text_delete']               = 'Delete';
-$_['text_default']              = 'Default';
-
 $_['text_controller']           = 'Controller';
 $_['text_model']                = 'Model';
 $_['text_template']             = 'Template';
 $_['text_modification']         = 'Modification';
 $_['text_event']                = 'Event';
 $_['text_options']              = 'Options';
+
+$_['text_insert']               = 'Insert';
+$_['text_save']                 = 'Save';
+$_['text_close']                = 'Close';
+$_['text_edit']                 = 'Edit';
+$_['text_delete']               = 'Delete';
+$_['text_default']              = 'Default';
+$_['text_publish']              = 'Publish';
+$_['text_unpublish']            = 'Unpublish';
+$_['text_id']                   = 'ID';
+$_['text_name']                 = 'Name';
+$_['text_status']               = 'Status';
+$_['text_action']               = 'Action';
 
 $_['text_processing']           = 'Processing..';
 $_['text_no_data']              = 'Data not available!';
@@ -32,6 +38,7 @@ $_['text_open_ticket_info']     = 'Want to communicate one-to-one with our tech 
 $_['text_pre_sale']             = 'Pre-sale';
 $_['text_bump_the_sales']       = 'Bump the sales';
 $_['text_pre_sale_info']        = 'Have a brilliant idea for your webstore? Our team of top-notch developers can make it real.';
+$_['tab_help_info']             = '<p>Architect is an OpenCart module for rapid extension development. It can be considered as low-level extension which provide access to OpenCart API to make prototype, build minimum viable product or specifically custom function.</p>';
 
 // Form
 $_['entry_name']                = 'Name';
@@ -41,7 +48,7 @@ $_['entry_status']              = 'Status';
 
 $_['placeholder_note']          = 'A bit description would help..';
 
-// Options tab
+// Form: tab Options
 $_['entry_customer_profile']    = 'Customer Profile';
 $_['entry_customer_group']      = 'Customer Group';
 $_['entry_date_duration']       = 'Date Duration';
@@ -49,7 +56,6 @@ $_['entry_date_duration']       = 'Date Duration';
 $_['text_all_customer']            = 'All customers.';
 $_['text_guest_visitor']           = 'Guest visitor';
 $_['text_selected_customer_group'] = 'Customers within the following customer groups.';
-
 
 // Notification
 $_['validate_name']             = 'Sub-module name must be at least 3 characters!';
