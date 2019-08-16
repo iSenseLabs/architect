@@ -103,8 +103,9 @@
     </tbody>
 </table>
 
-<p>Notes:</p>
+<p><b>Notes:</b></p>
 <ul>
     <li>The <code>{identifier}</code> replacement above is the real identifier for current sub-module.</li>
     <li>For consistency, Modification and Event <code>code</code> always replaced with prefixed sub-module identifier.</li>
+    <li>Tab Options: when all options evaluated to true then sub-module entrance <code>controller::index()</code> will be executed. This options not affecting Model, Template, Modification or Event.</li>
 </ul>

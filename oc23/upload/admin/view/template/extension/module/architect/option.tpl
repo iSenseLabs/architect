@@ -1,10 +1,4 @@
 <div class="tab-panel form-horizontal">
-    <div class="form-group" style="color: #666;">
-        Module entrance <i>controller::index()</i> will be executed when all options evaluated to true. This options not affecting Model, Template, Modification or Event.
-
-        <hr class="mb-25">
-    </div>
-
     <div class="form-group">
         <label class="col-sm-3 control-label"><?php echo $i18n['entry_customer_group']; ?></label>
         <div class="col-sm-9 js-toggle">
