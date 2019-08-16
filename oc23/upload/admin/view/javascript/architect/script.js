@@ -158,6 +158,10 @@ $(document).ready(function()
                         $('.module_id').val(resp.module_id);
 
                         notify('success', architect.i18n.notify_success, true);
+
+                        if ($('input[name="meta[editor][modification]"]').is(':checked') && $.trim($('textarea[name="modification"]').val()).length > 1) {
+                            notify('primary', architect.msg_ocmod_refresh);
+                        }
                     } else {
                         notify('warning', resp.error);
                     }
