@@ -1,6 +1,6 @@
 <?php foreach ($items as $item) { ?>
     <tr class="text-center">
-        <td><?php echo $item['architect_id']; ?></td>
+        <td><?php echo $item['module_id']; ?></td>
         <td class="text-left">
             <a href="<?php echo $item['url_edit']; ?>"><?php echo $item['name']; ?></a>
             <?php if (!empty($item['meta']['note'])) { ?>
