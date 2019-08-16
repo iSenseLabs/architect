@@ -157,11 +157,11 @@ $(document).ready(function()
                     if (!resp.error) {
                         $('.module_id').val(resp.module_id);
 
-                        notify('success', architect.i18n.notify_success, true);
-
                         if ($('input[name="meta[editor][modification]"]').is(':checked') && $.trim($('textarea[name="modification"]').val()).length > 1) {
-                            notify('primary', architect.msg_ocmod_refresh);
+                            notify('primary', architect.msg_ocmod_refresh, 5000);
                         }
+
+                        notify('success', architect.i18n.notify_success, 2500);
                     } else {
                         notify('warning', resp.error);
                     }
@@ -181,14 +181,14 @@ $(document).ready(function()
     });
 });
 
-function notify(type, message, hide) {
+function notify(type, message, timeout) {
     notyCount++;
 
     $('.arc-notification').prepend('<div class="alert alert-' + type + ' arc-alert arc-noty-' + notyCount + ' fade">' + message + '</div>');
     $('.arc-noty-' + notyCount).fadeTo(200, 1);
 
-    if (hide) {
-        notifyHide('.arc-noty-' + notyCount);
+    if (timeout) {
+        notifyHide('.arc-noty-' + notyCount, timeout);
     }
 }
 
