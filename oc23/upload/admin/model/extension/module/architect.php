@@ -294,26 +294,20 @@ class ModelExtensionModuleArchitect extends Model
         return $this->db->query("SELECT COUNT(DISTINCT architect_id) AS total FROM `" . DB_PREFIX . "architect`")->row['total'];
     }
 
-    public function prepareItem($itemValues)
+    public function prepareItem($item)
     {
-        $item    = $itemValues;
-        $decodes = array('option', 'meta');
-
         if ($item) {
-            foreach ($itemValues as $key => $value) {
-                if (in_array($key, $decodes)) {
-                    $temp_val = json_decode($value, true);
-                    $item[$key] = is_array($temp_val) ? $temp_val : array();
-                }
-            }
+            $item['option']     = json_decode($item['option'], true);
+            $item['meta']       = json_decode($item['meta'], true);
+            $item['url_edit']   = $this->url->link($this->arc['path_module'], $this->arc['url_token'] . '&module_id=' . $item['module_id'], true);
 
-            $item['publish']          = $item['publish'] != '0000-00-00 00:00:00' ? $item['publish'] : date('Y-m-d H:i:s');
-            $item['unpublish']        = $item['unpublish'] != '0000-00-00 00:00:00' ? $item['unpublish'] : '';
+            $item['publish']    = $item['publish'] != '0000-00-00 00:00:00' ? $item['publish'] : date('Y-m-d H:i:s');
+            $item['unpublish']  = $item['unpublish'] != '0000-00-00 00:00:00' ? $item['unpublish'] : '';
 
             $item['publish_format']   = $item['publish'] ? date('M d, Y', strtotime($item['publish'])) : '';
             $item['unpublish_format'] = $item['unpublish']   ? date('M d, Y', strtotime($item['unpublish'])) : '';
 
-            $item['url_edit']         = $this->url->link($this->arc['path_module'], $this->arc['url_token'] . '&module_id=' . $item['module_id'], true);
+            $item = array_replace_recursive($this->arc['setting'], $item);
         }
 
         return $item;
