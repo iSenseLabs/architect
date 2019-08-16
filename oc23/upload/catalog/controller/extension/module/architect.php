@@ -9,10 +9,17 @@ class ControllerExtensionModuleArchitect extends Controller
 
         $this->config->load('architect');
         $this->arc = $this->config->get('architect');
+
+        $this->load->model($this->arc['path_module']);
+        $this->arc['model'] = $this->{$this->arc['model']};
     }
 
     public function index($setting = array())
     {
-        return $this->load->controller('extension/module/architect/' . $setting['identifier'], $setting);
+        if (empty($setting['identifier']) || !$params = $this->arc['model']->getSubModule($setting['identifier'])) {
+            return null;
+        }
+
+        return $this->load->controller('extension/architect/' . $setting['identifier'], $params);
     }
 }
