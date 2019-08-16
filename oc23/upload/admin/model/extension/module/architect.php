@@ -53,7 +53,7 @@ class ModelExtensionModuleArchitect extends Model
             '{controller_class}' => 'ControllerExtensionArchitect' . $data['identifier'],
             '{model_class}'      => 'ModelExtensionArchitect' . $data['identifier'],
             '{model_path}'       => 'extension/architect/' . $data['identifier'],
-            '{model_call}'       => 'extension_architect_' . $data['identifier'],
+            '{model_call}'       => 'model_extension_architect_' . $data['identifier'],
             '{template_path}'    => 'extension/architect/' . $data['identifier'],
             '{ocmod_name}'       => 'Architect #' . $data['module_id'] . ' - ' . $data['name'],
             '{ocmod_code}'       => $data['identifier'],
