@@ -38,7 +38,7 @@ $_['text_open_ticket_info']     = 'Want to communicate one-to-one with our tech 
 $_['text_pre_sale']             = 'Pre-sale';
 $_['text_bump_the_sales']       = 'Bump the sales';
 $_['text_pre_sale_info']        = 'Have a brilliant idea for your webstore? Our team of top-notch developers can make it real.';
-$_['tab_help_info']             = '<p>Architect is an OpenCart module for rapid extension development. It can be considered as low-level extension which provide access to OpenCart API to make prototype, build minimum viable product or specifically custom function.</p>';
+$_['tab_help_info']             = 'Architect is an OpenCart module for rapid extension development. It can be considered as low-level extension which provide access to OpenCart API to make prototype, build minimum viable product or specifically custom function.';
 
 // Form
 $_['entry_name']                = 'Name';
