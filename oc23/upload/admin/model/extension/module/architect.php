@@ -14,8 +14,6 @@ class ModelExtensionModuleArchitect extends Model
         $this->arc['url_token'] = sprintf($this->arc['token_url'], $this->session->data[$this->arc['token_part']]);
 
         $this->load->model('extension/module');
-        $this->model_extension = $this->model_extension_module;
-
         $this->load->language($this->arc['path_module']);
     }
 
@@ -34,11 +32,11 @@ class ModelExtensionModuleArchitect extends Model
          */
 
         if (!$data['module_id']) {
-            $this->model_extension->addModule('architect', $this->queryForm('module', $data));
+            $this->model_extension_module->addModule('architect', $this->queryForm('module', $data));
             $data['module_id'] = $this->db->getLastId();
             $this->db->query("INSERT INTO `" . DB_PREFIX . "architect` SET " . $this->queryForm('architect', $data) . ", `created` = NOW()");
         } else {
-            $this->model_extension->editModule($data['module_id'], $this->queryForm('module', $data));
+            $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
             $this->db->query("UPDATE `" . DB_PREFIX . "architect` SET " . $this->queryForm('architect', $data) . " WHERE `module_id` = '" . (int)$data['module_id'] . "'");
         }
 
@@ -203,7 +201,7 @@ class ModelExtensionModuleArchitect extends Model
     public function deleteModule($module_id, $chain = true)
     {
         if ($chain) {
-            $this->model_extension->deleteModule($module_id);
+            $this->model_extension_module->deleteModule($module_id);
         }
 
         $arc = $this->db->query("SELECT identifier FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'")->row;

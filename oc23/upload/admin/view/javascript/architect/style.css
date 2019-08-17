@@ -295,6 +295,9 @@ label input[type="checkbox"] {
     border-bottom-right-radius: 2px !important;
 }
 
+.thumbnail {
+    padding: 4px 4px 10px;
+}
 .text-muted {
     color: #888;
 }
@@ -378,8 +381,6 @@ label input[type="checkbox"] {
         border-bottom: 1px solid #ddd;
     }
 }
-
-
 .panel-sidebar .form-control {
     box-shadow: none;
     transition: none;

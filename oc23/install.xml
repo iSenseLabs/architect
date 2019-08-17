@@ -7,7 +7,7 @@
     <link>https://github.com/iSenseLabs/architect</link>
 
     <file path="admin/controller/common/column_left.php">
-        <operation error="log" info="">
+        <operation error="log">
             <search><![CDATA[$design = array();]]></search>
             <add position="before"><![CDATA[
                 $data['menus'] = $this->load->controller('extension/module/architect/hookNav', $data['menus']);
