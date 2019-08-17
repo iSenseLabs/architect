@@ -340,6 +340,8 @@ class ModelExtensionModuleArchitect extends Model
                     `option` TEXT NOT NULL COMMENT 'encoded',
                     `meta` TEXT NOT NULL COMMENT 'encoded',
                     `status` TINYINT(1) NOT NULL,
+                    `publish` DATETIME NULL DEFAULT NULL,
+                    `unpublish` DATETIME NULL DEFAULT NULL,
                     `created` DATETIME NULL DEFAULT NULL,
                     `updated` DATETIME NULL DEFAULT NULL,
                     PRIMARY KEY (`architect_id`),
