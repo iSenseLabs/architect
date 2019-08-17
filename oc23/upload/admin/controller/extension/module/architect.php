@@ -255,12 +255,29 @@ class ControllerExtensionModuleArchitect extends Controller
      *
      * @return array
      */
-    public function hookNav($navs)
+    public function hookNav($navs = array())
     {
         if ($this->config->get('architect_install')) {
             $navs[] = array(
                 'id'       => 'menu-architect',
-                'icon'     => 'fa-buysellads fw arc-visit" style="font-size:18px;color:#fff;" attr="',
+                'icon'     => 'hidden"></i>
+                    <span class="arc-visit" style="
+                        display: inline-block;
+                        color: #e8e8e8;
+                        background: rgba(0,0,0,.3);
+                        font-weight: 600;
+                        font-size: 17px;
+                        font-family: \'Open Sans\', sans-serif;
+                        text-align: center;
+                        line-height: 17px;
+                        width: 21px;
+                        height: 21px;
+                        margin-left: -2px;
+                        padding: 1px 2px 3px 2px;
+                        border-radius: 36px;
+                        text-shadow: 0 1px 1px rgba(0,0,0,.2);
+                    ">A</span>
+                    <i class="hidden',
                 'name'     => 'Architect',
                 'href'     => $this->arc['url_module_manage'],
                 'children' => array()
