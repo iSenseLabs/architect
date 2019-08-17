@@ -13,21 +13,25 @@ class ModelExtensionModuleArchitect extends Model
 
     public function getSubModule($identifier)
     {
+        $data   = array();
         $result = $this->db->query(
             "SELECT *
             FROM `" . DB_PREFIX . "architect`
             WHERE `identifier` = '" . $this->db->escape($identifier) . "'
+                AND status = 1
                 AND CURDATE() >= publish
                 AND (unpublish >= CURDATE() or unpublish = 0)"
         )->row;
 
-        $module = $this->prepareItem($result);
+        if ($result) {
+            $data = $this->prepareItem($result);
 
-        if ($module['option']['customer_group'] && !in_array((int)$this->customer->getGroupId(), $module['option']['customer_group_ids'])) {
-            $module = array();
+            if ($data['option']['customer_group'] && !in_array((int)$this->customer->getGroupId(), $data['option']['customer_group_ids'])) {
+                $data = array();
+            }
         }
 
-        return $module;
+        return $data;
     }
 
     public function prepareItem($item)
