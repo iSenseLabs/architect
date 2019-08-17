@@ -28,8 +28,6 @@ $_['text_action']               = 'Action';
 
 $_['text_processing']           = 'Processing..';
 $_['text_no_data']              = 'Data not available!';
-$_['text_click_to_disable']     = 'Click to disable';
-$_['text_click_to_enable']      = 'Click to enable';
 $_['text_pagination']           = 'Show %d to %d of %d (%d Pages)';
 
 $_['text_tickets']              = 'Tickets';

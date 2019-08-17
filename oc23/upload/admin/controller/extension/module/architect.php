@@ -232,10 +232,6 @@ class ControllerExtensionModuleArchitect extends Controller
         $response = $post;
 
         switch ($post['action']) {
-            case 'status':
-                $this->db->query("UPDATE `" . DB_PREFIX . "architect` SET `status` = '" . (int)$post['value'] . "' WHERE `architect_id` = '" . (int)$post['architect_id'] . "'");
-                break;
-
             case 'delete':
                 $this->arc['model']->deleteModule($post['module_id']);
                 break;
