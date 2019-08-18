@@ -278,10 +278,10 @@ class ModelExtensionModuleArchitect extends Model
 
         $results = $this->db->query(
             "SELECT *
-            FROM `" . DB_PREFIX . "module` m
-                LEFT JOIN `" . DB_PREFIX . "architect` a ON a.module_id = m.module_id
+            FROM `" . DB_PREFIX . "architect` a
+                LEFT JOIN `" . DB_PREFIX . "module` m ON m.module_id = a.module_id
             WHERE m.code = 'architect'
-            ORDER BY `architect_id` ASC
+            ORDER BY a.architect_id ASC
             LIMIT " . (int)$param['start'] . "," . (int)$param['limit']
         );
 
