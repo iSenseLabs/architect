@@ -108,6 +108,9 @@ class ControllerModuleArchitect extends Controller
             );
         } else {
             $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
+            if (version_compare(VERSION, '2.2.0', '<')) {
+                $data['architect']['setting']['meta']['editor']['event'] = 0;
+            }
         }
 
         // Options
@@ -116,15 +119,15 @@ class ControllerModuleArchitect extends Controller
         $data['default_cust_group'] = $this->config->get('config_customer_group_id');
         $data['customer_groups']    = $this->model_customer_customer_group->getCustomerGroups();
 
-        $data['tab_option'] = $this->load->view($this->arc['path_module'] . '/option', $data);
-        $data['quick_reference'] = $this->load->view($this->arc['path_module'] . '/quick_reference', $data);
+        $data['tab_option'] = $this->load->view($this->template($this->arc['path_module'] . '/option'), $data);
+        $data['quick_reference'] = $this->load->view($this->template($this->arc['path_module'] . '/quick_reference'), $data);
 
         // === Page element
         $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer']      = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view($this->arc['path_module'] . '/editor', $data));
+        $this->response->setOutput($this->load->view($this->template($this->arc['path_module'] . '/editor'), $data));
     }
 
     public function manage()
@@ -159,15 +162,15 @@ class ControllerModuleArchitect extends Controller
 
         $data['urlTicketSupport']   = 'https://isenselabs.com/tickets/open/' . base64_encode('Support Request').'/'.base64_encode('414').'/'. base64_encode($_SERVER['SERVER_NAME']);
 
-        $data['tab_manage']  = $this->load->view($this->arc['path_module'] .'/tab_manage', $data);
-        $data['tab_help']    = $this->load->view($this->arc['path_module'] .'/tab_help', $data);
+        $data['tab_manage']  = $this->load->view($this->template($this->arc['path_module'] .'/tab_manage'), $data);
+        $data['tab_help']    = $this->load->view($this->template($this->arc['path_module'] .'/tab_help'), $data);
 
         // === Page element
         $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer']      = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view($this->arc['path_module'], $data));
+        $this->response->setOutput($this->load->view($this->template($this->arc['path_module']), $data));
     }
 
     public function save()
@@ -218,7 +221,7 @@ class ControllerModuleArchitect extends Controller
         $pagination->url   = $this->url->link($this->arc['path_module'] . '/manageList', $this->arc['url_token'] . '&page={page}', true);
 
         $response['items']           = count($data['items']);
-        $response['output']          = $this->load->view($this->arc['path_module'] . '/manage_list', $data);
+        $response['output']          = $this->load->view($this->template($this->arc['path_module'] . '/manage_list'), $data);
         $response['pagination']      = $pagination->render();
         $response['pagination_info'] = sprintf($this->language->get('text_pagination'), ($total_item) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total_item - $limit)) ? $total_item : ((($page - 1) * $limit) + $limit), $total_item, ceil($total_item / $limit));
 
@@ -299,6 +302,13 @@ class ControllerModuleArchitect extends Controller
         if ($this->config->get('architect_install') && !empty($params['module_id'])) {
             $this->arc['model']->deleteModule($params['module_id'], false);
         }
+    }
+
+    protected function template($path)
+    {
+        $ext = version_compare(VERSION, '2.2.0', '<') ? '.tpl' : '';
+
+        return $path . $ext;
     }
 
 

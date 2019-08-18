@@ -138,3 +138,31 @@ class {event_class} extends Controller
 }',
     )
 );
+
+if (version_compare(VERSION, '2.2.0', '<')) {
+    $_['architect']['setting']['controller'] = '<?php
+class {controller_class} extends Controller
+{
+    public function index($param = array())
+    {
+        $data = $this->language();
+
+        // Your code here..
+
+        if (file_exists(DIR_TEMPLATE . $this->config->get(\'config_template\') . \'/template/{template_path}.tpl\')) {
+            return $this->load->view($this->config->get(\'config_template\') . \'/template/{template_path}.tpl\', $data);
+        } else {
+            return $this->load->view(\'default/template/{template_path}.tpl\', $data);
+        }
+    }
+
+    protected function language($data = array())
+    {
+        $_[\'heading\']  = \'Architect\';
+        $_[\'greeting\'] = \'Hello World\';
+
+        return array_merge($data, $_);
+    }
+}';
+    $_['architect']['setting']['event'] = '';
+}
