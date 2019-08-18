@@ -16,7 +16,7 @@
     </file>
     <file path="admin/view/template/common/menu.tpl">
         <operation error="skip">
-            <search><![CDATA[<span><?php echo $text_design; ?></span>]]></search>
+            <search><![CDATA[<span><?php echo $text_sale; ?></span>]]></search>
             <add position="before"><![CDATA[
             <?php if (!empty($architect)) { ?>
                 <li id="<?php echo $architect['id']; ?>"><a href="<?php echo $architect['href']; ?>"><i class="<?php echo $architect['icon']; ?> fa-fw"></i> <span><?php echo $architect['name']; ?></span></a></li>

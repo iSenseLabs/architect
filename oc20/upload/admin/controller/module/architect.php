@@ -114,10 +114,16 @@ class ControllerModuleArchitect extends Controller
         }
 
         // Options
-        $this->load->model('customer/customer_group');
+        if (version_compare(VERSION, '2.1.0.0', '<')) {
+            $this->load->model('sale/customer_group');
+            $this->model_customer_group = $this->model_sale_customer_group;
+        } else {
+            $this->load->model('customer/customer_group');
+            $this->model_customer_group = $this->model_customer_customer_group;
+        }
 
         $data['default_cust_group'] = $this->config->get('config_customer_group_id');
-        $data['customer_groups']    = $this->model_customer_customer_group->getCustomerGroups();
+        $data['customer_groups']    = $this->model_customer_group->getCustomerGroups();
 
         $data['tab_option'] = $this->load->view($this->template($this->arc['path_module'] . '/option'), $data);
         $data['quick_reference'] = $this->load->view($this->template($this->arc['path_module'] . '/quick_reference'), $data);
