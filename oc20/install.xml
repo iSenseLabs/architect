@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Architect by iSenseLabs</name>
+    <version>2.0.0-alpha.1</version>
+    <author>iSenseLabs</author>
+    <code>isenselabs_architect</code>
+    <link>https://github.com/iSenseLabs/architect</link>
+
+    <file path="admin/controller/common/menu.php">
+        <operation error="log">
+            <search><![CDATA[$data['setting']]]></search>
+            <add position="before"><![CDATA[
+                $data['architect'] = $this->load->controller('module/architect/hookNav');
+            ]]></add>
+        </operation>
+    </file>
+    <file path="admin/view/template/common/menu.tpl">
+        <operation error="skip">
+            <search><![CDATA[<span><?php echo $text_design; ?></span>]]></search>
+            <add position="before"><![CDATA[
+            <?php if (!empty($architect)) { ?>
+                <li id="<?php echo $architect['id']; ?>"><a href="<?php echo $architect['href']; ?>"><i class="<?php echo $architect['icon']; ?> fa-fw"></i> <span><?php echo $architect['name']; ?></span></a></li>
+            <?php } ?>
+            ]]></add>
+        </operation>
+    </file>
+    <file path="admin/model/extension/module.php">
+        <operation error="log">
+            <search><![CDATA[deleteModule($module_id)]]></search>
+            <add position="after"><![CDATA[
+                $this->load->controller('module/architect/hookDelete', array('module_id' => $module_id));
+            ]]></add>
+        </operation>
+    </file>
+</modification>
