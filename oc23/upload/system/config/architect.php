@@ -1,22 +1,4 @@
 <?php
-/**
- * Architect - OpenCart extension prototyping tool
- * Copyright (C) 2019 Mudzakkir
-
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
-
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 defined('ARCHITECT') or define('ARCHITECT', '2.0.0-alpha.1');
 defined('ARC_CATALOG') or define('ARC_CATALOG', realpath(DIR_APPLICATION . './../') . '/catalog/');
 
@@ -111,7 +93,7 @@ class {model_class} extends Model
     <file path="admin/view/template/common/header.tpl">
         <operation error="skip">
             <search><![CDATA[<ul class="nav pull-right">]]></search>
-            <add position="after"><![CDATA[<li><a href="#">Arc Test</a></li>]]></add>
+            <add position="after"><![CDATA[<li><a href="#">Arc Test #{module_id}</a></li>]]></add>
         </operation>
     </file>
 </modification>',
