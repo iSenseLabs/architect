@@ -1,0 +1,16 @@
+{% for item in items %}
+    <tr class="text-center">
+        <td>{{ item.module_id }}</td>
+        <td class="text-left">
+            <a href="{{ item.url_edit }}">{{ item.name }}</a>
+            {% if item.meta.note %}
+                <div class="small text-muted">{{ item.meta.note }}</div>
+            {% endif %}
+        </td>
+        <td>{{ item.status ? i18n.text_enabled : i18n.text_disabled }}</td>
+        <td style="padding:8px 2px;">
+            <a href="{{ item.url_edit }}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="{{ i18n.text_edit }}"><i class="fa fa-pencil"></i></a>
+            <a class="btn btn-danger btn-sm" data-arc-update='{"action":"delete", "identifier":"{{ item.identifier }}", "module_id":{{ item.module_id }}}' data-toggle="tooltip" title="{{ i18n.text_delete }}"><i class="fa fa-trash-o"></i></a>
+        </td>
+    </tr>
+{% endfor %}
