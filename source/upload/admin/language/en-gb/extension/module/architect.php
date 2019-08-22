@@ -65,5 +65,8 @@ $_['notify_arch_ocmod']         = 'Archited OcMod not yet applied!';
 $_['notify_ocmod_refresh']      = 'Apply modification by click <a href="%s" target="_blank">refresh <i class="fa fa-external-link" style="font-size:11px;"></i></a>.';
 
 $_['error_permission']          = 'Oops, you not permitted to modify Architect module!';
-$_['error_save_file']           = 'Oops, unable to save sub-module files!';
 $_['error_action_type']         = 'Oops, action type is not recognized!';
+$_['error_save_file']           = 'Oops, unable to save sub-module files!';
+$_['error_controller_class']    = 'Oops, unable to find correct controller class name!';
+$_['error_model_class']         = 'Oops, unable to find correct model class name!';
+$_['error_event_class']         = 'Oops, unable to find correct event class name!';
