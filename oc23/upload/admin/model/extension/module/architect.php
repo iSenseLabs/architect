@@ -87,8 +87,7 @@ class ModelExtensionModuleArchitect extends Model
              */
 
             if (!$data['module_id']) {
-                $this->model_extension_module->addModule('architect', $this->queryForm('module', $data));
-                $data['module_id'] = $this->db->getLastId();
+                $data['module_id'] = $this->model_extension_module->addModule('architect', $this->queryForm('module', $data));
                 $this->db->query("INSERT INTO `" . DB_PREFIX . "architect` SET " . $this->queryForm('architect', $data) . ", `created` = NOW()");
             } else {
                 $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
