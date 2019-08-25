@@ -62,19 +62,19 @@ class ModelExtensionModuleArchitect extends Model
         $event          = $data['meta']['editor']['event']        ? str_replace($tags_search, $tags_replace, trim($data['event']) . "\n") : '';
 
         // Class name
-        if (strpos($controller, $codetags['{controller_class}']) === false) {
+        if ($controller && strpos($controller, $codetags['{controller_class}']) === false) {
             $error = array(
                 'status'  => true,
                 'message' => $this->language->get('error_controller_class')
             );
         }
-        if (strpos($model, $codetags['{model_class}']) === false) {
+        if (!$error['status'] && $model && strpos($model, $codetags['{model_class}']) === false) {
             $error = array(
                 'status'  => true,
                 'message' => $this->language->get('error_model_class')
             );
         }
-        if (strpos($event, $codetags['{event_class}']) === false) {
+        if (!$error['status'] && $event && strpos($event, $codetags['{event_class}']) === false) {
             $error = array(
                 'status'  => true,
                 'message' => $this->language->get('error_event_class')
