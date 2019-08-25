@@ -16,6 +16,12 @@
     </file>
     <file path="admin/model/setting/module.php">
         <operation error="log">
+            <search><![CDATA[$this->db->query("INSERT INTO `" . DB_PREFIX . "module`]]></search>
+            <add position="after"><![CDATA[
+                return $this->db->getLastId();
+            ]]></add>
+        </operation>
+        <operation error="log">
             <search><![CDATA[deleteModule($module_id)]]></search>
             <add position="after"><![CDATA[
                 $this->load->controller('extension/module/architect/hookDelete', array('module_id' => $module_id));
