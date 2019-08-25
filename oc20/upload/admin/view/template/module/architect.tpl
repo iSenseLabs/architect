@@ -16,7 +16,7 @@
         </ul>
 
         <div class="pull-right">
-            <a href="<?php echo $architect['url_module']; ?>" class="btn btn-success arc-insert"><?php echo $i18n['text_insert']; ?></a>
+            <a href="<?php echo $architect['url_module']; ?>&module_id=0" class="btn btn-success arc-insert"><?php echo $i18n['text_insert']; ?></a>
         </div>
     </div> <!-- /.content-head -->
 

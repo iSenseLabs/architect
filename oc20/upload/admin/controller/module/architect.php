@@ -30,6 +30,10 @@ class ControllerModuleArchitect extends Controller
 
     public function index()
     {
+        if (!isset($this->request->get['module_id'])) {
+            $this->response->redirect($this->arc['url_module_manage']);
+        }
+
         $this->document->setTitle($this->arc['title']);
 
         $this->document->addStyle('view/javascript/architect/codemirror/codemirror.css');
@@ -98,7 +102,7 @@ class ControllerModuleArchitect extends Controller
             );
 
             if (empty($module['module_id'])) {
-                $this->response->redirect($this->arc['url_module']);
+                $this->response->redirect($this->arc['url_module_manage']);
             }
 
             $data['docs'] = array(
