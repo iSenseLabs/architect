@@ -24,24 +24,14 @@ class ModelModuleArchitect extends Model
 
     public function editModule($data)
     {
-        $error = false;
         $data  = array_replace_recursive($this->arc['setting'], $data);
+        $error = array(
+            'status'  => false,
+            'message' => ''
+        );
 
         /**
-         * Part 1: Save to database
-         */
-
-        if (!$data['module_id']) {
-            $this->model_extension_module->addModule('architect', $this->queryForm('module', $data));
-            $data['module_id'] = $this->db->getLastId();
-            $this->db->query("INSERT INTO `" . DB_PREFIX . "architect` SET " . $this->queryForm('architect', $data) . ", `created` = NOW()");
-        } else {
-            $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
-            $this->db->query("UPDATE `" . DB_PREFIX . "architect` SET " . $this->queryForm('architect', $data) . " WHERE `module_id` = '" . (int)$data['module_id'] . "'");
-        }
-
-        /**
-         * Part 2: Create related file and db entries
+         * Part 1: Preparation
          */
 
         $codetags = array(
@@ -62,125 +52,133 @@ class ModelModuleArchitect extends Model
         $tags_search  = array_keys($codetags);
         $tags_replace = array_values($codetags);
 
-        // Validate editor state
+        // === Validate
 
-        if (!$data['meta']['editor']['controller']) {
-            $data['controller'] = '';
-        }
-        if (!$data['meta']['editor']['model']) {
-            $data['model'] = '';
-        }
-        if (!$data['meta']['editor']['template']) {
-            $data['template'] = '';
-        }
-        if (!$data['meta']['editor']['modification']) {
-            $data['modification'] = '';
-        }
-        if (!$data['meta']['editor']['event']) {
-            $data['event'] = '';
-        }
+        // Editor content
+        $controller     = $data['meta']['editor']['controller']   ? str_replace($tags_search, $tags_replace, trim($data['controller']) . "\n") : '';
+        $model          = $data['meta']['editor']['model']        ? str_replace($tags_search, $tags_replace, trim($data['model']) . "\n") : '';
+        $template       = $data['meta']['editor']['template']     ? str_replace($tags_search, $tags_replace, trim($data['template']) . "\n") : '';
+        $modification   = $data['meta']['editor']['modification'] ? str_replace($tags_search, $tags_replace, trim($data['modification']) . "\n") : '';
+        $event          = $data['meta']['editor']['event']        ? str_replace($tags_search, $tags_replace, trim($data['event']) . "\n") : '';
 
-        // === Save
-
-        // Controller
-        $path_controller = ARC_CATALOG . 'controller/architect/' . $data['identifier'] . '.php';
-
-        if ($controller = trim($data['controller'])) {
-            $error = !$this->saveToFile(
-                $path_controller,
-                str_replace($tags_search, $tags_replace, $controller . "\n")
+        // Class name
+        if ($controller && strpos($controller, $codetags['{controller_class}']) === false) {
+            $error = array(
+                'status'  => true,
+                'message' => $this->language->get('error_controller_class')
             );
-        } elseif (file_exists($path_controller)) {
-            unlink($path_controller);
         }
-
-        // Model
-        $path_model = ARC_CATALOG . 'model/architect/' . $data['identifier'] . '.php';
-
-        if (!$error && $model = trim($data['model'])) {
-            $error = !$this->saveToFile(
-                $path_model,
-                str_replace($tags_search, $tags_replace, $model . "\n")
+        if (!$error['status'] && $model && strpos($model, $codetags['{model_class}']) === false) {
+            $error = array(
+                'status'  => true,
+                'message' => $this->language->get('error_model_class')
             );
-        } elseif (file_exists($path_model)) {
-            unlink($path_model);
         }
-
-        // Template
-        $path_template = ARC_CATALOG . 'view/theme/default/template/architect/' . $data['identifier'] . '.tpl';
-
-        if (!$error && $template = trim($data['template'])) {
-            $error = !$this->saveToFile(
-                $path_template,
-                str_replace($tags_search, $tags_replace, $template . "\n")
+        if (!$error['status'] && $event && strpos($event, $codetags['{event_class}']) === false) {
+            $error = array(
+                'status'  => true,
+                'message' => $this->language->get('error_event_class')
             );
-        } elseif (file_exists($path_template)) {
-            unlink($path_template);
         }
 
-        // Modification
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
+        if (!$error['status']) {
+            /**
+             * Part 1: Save to database
+             */
 
-        if (!$error && $modification = trim($data['modification'])) {
-            $modification = html_entity_decode(str_replace($tags_search, $tags_replace, $modification . "\n"), ENT_COMPAT, 'UTF-8');
-            $ocmod        = $this->getOcmodInfo($modification, $data['identifier']);
-
-            if (!$ocmod['error']) {
-                $this->db->query(
-                    "INSERT INTO `" . DB_PREFIX . "modification`
-                    SET `name`        = '" . $this->db->escape($ocmod['name']) . "',
-                        `code`        = 'architect_" . $this->db->escape($ocmod['code']) . "',
-                        `author`      = '" . $this->db->escape($ocmod['author']) . "',
-                        `version`     = '" . $this->db->escape($ocmod['version']) . "',
-                        `link`        = '" . $this->db->escape($ocmod['link']) . "',
-                        `xml`         = '" . $this->db->escape($modification) . "',
-                        `status`      = '" . (int)$data['status'] . "',
-                        `date_added`  = NOW()"
-                );
+            if (!$data['module_id']) {
+                $data['module_id'] = $this->model_extension_module->addModule('architect', $this->queryForm('module', $data));
+                $this->db->query("INSERT INTO `" . DB_PREFIX . "architect` SET " . $this->queryForm('architect', $data) . ", `created` = NOW()");
+            } else {
+                $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
+                $this->db->query("UPDATE `" . DB_PREFIX . "architect` SET " . $this->queryForm('architect', $data) . " WHERE `module_id` = '" . (int)$data['module_id'] . "'");
             }
-        }
 
-        // Event
-        $path_event = ARC_CATALOG . 'controller/architect/event/' . $data['identifier'] . '.php';
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
+            // Controller
+            $path_controller = ARC_CATALOG . 'controller/architect/' . $data['identifier'] . '.php';
 
-        // only add event if status enabled
-        if (!$error && $data['status'] && $event = trim($data['event'])) {
-            $event  = html_entity_decode(str_replace($tags_search, $tags_replace, $event . "\n"), ENT_COMPAT, 'UTF-8');
-            $events = $this->getEventAnnotation($event);
+            if (!$error['status'] && $controller) {
+                $error = $this->saveToFile($path_controller, $controller);
+            } elseif (file_exists($path_controller)) {
+                unlink($path_controller);
+            }
 
-            if ($events) {
-                $error = !$this->saveToFile(
-                    $path_event,
-                    str_replace($tags_search, $tags_replace, $event . "\n")
-                );
+            // Model
+            $path_model = ARC_CATALOG . 'model/architect/' . $data['identifier'] . '.php';
 
-                if (!$error) {
-                    foreach ($events as $event) {
-                        if ($event['trigger'] && $event['action']) {
-                            $this->db->query(
-                                "INSERT INTO `" . DB_PREFIX . "event`
-                                SET `code`        = 'architect_" . $this->db->escape($data['identifier']) . "',
-                                    `trigger`     = '" . $this->db->escape($event['trigger']) . "',
-                                    `action`      = '" . $this->db->escape($event['action']) . "'"
-                            );
+            if (!$error['status'] && $model) {
+                $error = $this->saveToFile($path_model, $model);
+            } elseif (file_exists($path_model)) {
+                unlink($path_model);
+            }
+
+            // Template
+            $path_template = ARC_CATALOG . 'view/theme/default/template/architect/' . $data['identifier'] . '.tpl';
+
+            if (!$error['status'] && $template) {
+                $error = $this->saveToFile($path_template, $template);
+            } elseif (file_exists($path_template)) {
+                unlink($path_template);
+            }
+
+            // Modification
+            $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
+
+            if (!$error && $modification) {
+                $modification = html_entity_decode($modification, ENT_COMPAT, 'UTF-8');
+                $ocmod        = $this->getOcmodInfo($modification, $data['identifier']);
+
+                if (!$ocmod['error']) {
+                    $this->db->query(
+                        "INSERT INTO `" . DB_PREFIX . "modification`
+                        SET `name`        = '" . $this->db->escape($ocmod['name']) . "',
+                            `code`        = 'architect_" . $this->db->escape($ocmod['code']) . "',
+                            `author`      = '" . $this->db->escape($ocmod['author']) . "',
+                            `version`     = '" . $this->db->escape($ocmod['version']) . "',
+                            `link`        = '" . $this->db->escape($ocmod['link']) . "',
+                            `xml`         = '" . $this->db->escape($modification) . "',
+                            `status`      = '" . (int)$data['status'] . "',
+                            `date_added`  = NOW()"
+                    );
+                }
+            }
+
+            // Event
+            $path_event = ARC_CATALOG . 'controller/architect/event/' . $data['identifier'] . '.php';
+            $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
+
+            // only add event if status enabled
+            if (!$error['status'] && $event) {
+                $events = $this->getEventAnnotation($event);
+
+                if ($events) {
+                    $error = $this->saveToFile($path_event, $event);
+
+                    if (!$error['status']) {
+                        foreach ($events as $event) {
+                            if ($event['trigger'] && $event['action']) {
+                                $this->db->query(
+                                    "INSERT INTO `" . DB_PREFIX . "event`
+                                    SET `code`        = 'architect_" . $this->db->escape($data['identifier']) . "',
+                                        `trigger`     = '" . $this->db->escape($event['trigger']) . "',
+                                        `action`      = '" . $this->db->escape($event['action']) . "'"
+                                );
+                            }
                         }
                     }
                 }
+            } elseif (file_exists($path_event)) {
+                unlink($path_event);
             }
-        } elseif (file_exists($path_event)) {
-            unlink($path_event);
-        }
 
-        /**
-         * Part 3: Remove on error
-         */
+            /**
+             * Part 3: Remove on error
+             */
 
-        if ($error) {
-            $this->deleteModule($data['module_id']);
-
-            $data['module_id'] = 0;
-            $error = $this->language->get('error_save_file');
+            if ($error['status']) {
+                $this->deleteModule($data['module_id']);
+                $data['module_id'] = 0;
+            }
         }
 
         return array(
@@ -442,14 +440,23 @@ class ModelModuleArchitect extends Model
      */
     public function saveToFile($target, $content)
     {
+        $error = array(
+            'status'  => false,
+            'message' => ''
+        );
+
         if (!@file_put_contents($target, html_entity_decode($content, ENT_QUOTES, 'UTF-8'))) {
             if (file_exists($target)) {
                 unlink($target);
             }
-            return false;
+
+            $error = array(
+                'status'  => true,
+                'message' => $this->language->get('error_save_file')
+            );
         };
 
-        return true;
+        return $error;
     }
 
     /**
