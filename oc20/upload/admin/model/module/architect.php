@@ -124,7 +124,7 @@ class ModelModuleArchitect extends Model
             // Modification
             $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
 
-            if (!$error && $modification) {
+            if (!$error['status'] && $modification) {
                 $modification = html_entity_decode($modification, ENT_COMPAT, 'UTF-8');
                 $ocmod        = $this->getOcmodInfo($modification, $data['identifier']);
 
