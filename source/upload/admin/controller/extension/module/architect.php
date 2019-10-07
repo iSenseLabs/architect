@@ -233,15 +233,22 @@ class ControllerExtensionModuleArchitect extends Controller
     {
         $post = $this->request->post;
         $response = $post;
+        $response['error'] = '';
 
-        switch ($post['action']) {
-            case 'delete':
-                $this->arc['model']->deleteModule($post['module_id']);
-                break;
+        if (!$this->user->hasPermission('modify', $this->arc['path_module'])) {
+            $response['error'] = $this->i18n['error_permission'];
+        }
 
-            default:
-                $response['error'] = $this->i18n['error_action_type'];
-                break;
+        if (!$response['error']) {
+            switch ($post['action']) {
+                case 'delete':
+                    $this->arc['model']->deleteModule($post['module_id']);
+                    break;
+
+                default:
+                    $response['error'] = $this->i18n['error_action_type'];
+                    break;
+            }
         }
 
         $this->response->addHeader('Content-Type: application/json');
