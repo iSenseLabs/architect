@@ -55,8 +55,11 @@ $(document).ready(function()
                     if (!confirm(architect.i18n.confirm_delete)) {
                         return false;
                     }
-                    el.after('<i class="fa fa-spinner fa-spin spinner-' + elData.id + '"></i>');
+                    el.after('<i class="fa fa-spinner fa-spin spinner-' + elData.module_id + '"></i>');
                 }
+            },
+            complete: function(data) {
+                $('.spinner-' + elData.module_id).remove();
             },
             success: function(data) {
                 if (!data.error) {
