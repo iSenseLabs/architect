@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <td>Template</td>
-            <td>catalog/model/extension/architect/<code><?php echo $docs['identifier']; ?></code>.php</td>
+            <td>catalog/view/theme/default/template/extension/architect/<code><?php echo $docs['identifier']; ?></code>.tpl</td>
         </tr>
         <tr>
             <td>Modification</td>

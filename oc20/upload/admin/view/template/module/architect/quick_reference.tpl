@@ -16,15 +16,15 @@
     <tbody>
         <tr>
             <td>Controller</td>
-            <td>catalog/controller/extension/architect/<code><?php echo $docs['identifier']; ?></code>.php</td>
+            <td>catalog/controller/architect/<code><?php echo $docs['identifier']; ?></code>.php</td>
         </tr>
         <tr>
             <td>Model</td>
-            <td>catalog/model/extension/architect/<code><?php echo $docs['identifier']; ?></code>.php</td>
+            <td>catalog/model/architect/<code><?php echo $docs['identifier']; ?></code>.php</td>
         </tr>
         <tr>
             <td>Template</td>
-            <td>catalog/model/extension/architect/<code><?php echo $docs['identifier']; ?></code>.php</td>
+            <td>catalog/view/theme/default/template/architect/<code><?php echo $docs['identifier']; ?></code>.tpl</td>
         </tr>
         <tr>
             <td>Modification</td>
@@ -34,7 +34,7 @@
             <td>Event</td>
             <td>
                 Database table <code>event</code> with "code" identifier <code>architect_<?php echo $docs['identifier']; ?></code><br>
-                catalog/controller/extension/architect/event/<code><?php echo $docs['identifier']; ?></code>.php
+                catalog/controller/architect/event/<code><?php echo $docs['identifier']; ?></code>.php
             </td>
         </tr>
     </tbody>
@@ -74,7 +74,7 @@
         </tr>
         <tr>
             <td>{model_path}</td>
-            <td>extension/architect/<code><?php echo $docs['identifier']; ?></code></td>
+            <td>architect/<code><?php echo $docs['identifier']; ?></code></td>
         </tr>
         <tr>
             <td>{model_call}</td>
@@ -82,7 +82,7 @@
         </tr>
         <tr>
             <td>{template_path}</td>
-            <td>extension/architect/<code><?php echo $docs['identifier']; ?></code></td>
+            <td>architect/<code><?php echo $docs['identifier']; ?></code></td>
         </tr>
         <tr>
             <td>{ocmod_name}</td>
@@ -90,7 +90,7 @@
         </tr>
         <tr>
             <td>{ocmod_code}</td>
-            <td><code>architect_<?php echo $docs['identifier']; ?></code></td>
+            <td><code><?php echo $docs['identifier']; ?></code></td>
         </tr>
         <tr>
             <td>{event_class}</td>
@@ -98,7 +98,7 @@
         </tr>
         <tr>
             <td>{event_path}</td>
-            <td>extension/architect/event/<code><?php echo $docs['identifier']; ?></code></td>
+            <td>architect/event/<code><?php echo $docs['identifier']; ?></code></td>
         </tr>
     </tbody>
 </table>
