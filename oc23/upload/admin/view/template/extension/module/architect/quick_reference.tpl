@@ -90,7 +90,7 @@
         </tr>
         <tr>
             <td>{ocmod_code}</td>
-            <td><code><?php echo $docs['identifier']; ?></code></td>
+            <td><code>architect_<?php echo $docs['identifier']; ?></code></td>
         </tr>
         <tr>
             <td>{event_class}</td>
