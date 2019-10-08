@@ -1,5 +1,5 @@
 <?php
-defined('ARCHITECT') or define('ARCHITECT', '2.0.0-alpha.1');
+defined('ARCHITECT') or define('ARCHITECT', '2.0.0');
 defined('ARC_CATALOG') or define('ARC_CATALOG', realpath(DIR_APPLICATION . './../') . '/catalog/');
 
 $_['architect'] = array(
