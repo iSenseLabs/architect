@@ -16,3 +16,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [v3.0.0] - 2019-10-07
+### Added
+- Initial Release
+
+[Unreleased]: https://github.com/qaharmdz/architect/compare/v3.0.0...HEAD
+[v3.0.0]: https://github.com/qaharmdz/architect/releases/tag/v3.0.0
