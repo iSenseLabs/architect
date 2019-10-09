@@ -20,5 +20,5 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Added
 - Initial Release
 
-[Unreleased]: https://github.com/iSenseLabs/architect/compare/v3.0.0...HEAD
-[v3.0.0]: https://github.com/iSenseLabs/architect/releases/tag/v2.0.0
+[Unreleased]: https://github.com/iSenseLabs/architect/compare/v3.0.0...master
+[v3.0.0]: https://github.com/iSenseLabs/architect/releases/tag/v3.0.0
