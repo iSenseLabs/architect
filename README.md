@@ -24,7 +24,7 @@ This is an extension that can be used by developers to write custom functionalit
 * [Releases package](https://github.com/iSenseLabs/architect/releases) (source code)
 * Latest build (non-production)
   * [OpenCart 3x](https://github.com/iSenseLabs/architect/archive/master.zip)
-  * [OpenCatt 2x](https://github.com/iSenseLabs/architect/archive/oc2x.zip)
+  * [OpenCart 2x](https://github.com/iSenseLabs/architect/archive/oc2x.zip)
 
 ## Documentations
 
