@@ -1,3 +1,4 @@
+
 # Architect
 
 <p align="center">
@@ -7,7 +8,6 @@
 This is an extension that can be used by developers to write custom functionality for an OpenCart website quickly. It provides the most essential tools for it - a controller, model, template, event, and a modification file. Furthermore, it does not matter which theme you are using - it will work with all OpenCart templates!
 
 > **WARNING:**<br/>Architect is tool for developer or user with proper knowledge of OpenCart programming. Not recommended for end users without expert supervision.
-
 
 ## Features
 
@@ -28,6 +28,7 @@ This is an extension that can be used by developers to write custom functionalit
 
 ## Documentations
 
+* [Home](https://github.com/iSenseLabs/architect/wiki)
 * [Installation](https://github.com/iSenseLabs/architect/wiki/Installation)
 * [Concepts](https://github.com/iSenseLabs/architect/wiki/Concepts)
 * [Usages](https://github.com/iSenseLabs/architect/wiki/Usages)
@@ -51,12 +52,13 @@ This is an extension that can be used by developers to write custom functionalit
 Architect - OpenCart extension prototyping tool; rapid extension development.  
 Copyright (C) 2019 iSenseLabs
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
+This program is free software: you can redistribute it and/or modify  
+it under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
 (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+This program is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
 GNU General Public License for more details.
+
