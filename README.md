@@ -8,6 +8,9 @@
 
 This is an extension that can be used by developers to write custom functionality for an OpenCart website quickly. It provides the most essential tools for it - a controller, model, template, event, and a modification file. Furthermore, it does not matter which theme you are using - it will work with all OpenCart templates!
 
+> **WARNING:**<br/>Architect is tool for developer or user with proper knowledge of OpenCart programming. Not recommended for end users without expert supervision.
+
+
 ## Features
 
 - Rapid extension prototyping and development
