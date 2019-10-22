@@ -19,6 +19,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Add xml version and encoding to default ocmod skeleton
 - Change method sequence for admin model
 
+### Fixed
+- Properly handle invalid ocmod xml on sub-module save
+
 ## [v3.0.0] - 2019-10-07
 ### Added
 - Initial Release
