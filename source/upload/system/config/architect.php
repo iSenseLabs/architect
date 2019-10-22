@@ -83,11 +83,12 @@ class {model_class} extends Model
         {{ greeting }}
     </div>
 </div>',
-        'modification'  => '<modification>
+        'modification'  => '<?xml version="1.0" encoding="utf-8"?>
+<modification>
     <name>{ocmod_name}</name>
     <version>1.0.1</version>
-    <link>...</link>
     <author>{author}</author>
+    <link>...</link>
     <code>{ocmod_code}</code>
 
     <file path="admin/view/template/common/header.twig">
