@@ -22,6 +22,57 @@ class ModelExtensionModuleArchitect extends Model
         return $this->prepareItem($this->db->query("SELECT * FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'")->row);
     }
 
+    public function getItems($param)
+    {
+        $items = array();
+
+        $results = $this->db->query(
+            "SELECT *
+            FROM `" . DB_PREFIX . "architect` a
+                LEFT JOIN `" . DB_PREFIX . "module` m ON m.module_id = a.module_id
+            WHERE m.code = 'architect'
+            ORDER BY a.architect_id ASC
+            LIMIT " . (int)$param['start'] . "," . (int)$param['limit']
+        );
+
+        foreach ($results->rows as $key => $value) {
+            $items[$key] = $this->prepareItem($value);
+        }
+
+        return $items;
+    }
+
+    public function getTotalItems()
+    {
+        return $this->db->query("SELECT COUNT(DISTINCT architect_id) AS total FROM `" . DB_PREFIX . "architect`")->row['total'];
+    }
+
+    /**
+     * Standarize returned item result
+     *
+     * @param  array $item
+     *
+     * @return array
+     */
+    protected function prepareItem($item)
+    {
+        if ($item) {
+            $item['option']     = json_decode($item['option'], true);
+            $item['meta']       = json_decode($item['meta'], true);
+            $item['url_edit']   = $this->url->link($this->arc['path_module'], $this->arc['url_token'] . '&module_id=' . $item['module_id'], true);
+
+            $item['publish']    = $item['publish'] != '0000-00-00 00:00:00' ? $item['publish'] : date('Y-m-d H:i:s');
+            $item['unpublish']  = $item['unpublish'] != '0000-00-00 00:00:00' ? $item['unpublish'] : '';
+
+            $item['publish_format']   = $item['publish'] ? date('M d, Y', strtotime($item['publish'])) : '';
+            $item['unpublish_format'] = $item['unpublish']   ? date('M d, Y', strtotime($item['unpublish'])) : '';
+
+            $item = array_replace_recursive($this->arc['setting'], $item);
+        }
+
+        return $item;
+    }
+
     public function editModule($data)
     {
         $data  = array_replace_recursive($this->arc['setting'], $data);
@@ -189,45 +240,6 @@ class ModelExtensionModuleArchitect extends Model
     }
 
     /**
-     * Delete architect database entry and files
-     *
-     * @param  int  $module_id
-     * @param  bool $chain      Delete module before architect sub-module
-     *
-     * @return bool             True on success
-     */
-    public function deleteModule($module_id, $chain = true)
-    {
-        if ($chain) {
-            $this->model_extension_module->deleteModule($module_id);
-        }
-
-        $arc = $this->db->query("SELECT identifier FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'")->row;
-
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'");
-
-        if (!empty($arc['identifier'])) {
-            $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($arc['identifier']) . "'");
-            $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($arc['identifier']) . "'");
-
-            $files = array(
-                ARC_CATALOG . 'model/extension/architect/' . $arc['identifier'] . '.php',
-                ARC_CATALOG . 'controller/extension/architect/' . $arc['identifier'] . '.php',
-                ARC_CATALOG . 'controller/extension/architect/event/' . $arc['identifier'] . '.php',
-                ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $arc['identifier'] . '.tpl',
-            );
-
-            foreach ($files as $file) {
-                if (file_exists($file)) {
-                    unlink($file);
-                }
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * Standarize insert and update query
      *
      * @param  string $type     Database table: module or architect
@@ -270,48 +282,43 @@ class ModelExtensionModuleArchitect extends Model
         return false;
     }
 
-    public function getItems($param)
+    /**
+     * Delete architect database entry and files
+     *
+     * @param  int  $module_id
+     * @param  bool $chain      Delete module before architect sub-module
+     *
+     * @return bool             True on success
+     */
+    public function deleteModule($module_id, $chain = true)
     {
-        $items = array();
-
-        $results = $this->db->query(
-            "SELECT *
-            FROM `" . DB_PREFIX . "architect` a
-                LEFT JOIN `" . DB_PREFIX . "module` m ON m.module_id = a.module_id
-            WHERE m.code = 'architect'
-            ORDER BY a.architect_id ASC
-            LIMIT " . (int)$param['start'] . "," . (int)$param['limit']
-        );
-
-        foreach ($results->rows as $key => $value) {
-            $items[$key] = $this->prepareItem($value);
+        if ($chain) {
+            $this->model_extension_module->deleteModule($module_id);
         }
 
-        return $items;
-    }
+        $arc = $this->db->query("SELECT identifier FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'")->row;
 
-    public function getTotalItems()
-    {
-        return $this->db->query("SELECT COUNT(DISTINCT architect_id) AS total FROM `" . DB_PREFIX . "architect`")->row['total'];
-    }
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'");
 
-    public function prepareItem($item)
-    {
-        if ($item) {
-            $item['option']     = json_decode($item['option'], true);
-            $item['meta']       = json_decode($item['meta'], true);
-            $item['url_edit']   = $this->url->link($this->arc['path_module'], $this->arc['url_token'] . '&module_id=' . $item['module_id'], true);
+        if (!empty($arc['identifier'])) {
+            $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($arc['identifier']) . "'");
+            $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($arc['identifier']) . "'");
 
-            $item['publish']    = $item['publish'] != '0000-00-00 00:00:00' ? $item['publish'] : date('Y-m-d H:i:s');
-            $item['unpublish']  = $item['unpublish'] != '0000-00-00 00:00:00' ? $item['unpublish'] : '';
+            $files = array(
+                ARC_CATALOG . 'model/extension/architect/' . $arc['identifier'] . '.php',
+                ARC_CATALOG . 'controller/extension/architect/' . $arc['identifier'] . '.php',
+                ARC_CATALOG . 'controller/extension/architect/event/' . $arc['identifier'] . '.php',
+                ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $arc['identifier'] . '.tpl',
+            );
 
-            $item['publish_format']   = $item['publish'] ? date('M d, Y', strtotime($item['publish'])) : '';
-            $item['unpublish_format'] = $item['unpublish']   ? date('M d, Y', strtotime($item['unpublish'])) : '';
-
-            $item = array_replace_recursive($this->arc['setting'], $item);
+            foreach ($files as $file) {
+                if (file_exists($file)) {
+                    unlink($file);
+                }
+            }
         }
 
-        return $item;
+        return true;
     }
 
 
@@ -398,7 +405,7 @@ class ModelExtensionModuleArchitect extends Model
      *
      * @return bool
      */
-    public function checkTable($table)
+    protected function checkTable($table)
     {
         $tables = $this->db->query("SHOW TABLES LIKE '" . DB_PREFIX . $this->db->escape($table) . "';");
 
@@ -417,7 +424,7 @@ class ModelExtensionModuleArchitect extends Model
      *
      * @return bool
      */
-    public function checkTableColumn($table, $column)
+    protected function checkTableColumn($table, $column)
     {
         if ($this->checkTable($table)) {
             $results = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . $this->db->escape($table) . "` LIKE '" . $this->db->escape($column) . "';");
@@ -439,7 +446,7 @@ class ModelExtensionModuleArchitect extends Model
      *
      * @return array
      */
-    public function saveToFile($target, $content)
+    protected function saveToFile($target, $content)
     {
         $error = array(
             'status'  => false,
@@ -467,7 +474,7 @@ class ModelExtensionModuleArchitect extends Model
      *
      * @return array
      */
-    public function getOcmodInfo($xml, $identifier)
+    protected function getOcmodInfo($xml, $identifier)
     {
         $data = array(
             'code'  => $identifier,
@@ -489,7 +496,7 @@ class ModelExtensionModuleArchitect extends Model
         return $data;
     }
 
-    public function getEventAnnotation($string)
+    protected function getEventAnnotation($string)
     {
         $i = 0;
         $events = array();
