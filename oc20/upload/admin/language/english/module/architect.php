@@ -67,6 +67,7 @@ $_['notify_ocmod_refresh']      = 'Apply modification by click <a href="%s" targ
 $_['error_permission']          = 'Oops, you not permitted to modify Architect module!';
 $_['error_action_type']         = 'Oops, action type is not recognized!';
 $_['error_save_file']           = 'Oops, unable to save sub-module files!';
+$_['error_ocmod_xml']           = 'Oops, modification xml invalid!';
 $_['error_controller_class']    = 'Oops, unable to find correct controller class name!';
 $_['error_model_class']         = 'Oops, unable to find correct model class name!';
 $_['error_event_class']         = 'Oops, unable to find correct event class name!';

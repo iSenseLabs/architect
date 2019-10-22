@@ -178,8 +178,9 @@ class ModelModuleArchitect extends Model
             if (!$error['status'] && $modification) {
                 $modification = html_entity_decode($modification, ENT_COMPAT, 'UTF-8');
                 $ocmod        = $this->getOcmodInfo($modification, $data['identifier']);
+                $error        = $ocmod['error'];
 
-                if (!$ocmod['error']) {
+                if (!$error['status']) {
                     $this->db->query(
                         "INSERT INTO `" . DB_PREFIX . "modification`
                         SET `name`        = '" . $this->db->escape($ocmod['name']) . "',
@@ -477,20 +478,26 @@ class ModelModuleArchitect extends Model
     {
         $data = array(
             'code'  => $identifier,
-            'error' => false,
+            'error' => array(
+                'status'  => false,
+                'message' => ''
+            )
         );
 
-        try {
-            $dom = new DOMDocument('1.0', 'UTF-8');
-            $dom->loadXml($xml);
+        $dom = new DOMDocument('1.0', 'UTF-8');
 
+        if (@$dom->loadXml($xml) !== false) {
             $data['name']    = $dom->getElementsByTagName('name')->item(0)->nodeValue;
             $data['version'] = $dom->getElementsByTagName('version')->item(0)->nodeValue;
             $data['author']  = $dom->getElementsByTagName('author')->item(0)->nodeValue;
             $data['link']    = $dom->getElementsByTagName('link')->item(0)->nodeValue;
-        } catch (\Exception $exception) {
-            $data['error'] = true;
+        ] else {
+            $data['error'] = array(
+                'status'  => true,
+                'message' => $this->language->get('error_ocmod_xml')
+            );
         }
+
 
         return $data;
     }
