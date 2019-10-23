@@ -54,7 +54,7 @@ class ModelModuleArchitect extends Model
      *
      * @return array
      */
-    public function prepareItem($item)
+    protected function prepareItem($item)
     {
         if ($item) {
             $item['option']     = json_decode($item['option'], true);
@@ -100,8 +100,8 @@ class ModelModuleArchitect extends Model
             '{event_path}'       => 'architect/event/' . $data['identifier']
         );
 
-        $tags_search  = array_keys($codetags);
-        $tags_replace = array_values($codetags);
+        $tags_search    = array_keys($codetags);
+        $tags_replace   = array_values($codetags);
 
         // === Validate
 
@@ -134,7 +134,7 @@ class ModelModuleArchitect extends Model
 
         if (!$error['status']) {
             /**
-             * Part 1: Save
+             * Part 2: Save
              */
 
             if (!$data['module_id']) {
@@ -224,12 +224,14 @@ class ModelModuleArchitect extends Model
             }
 
             /**
-             * Part 3: Remove sub-module on error
+             * Part 3: Handling error
              */
 
             if ($error['status']) {
-                $this->deleteModule($data['module_id']);
-                $data['module_id'] = 0;
+                $data['status'] = 0;
+
+                $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
+                $this->deleteModuleContent($data['identifier']);
             }
         }
 
@@ -247,7 +249,7 @@ class ModelModuleArchitect extends Model
      *
      * @return mixed
      */
-    public function queryForm($type, $data)
+    protected function queryForm($type, $data)
     {
         if ($type == 'module') {
             return array(
@@ -301,24 +303,29 @@ class ModelModuleArchitect extends Model
         $this->db->query("DELETE FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'");
 
         if (!empty($arc['identifier'])) {
-            $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($arc['identifier']) . "'");
-            $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($arc['identifier']) . "'");
-
-            $files = array(
-                ARC_CATALOG . 'model/architect/' . $arc['identifier'] . '.php',
-                ARC_CATALOG . 'controller/architect/' . $arc['identifier'] . '.php',
-                ARC_CATALOG . 'controller/architect/event/' . $arc['identifier'] . '.php',
-                ARC_CATALOG . 'view/theme/default/template/architect/' . $arc['identifier'] . '.tpl',
-            );
-
-            foreach ($files as $file) {
-                if (file_exists($file)) {
-                    unlink($file);
-                }
-            }
+            $this->deleteModuleContent($arc['identifier']);
         }
 
         return true;
+    }
+
+    protected function deleteModuleContent($identifier)
+    {
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($identifier) . "'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($identifier) . "'");
+
+        $files = array(
+            ARC_CATALOG . 'model/architect/' . $arc['identifier'] . '.php',
+            ARC_CATALOG . 'controller/architect/' . $arc['identifier'] . '.php',
+            ARC_CATALOG . 'controller/architect/event/' . $arc['identifier'] . '.php',
+            ARC_CATALOG . 'view/theme/default/template/architect/' . $arc['identifier'] . '.tpl',
+        );
+
+        foreach ($files as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
     }
 
 
@@ -491,13 +498,12 @@ class ModelModuleArchitect extends Model
             $data['version'] = $dom->getElementsByTagName('version')->item(0)->nodeValue;
             $data['author']  = $dom->getElementsByTagName('author')->item(0)->nodeValue;
             $data['link']    = $dom->getElementsByTagName('link')->item(0)->nodeValue;
-        ] else {
+        } else {
             $data['error'] = array(
                 'status'  => true,
                 'message' => $this->language->get('error_ocmod_xml')
             );
         }
-
 
         return $data;
     }

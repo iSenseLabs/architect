@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Changed
 - Add xml version and encoding to default ocmod skeleton
 - Change method sequence for admin model
+- When saving sub-module get an error, only delete sub-module content
 
 ### Fixed
 - Properly handle invalid ocmod xml on sub-module save
