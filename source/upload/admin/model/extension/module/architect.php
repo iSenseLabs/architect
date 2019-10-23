@@ -54,7 +54,7 @@ class ModelExtensionModuleArchitect extends Model
      *
      * @return array
      */
-    public function prepareItem($item)
+    protected function prepareItem($item)
     {
         if ($item) {
             $item['option']     = json_decode($item['option'], true);
@@ -225,12 +225,14 @@ class ModelExtensionModuleArchitect extends Model
             }
 
             /**
-             * Part 3: Remove sub-module on error
+             * Part 3: Handling error
              */
 
             if ($error['status']) {
-                $this->deleteModule($data['module_id']);
-                $data['module_id'] = 0;
+                $data['status'] = 0;
+
+                $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
+                $this->deleteModuleContent($data['identifier']);
             }
         }
 
@@ -248,7 +250,7 @@ class ModelExtensionModuleArchitect extends Model
      *
      * @return mixed
      */
-    public function queryForm($type, $data)
+    protected function queryForm($type, $data)
     {
         if ($type == 'module') {
             return array(
@@ -302,24 +304,29 @@ class ModelExtensionModuleArchitect extends Model
         $this->db->query("DELETE FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'");
 
         if (!empty($arc['identifier'])) {
-            $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($arc['identifier']) . "'");
-            $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($arc['identifier']) . "'");
-
-            $files = array(
-                ARC_CATALOG . 'model/extension/architect/' . $arc['identifier'] . '.php',
-                ARC_CATALOG . 'controller/extension/architect/' . $arc['identifier'] . '.php',
-                ARC_CATALOG . 'controller/extension/architect/event/' . $arc['identifier'] . '.php',
-                ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $arc['identifier'] . '.twig',
-            );
-
-            foreach ($files as $file) {
-                if (file_exists($file)) {
-                    unlink($file);
-                }
-            }
+            $this->deleteModuleContent($arc['identifier']);
         }
 
         return true;
+    }
+
+    protected function deleteModuleContent($identifier)
+    {
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($identifier) . "'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($identifier) . "'");
+
+        $files = array(
+            ARC_CATALOG . 'model/extension/architect/' . $identifier . '.php',
+            ARC_CATALOG . 'controller/extension/architect/' . $identifier . '.php',
+            ARC_CATALOG . 'controller/extension/architect/event/' . $identifier . '.php',
+            ARC_CATALOG . 'view/theme/default/template/extension/architect/' . $identifier . '.twig',
+        );
+
+        foreach ($files as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
     }
 
 
