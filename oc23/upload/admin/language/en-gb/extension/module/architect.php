@@ -3,6 +3,7 @@ $_['heading_title'            ] = 'Architect';
 
 $_['text_modules']              = 'Modules';
 $_['text_manage']               = 'Manage';
+$_['text_gist']                 = 'Gist';
 $_['text_setting']              = 'Setting';
 $_['text_help']                 = 'Help';
 
@@ -25,6 +26,8 @@ $_['text_id']                   = 'ID';
 $_['text_name']                 = 'Name';
 $_['text_status']               = 'Status';
 $_['text_action']               = 'Action';
+$_['text_information']          = 'Information';
+$_['text_author']               = 'Author';
 
 $_['text_processing']           = 'Processing..';
 $_['text_no_data']              = 'Data not available!';

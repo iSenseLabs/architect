@@ -329,6 +329,89 @@ class ModelExtensionModuleArchitect extends Model
         }
     }
 
+    public function getGist($file)
+    {
+        $gist = array();
+        $file = DIR_APPLICATION . '/controller/extension/architect/gist/' . $file . '.arcgist.xml';
+
+        if (file_exists($file)) {
+            $xml  = file_get_contents($file);
+            $gist = $this->getGistInfo($xml);
+
+            if (!$gist) {
+                return;
+            }
+        }
+
+        return $gist;
+    }
+
+    public function getGists($count = false)
+    {
+        $gists = array();
+        $files = glob(DIR_APPLICATION . '/controller/extension/architect/gist/*.arcgist.xml');
+
+        if ($count) {
+            return count($files);
+        }
+        if ($files) {
+            foreach ($files as $file) {
+                $xml  = file_get_contents($file);
+                $gist = $this->getGistInfo($xml);
+
+                if (!empty($gist)) {
+                    $gist['file'] = str_replace('.arcgist.xml', '', basename($file));
+                    $gists[] = $gist;
+                }
+            }
+        }
+
+        return $gists;
+    }
+
+    protected function getGistInfo($xml)
+    {
+        $gist = array();
+
+        if (empty($xml)) {
+            return $gist;
+        }
+
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->loadXml($xml);
+
+        $ocCompatible = array_map('trim', explode(',', $this->getDOMTag($dom, 'opencart')));
+        if (!in_array(VERSION, $ocCompatible)) {
+            return $gist;
+        }
+
+        $gist = array(
+            'name'         => $this->getDOMTag($dom, 'name'),
+            'version'      => $this->getDOMTag($dom, 'version'),
+            'author'       => $this->getDOMTag($dom, 'author'),
+            'link'         => $this->getDOMTag($dom, 'link'),
+            'description'  => substr(strip_tags($this->getDOMTag($dom, 'description')), 0, 200),
+            'opencart'     => $ocCompatible,
+            'controller'   => $this->getDOMTag($dom, 'controller'),
+            'model'        => $this->getDOMTag($dom, 'model'),
+            'template'     => $this->getDOMTag($dom, 'template'),
+            'modification' => $this->getDOMTag($dom, 'modification'),
+            'event'        => $this->getDOMTag($dom, 'event'),
+        );
+
+        return $gist;
+    }
+
+    protected function getDOMTag($dom, $tag)
+    {
+        if ($dom->getElementsByTagName($tag)->item(0)) {
+            return $dom->getElementsByTagName($tag)->item(0)->textContent;
+        }
+
+        return '';
+    }
+
 
     // ================ Setup ================
 
@@ -493,7 +576,7 @@ class ModelExtensionModuleArchitect extends Model
         );
 
         $dom = new DOMDocument('1.0', 'UTF-8');
-
+        
         if (@$dom->loadXml($xml) !== false) {
             $data['name']    = $dom->getElementsByTagName('name')->item(0)->nodeValue;
             $data['version'] = $dom->getElementsByTagName('version')->item(0)->nodeValue;

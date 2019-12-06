@@ -162,6 +162,8 @@ $(document).ready(function()
                             notify('primary', architect.msg_ocmod_refresh, 5000);
                         }
 
+                        history.pushState(null, '', architect.url_module.replace('&amp;', '&') + '&module_id=' + resp.module_id);   
+
                         notify('success', architect.i18n.notify_success, 2500);
                     } else {
                         notify('warning', resp.error.message);

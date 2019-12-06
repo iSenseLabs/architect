@@ -16,7 +16,7 @@
         </ul>
 
         <div class="pull-right">
-            <a href="<?php echo $architect['url_module']; ?>&module_id=0" class="btn btn-success arc-insert"><?php echo $i18n['text_insert']; ?></a>
+            <a href="<?php echo $architect['url_module']; ?>&module_id=0" class="btn btn-primary arc-insert"><?php echo $i18n['text_insert']; ?></a>
         </div>
     </div> <!-- /.content-head -->
 
@@ -26,12 +26,14 @@
             <div class="tab-navigation" style="position:relative">
                 <ul class="nav nav-tabs arc-nav-base" id="main-tabs">
                     <li class="active"><a href="#tab-manage" data-toggle="tab"><?php echo $i18n['text_manage']; ?></a></li>
+                    <li><a href="#tab-gist" data-toggle="tab"><?php echo $i18n['text_gist']; ?></a></li>
                     <li><a href="#tab-help" data-toggle="tab"><?php echo $i18n['text_help']; ?></a></li>
                 </ul>
             </div>
 
             <div class="tab-content">
                 <div id="tab-manage" class="tab-pane fade active in"><?php echo $tab_manage; ?></div>
+                <div id="tab-gist" class="tab-pane fade"><?php echo $tab_gist; ?></div>
                 <div id="tab-help" class="tab-pane fade"><?php echo $tab_help; ?></div>
             </div>
 

@@ -16,7 +16,7 @@
                     <?php echo $i18n['text_selected_customer_group']; ?>
                 </label>
                 <div class="well well-sm js-toggle-target" <?php echo !$architect['setting']['option']['customer_group'] ? 'style="display:none"' : ''; ?>>
-                    <label data-toggle="tooltip" data-placement="left">
+                    <label>
                         <input type="checkbox" name="option[customer_group_ids][]" value="0" <?php echo in_array(0, $architect['setting']['option']['customer_group_ids']) ? 'checked' : ''; ?>> <?php echo $i18n['text_guest_visitor']; ?>
                     </label>
 

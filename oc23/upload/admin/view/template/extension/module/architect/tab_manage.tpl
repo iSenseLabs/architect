@@ -3,14 +3,18 @@
         <tr>
             <th class="text-center" style="width:80px"><?php echo $i18n['text_id']; ?></th>
             <th class="text-left" style="min-width:200px"><?php echo $i18n['text_name']; ?></th>
-            <th class="text-center" style="width:80px"><?php echo $i18n['text_status']; ?></th>
-            <th class="text-center" style="width:110px">
+            <th class="text-center" style="width:100px"><?php echo $i18n['text_status']; ?></th>
+            <th class="text-center" style="width:120px">
                 <?php echo $i18n['text_action']; ?>
                 <a href="#" class="ml-5 js-manage-refresh" data-toggle="tooltip" title="Reload list"><i class="fa fa-refresh"></i></a>
             </th>
         </tr>
     </thead>
-    <tbody id="manage-list"></tbody>
+    <tbody id="manage-list">
+        <tr>
+            <td colspan="4" class="table-process"><i class="fa fa-spinner fa-spin"></i> <?php echo $i18n['text_processing']; ?></td>
+        </tr>
+    </tbody>
 </table>
 
 <div class="row pagination-wrapper" style="display:hidden;">
@@ -20,7 +24,8 @@
 
 <script>
 var urlManageList   = 'index.php?route=<?php echo $architect["path_module"]; ?>/manageList&<?php echo $architect["url_token"]; ?>',
-    urlManageUpdate = 'index.php?route=<?php echo $architect["path_module"]; ?>/manageUpdate&<?php echo $architect["url_token"]; ?>';
+    urlManageUpdate = 'index.php?route=<?php echo $architect["path_module"]; ?>/manageUpdate&<?php echo $architect["url_token"]; ?>',
+    tableManageProcess = '<tr><td colspan="4" class="table-process">{string}</td></tr>';
 
 $(document).ready(function()
 {
@@ -79,7 +84,8 @@ function fetchManageList(url) {
         dataType: 'json',
         cache: false,
         beforeSend: function() {
-            $('#manage-list').html('<tr><td class="text-center" colspan="4" style="padding:25px 10px;"><i class="fa fa-spinner fa-spin"></i> ' + architect.i18n.text_processing + '</td></tr>');
+            $('.fa-refresh').addClass('fa-spin');
+            $('#manage-list').html(tableManageProcess.replace('{string}', '<i class="fa fa-spinner fa-spin"></i> ' + architect.i18n.text_processing));
             $('.pagination-wrapper').hide(10);
         },
         success: function(data) {
@@ -89,8 +95,9 @@ function fetchManageList(url) {
                 $('.pagination-number').html(data.pagination);
                 $('.pagination-info').html(data.pagination_info);
                 $('.pagination-wrapper').show();
+                $('.fa-refresh').removeClass('fa-spin');
             } else {
-                $('#manage-list').html('<tr><td class="text-center" colspan="4" style="padding:25px 10px;">' + architect.i18n.text_no_data + '</td></tr>');
+                $('#manage-list').html(tableManageProcess.replace('{string}', architect.i18n.text_no_data));
             }
         }
     });
