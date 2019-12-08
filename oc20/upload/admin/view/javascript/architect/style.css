@@ -1,3 +1,13 @@
+/**
+ * Table of Content:
+ * - Bootstrap Override
+ * - Head & Layouts
+ *   - Tab navigation
+ *   - Tab content
+ * - Specific element
+ * - 3rd Plugins
+ */
+
 #container {
     background: #fff;
 }
@@ -11,8 +21,10 @@
     display: none;
 }
 
+/* html.architect */
 .architect {}
 
+/* #content.arc-module */
 .arc-module {
     color: #444;
     font-size: 13px;
@@ -57,6 +69,7 @@ hr {
 }
 
 .table > thead > tr > th {
+    font-weight: 600;
     border-bottom: 2px solid #ccc;
 }
 .table-striped {
@@ -64,6 +77,10 @@ hr {
 }
 .table.no-border td {
     border: 0 !important;
+}
+.table-process {
+    text-align: center;
+    padding: 25px 10px !important;
 }
 
 form {
@@ -174,15 +191,18 @@ label input[type="checkbox"] {
 
 .btn {
     color: #333;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 400;
     line-height: 16px;
     padding: 7px 24px;
     border-radius: 0;
 }
+.btn-radio .btn {
+    font-size: 12px;
+}
 .input-group-btn .btn {
-    padding: 8px 13px;
-    line-height: 1.42857;
+    padding: 7px 12px 8px;
+    height: 35px;
 }
 .btn-sm, .btn-group-sm > .btn {
     padding: 3px 7px;
@@ -295,8 +315,18 @@ label input[type="checkbox"] {
     border-bottom-right-radius: 2px !important;
 }
 
+.modal h2 {
+    margin-bottom: 20px;
+}
+.modal .modal-body {
+    padding: 20px 25px;
+}
+
 .thumbnail {
     padding: 4px 4px 10px;
+}
+.small {
+
 }
 .text-muted {
     color: #888;
@@ -352,6 +382,9 @@ label input[type="checkbox"] {
     line-height: 30px;
     margin: 0;
     display: inline-block;
+}
+.content-head .btn + .btn {
+    margin-left: 5px;
 }
 .head-shadow {
     box-shadow: 0 0 2px rgba(0,0,0,.35);
@@ -414,7 +447,6 @@ label input[type="checkbox"] {
     text-shadow: 0 1px 1px rgba(0,0,0,.4);
 }
 
-
 .panel-auto {
     flex: 1;
     width: 100%;
@@ -435,6 +467,7 @@ label input[type="checkbox"] {
     margin-bottom: 25px;
 }
 
+/* Dashboard */
 .arc-nav-base {
     background: #435058;
     padding: 8px 15px 0 15px;
@@ -468,6 +501,7 @@ label input[type="checkbox"] {
     border: 0;
 }
 
+/* Editor */
 .arc-nav-editor {
     background: #fff;
     margin: 0;
@@ -519,6 +553,7 @@ label input[type="checkbox"] {
 
 /* ===== Specific element ===== */
 
+/* Arc logo sidebar */
 .arc-visit {
     color: #a1d613 !important;
     color: #ffd706 !important;
@@ -531,23 +566,18 @@ label input[type="checkbox"] {
 .arc-help-editor {
     position: absolute;
     top: 5px;
-    right: 10px;
+    right: 8px;
     cursor: pointer;
-
+}
+.arc-help-editor a {
     color: #bbb;
     font-size: 16px;
+    margin-left: 5px;
     background-color: transparent !important;
     border-color: transparent !important;
 }
-.arc-help-editor:hover {
+.arc-help-editor a:hover {
     color: #0e73d7
-}
-
-.arc-help-editor-modal {
-    font-family: arial;
-}
-.arc-help-editor-modal .modal-body {
-    padding: 15px 25px;
 }
 
 .arc-notification {
@@ -562,6 +592,8 @@ label input[type="checkbox"] {
 
 
 /* ===== 3rd Plugins ===== */
+
+/* === Codemirror */
 
 .CodeMirror {
     height: auto;

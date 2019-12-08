@@ -28,6 +28,9 @@ class ControllerModuleArchitect extends Controller
         $this->arc['msg_ocmod_refresh'] = sprintf($this->i18n['notify_ocmod_refresh'], $this->arc['url_ocmod_refresh']);
     }
 
+    /**
+     * Sub-module editor
+     */
     public function index()
     {
         if (!isset($this->request->get['module_id'])) {
@@ -87,7 +90,7 @@ class ControllerModuleArchitect extends Controller
 
         // === Content
 
-        // Quick Refference
+        // Quick Reference
         $data['docs'] = array(
             'module_id'  => '00',
             'author'     => 'johndoe',
@@ -112,8 +115,25 @@ class ControllerModuleArchitect extends Controller
             );
         } else {
             $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
+
             if (version_compare(VERSION, '2.2.0', '<')) {
                 $data['architect']['setting']['meta']['editor']['event'] = 0;
+            }
+
+            if (isset($this->request->get['gist'])) {
+                $gist = $this->arc['model']->getGist($this->request->get['gist']);
+
+                if ($gist) {
+                    $editors = array('controller', 'model', 'template', 'modification', 'event');
+
+                    foreach ($editors as $editor) {
+                        if ($gist[$editor]) {
+                            $data['architect']['setting'][$editor] = $gist[$editor];
+                        } else {
+                            $data['architect']['setting']['meta']['editor'][$editor] = 0;
+                        }
+                    }
+                }
             }
         }
 
@@ -129,8 +149,8 @@ class ControllerModuleArchitect extends Controller
         $data['default_cust_group'] = $this->config->get('config_customer_group_id');
         $data['customer_groups']    = $this->model_customer_group->getCustomerGroups();
 
-        $data['tab_option'] = $this->load->view($this->template($this->arc['path_module'] . '/option'), $data);
-        $data['quick_reference'] = $this->load->view($this->template($this->arc['path_module'] . '/quick_reference'), $data);
+        $data['tab_option'] = $this->load->view($this->template($this->arc['path_module'] . '/editor_tab_option'), $data);
+        $data['quick_reference'] = $this->load->view($this->template($this->arc['path_module'] . '/editor_reference'), $data);
 
         // === Page element
         $data['header']      = $this->load->controller('common/header');
@@ -140,6 +160,33 @@ class ControllerModuleArchitect extends Controller
         $this->response->setOutput($this->load->view($this->template($this->arc['path_module'] . '/editor'), $data));
     }
 
+    public function save()
+    {
+        $post     = $this->request->post;
+        $response = array(
+            'module_id' => $post['module_id'],
+            'error' => ''
+        );
+
+        if (!isset($post['module_id'])) {
+            return null;
+        }
+
+        if (!$this->user->hasPermission('modify', $this->arc['path_module'])) {
+            $response['error'] = $this->i18n['error_permission'];
+        }
+
+        if (!$response['error']) {
+            $response = $this->arc['model']->editModule($post);
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($response));
+    }
+
+    /**
+     * Module dashboard
+     */
     public function manage()
     {
         $this->document->setTitle($this->arc['title']);
@@ -172,7 +219,9 @@ class ControllerModuleArchitect extends Controller
 
         $data['urlTicketSupport']   = 'https://isenselabs.com/tickets/open/' . base64_encode('Support Request').'/'.base64_encode('414').'/'. base64_encode($_SERVER['SERVER_NAME']);
 
+        // Tab content
         $data['tab_manage']  = $this->load->view($this->template($this->arc['path_module'] .'/tab_manage'), $data);
+        $data['tab_gist']    = $this->load->view($this->template($this->arc['path_module'] .'/tab_gist'), $data);
         $data['tab_help']    = $this->load->view($this->template($this->arc['path_module'] .'/tab_help'), $data);
 
         // === Page element
@@ -181,30 +230,6 @@ class ControllerModuleArchitect extends Controller
         $data['footer']      = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view($this->template($this->arc['path_module']), $data));
-    }
-
-    public function save()
-    {
-        $post     = $this->request->post;
-        $response = array(
-            'module_id' => $post['module_id'],
-            'error' => ''
-        );
-
-        if (!isset($post['module_id'])) {
-            return null;
-        }
-
-        if (!$this->user->hasPermission('modify', $this->arc['path_module'])) {
-            $response['error'] = $this->i18n['error_permission'];
-        }
-
-        if (!$response['error']) {
-            $response = $this->arc['model']->editModule($post);
-        }
-
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($response));
     }
 
     public function manageList()
@@ -265,6 +290,22 @@ class ControllerModuleArchitect extends Controller
         $this->response->setOutput(json_encode($response));
     }
 
+    public function gistList()
+    {
+        $response   = array();
+        $data       = array(
+            'i18n'      => $this->i18n,
+            'architect' => $this->arc,
+            'gists'     => $this->arc['model']->getGists(),
+        );
+
+        $response['items']  = count($data['gists']);
+        $response['output'] = $this->load->view($this->arc['path_module'] . '/gist_list', $data);
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($response));
+    }
+
 
     // ================ Misc ================
 
@@ -299,7 +340,7 @@ class ControllerModuleArchitect extends Controller
                     ">A</span>
                     <i class="hidden',
                 'name'     => 'Architect',
-                'href'     => $this->arc['url_module_manage'],
+                'href'     => $this->arc['url_module_manage'] . '" title="Architect by iSenseLabs',
                 'children' => array()
             );
         }

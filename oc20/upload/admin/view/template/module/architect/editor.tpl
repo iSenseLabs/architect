@@ -94,8 +94,8 @@
                                 </li>
                             </ul>
 
-                            <div class="pull-right">
-                                <a class="arc-help-editor" data-toggle="modal" data-target="#arc-help-editor"><i class="fa fa-question-circle"></i></a>
+                            <div class="arc-help-editor">
+                                <a data-toggle="modal" data-target="#arc-help-editor" title="Quick reference"><i class="fa fa-question-circle"></i></a>
                             </div>
                         </div>
 
@@ -129,7 +129,7 @@
 
     <!-- ============ -->
 
-    <div id="arc-help-editor" class="modal fade arc-help-editor-modal" tabindex="-1">
+    <div id="arc-help-editor" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content modal-body">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
