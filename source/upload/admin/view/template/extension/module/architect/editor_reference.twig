@@ -1,7 +1,5 @@
-<h2 class=" text-center">Quick Reference</h2>
+<h2>Quick Reference <small>Complete documentation, please refer to the <a href="https://github.com/iSenseLabs/architect/wiki" target="_blank">Wiki</a></small></h2>
 <hr class="hr">
-
-<p>For complete documentation, please refer to the project <a href="https://github.com/iSenseLabs/architect/wiki" target="_blank">Wiki</a>.</p>
 
 <h3 class="legend">On Save</h3>
 <p>Each editor will be saved to respected file and database. This approach allow the module to work per OpenCart system workflow.</p>
