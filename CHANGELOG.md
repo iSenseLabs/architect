@@ -15,6 +15,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ---
 
 ## [Unreleased]
+### Added
+- A sub-module skeleton: Gist
+
 ### Changed
 - Add xml version and encoding to default ocmod skeleton
 - Change method sequence for admin model
