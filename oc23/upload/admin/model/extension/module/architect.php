@@ -360,7 +360,7 @@ class ModelExtensionModuleArchitect extends Model
                 $gist = $this->getGistInfo($xml);
 
                 if (!empty($gist)) {
-                    $gist['file'] = str_replace('.arcgist.xml', '', basename($file));
+                    $gist['codename'] = $gist['file'] = str_replace('.arcgist.xml', '', basename($file));
                     $gists[] = $gist;
                 }
             }

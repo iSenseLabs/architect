@@ -26,6 +26,7 @@
             <div class="arc-panel arc-flex">
                 <input type="hidden" name="module_id" value="<?php echo $architect['setting']['module_id']; ?>" class="form-control module_id">
                 <input type="hidden" name="identifier" value="<?php echo $architect['setting']['identifier']; ?>" class="form-control identifier">
+                <input type="hidden" name="meta[gist]" value="<?php echo $architect['setting']['meta']['gist']; ?>" class="form-control gist">
 
                 <div class="panel-sidebar">
                     <div class="form-group required">

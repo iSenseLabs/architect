@@ -29,6 +29,7 @@ $_['architect'] = array(
         'meta'          => array(
             'author'    => '',
             'note'      => '',
+            'gist'      => '',
             'editor'    => array(
                 'controller'   => 0,
                 'model'        => 0,
@@ -46,78 +47,22 @@ class {controller_class} extends Controller
 {
     public function index($param = array())
     {
-        $data = $this->language();
-
         // Your code here..
-
-        return $this->load->view(\'{template_path}\', $data);
-    }
-
-    protected function language($data = array())
-    {
-        $_[\'heading\']  = \'Architect\';
-        $_[\'greeting\'] = \'Hello World\';
-
-        return array_merge($data, $_);
     }
 }',
         'model'         => '<?php
 class {model_class} extends Model
 {
-    public function get($param = array())
-    {
-        $data = array();
 
-        // Usage in controller
-        // $this->load->model(\'{model_path}\');
-        // $data = $this->{model_call}->get(array());
-
-        return $data;
-    }
 }',
         'template'      => '<div class="module architect arc-{module_id}">
-    <div class="module-heading">
-        <h3><?php echo $heading; ?></h3>
-    </div>
-    <div class="module-body">
-        <?php echo $greeting; ?>
-    </div>
-</div>',
-        'modification'  => '<?xml version="1.0" encoding="utf-8"?>
-<modification>
-    <name>{ocmod_name}</name>
-    <version>1.0.1</version>
-    <author>{author}</author>
-    <link>...</link>
-    <code>{ocmod_code}</code>
 
-    <file path="admin/view/template/common/header.tpl">
-        <operation error="skip">
-            <search><![CDATA[<ul class="nav pull-right">]]></search>
-            <add position="after"><![CDATA[<li><a href="#">Arc Test #{module_id}</a></li>]]></add>
-        </operation>
-    </file>
-</modification>',
+</div>',
+        'modification'  => '',
         'event'         => '<?php
 class {event_class} extends Controller
 {
-    /**
-     * @trigger  catalog/controller/commmon/footer/before
-     * @action   {event_path}/foo
-     */
-    public function foo(&$route, &$data)
-    {
-        // Your code here..
-    }
 
-    /**
-     * @trigger  catalog/view/default/template/common/footer/after
-     * @action   {event_path}/bar
-     */
-    public function bar(&$route, &$data, &$output)
-    {
-        // Your code here..
-    }
 }',
     )
 );

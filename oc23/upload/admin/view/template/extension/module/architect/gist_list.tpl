@@ -9,6 +9,6 @@
             <?php endif ?>
         </td>
         <td><?php echo $gist['author']; ?></td>
-        <td class="text-center"><a href="<?php echo $architect['url_module']; ?>&module_id=0&gist=<?php echo $gist['file']; ?>" class="btn btn-primary btn-sm">Insert</a></td>
+        <td class="text-center"><a href="<?php echo $architect['url_module']; ?>&module_id=0&gist=<?php echo $gist['codename']; ?>" class="btn btn-primary btn-sm"><?php echo $i18n['text_insert']; ?></a></td>
     </tr>
 <?php } ?>

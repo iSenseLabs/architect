@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<architect>
+    <name>Alpha</name>
+    <version>2.1.0</version>
+    <author>iSenseLabs</author>
+    <link>https://github.com/iSenseLabs/architect</link>
+
+    <description>Skeleton codes as a guide to using Architects.</description>
+    <opencart>2.3.0.2, 2.3.0.1, 2.3.0.0</opencart>
+
+    <controller><![CDATA[
+<?php
+class {controller_class} extends Controller
+{
+    /**
+     * Module entrance if you assigned it to Design > Layouts
+     */
+    public function index($param = array())
+    {
+        $data = $this->language();
+
+        // Your code here..
+
+        return $this->load->view('{template_path}', $data);
+    }
+
+    /**
+     * Used to handle multi-language case
+     */
+    protected function language($data = array())
+    {
+        $_['heading']  = 'Architect';
+        $_['greeting'] = 'Hello World';
+
+        // Multi language
+        if ($this->config->get('config_language_id') == 99) {
+            $_['heading']  = 'архитект';
+            $_['greeting'] = 'Здравей свят';
+        }
+
+        return array_merge($data, $_);
+    }
+}
+]]></controller>
+    <model><![CDATA[
+<?php
+class {model_class} extends Model
+{
+    public function get($param = array())
+    {
+        $data = array();
+
+        // Usage in controller
+        // $this->load->model('{model_path}');
+        // $data = $this->{model_call}->get(...);
+
+        return $data;
+    }
+}
+]]></model>
+    <template><![CDATA[
+<div class="module architect arc-{module_id}">
+    <div class="module-heading">
+        <h3><?php echo $heading; ?></h3>
+    </div>
+    <div class="module-body">
+        <?php echo $greeting; ?>
+    </div>
+</div>
+]]></template>
+    <modification><![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>{ocmod_name}</name>
+    <version>1.0.1</version>
+    <author>{author}</author>
+    <link>...</link>
+    <code>{ocmod_code}</code>
+
+    <file path="admin/view/template/common/header.tpl">
+        <operation error="skip">
+            <search><![CDATA[<ul class="nav pull-right">]]]]><![CDATA[></search>
+            <add position="after"><![CDATA[<li><a href="#">Arc Test #{module_id}</a></li>]]]]><![CDATA[></add>
+        </operation>
+    </file>
+</modification>
+]]></modification>
+    <event><![CDATA[
+<?php
+class {event_class} extends Controller
+{
+    /**
+     * @trigger  catalog/controller/commmon/footer/before
+     * @action   {event_path}/foo
+     */
+    public function foo(&$route, &$data)
+    {
+        // Your code here..
+    }
+
+    /**
+     * @trigger  catalog/view/default/template/common/footer/after
+     * @action   {event_path}/bar
+     */
+    public function bar(&$route, &$data, &$output)
+    {
+        // Your code here..
+    }
+}
+]]></event>
+<admin_controller><![CDATA[
+<?php
+class {admin_controller_class} extends Controller
+{
+    /**
+     * Here to avoid an errors
+     */
+    public function index()
+    {
+        return;
+    }
+
+    /**
+     * Executed everytime the sub-module saved
+     */
+    public function onSave($data = array())
+    {
+        // Your code here..
+    }
+
+    /**
+     * Executed when sub-module deleted
+     */
+    public function onDelete()
+    {
+        // Your code here..
+    }
+}
+]]></admin_controller>
+</architect>
