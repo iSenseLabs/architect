@@ -20,8 +20,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Changed
 - Move default editor config to Alpha gist
-- Change method sequence for admin model
 - Delete sub-module content when there is an error saving
+- Change default visibile editor
 
 ### Fixed
 - Properly handle invalid ocmod xml on sub-module save
