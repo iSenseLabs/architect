@@ -232,7 +232,7 @@ class ModelExtensionModuleArchitect extends Model
                 $data['status'] = 0;
 
                 $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
-                $this->deleteModuleContent($data['identifier']);
+                $this->deleteModuleContent($data['identifier']); // Safety first, remove sub-module content
             }
         }
 
@@ -354,6 +354,7 @@ class ModelExtensionModuleArchitect extends Model
         if ($count) {
             return count($files);
         }
+
         if ($files) {
             foreach ($files as $file) {
                 $xml  = file_get_contents($file);
@@ -576,7 +577,7 @@ class ModelExtensionModuleArchitect extends Model
         );
 
         $dom = new DOMDocument('1.0', 'UTF-8');
-        
+
         if (@$dom->loadXml($xml) !== false) {
             $data['name']    = $dom->getElementsByTagName('name')->item(0)->nodeValue;
             $data['version'] = $dom->getElementsByTagName('version')->item(0)->nodeValue;
@@ -592,6 +593,13 @@ class ModelExtensionModuleArchitect extends Model
         return $data;
     }
 
+    /**
+     * Get annotation info for Events setting
+     *
+     * @param  string $string
+     *
+     * @return array
+     */
     protected function getEventAnnotation($string)
     {
         $i = 0;
