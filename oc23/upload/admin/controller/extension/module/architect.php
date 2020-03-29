@@ -60,8 +60,8 @@ class ControllerExtensionModuleArchitect extends Controller
         $this->document->addScript('view/javascript/architect/codemirror/mode/clike/clike.js');
         $this->document->addScript('view/javascript/architect/codemirror/mode/php/php.js');
 
-        $this->document->addStyle('view/javascript/architect/style.css');
-        $this->document->addScript('view/javascript/architect/script.js');
+        $this->document->addStyle('view/javascript/architect/style.css?v=' . $this->arc['version']);
+        $this->document->addScript('view/javascript/architect/script.js?v=' . $this->arc['version']);
 
         $data = array(
             'i18n'          => $this->i18n,

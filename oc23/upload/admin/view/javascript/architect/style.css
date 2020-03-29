@@ -18,6 +18,9 @@
     padding-bottom: 0;
 }
 #footer {
+    padding-top: 35px;
+}
+.arc-editor #footer {
     display: none;
 }
 
@@ -568,7 +571,6 @@ label input[type="checkbox"] {
     top: 5px;
     right: 8px;
     cursor: pointer;
-
 }
 .arc-help-editor a {
     color: #bbb;

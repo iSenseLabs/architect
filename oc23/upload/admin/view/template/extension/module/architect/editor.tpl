@@ -147,6 +147,13 @@
         <?php } ?>
     </div>
 
+<script>
+$(document).ready(function()
+{
+    $('html').addClass('arc-editor');
+});
+</script>
+
 </div> <!-- /.arc-module -->
 
 <?php echo $footer; ?>
