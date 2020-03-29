@@ -97,7 +97,7 @@ class ControllerExtensionModuleArchitect extends Controller
             'identifier' => $this->arc['setting']['identifier']
         );
 
-        // Sub-module Form
+        // Edit Sub-module
         if ($this->arc['setting']['module_id']) {
             $data['architect']['setting'] = array_replace_recursive(
                 $this->arc['setting'],
@@ -113,18 +113,23 @@ class ControllerExtensionModuleArchitect extends Controller
                 'author'     => $data['architect']['setting']['meta']['author'],
                 'identifier' => $data['architect']['setting']['identifier']
             );
+
+        // New Sub-module
         } else {
-            $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
+            $data['architect']['setting']['meta']['editor']['controller'] = 1;
+            $data['architect']['setting']['meta']['editor']['model'] = 1;
+            $data['architect']['setting']['meta']['editor']['template'] = 1;
 
             if (isset($this->request->get['gist'])) {
                 $gist = $this->arc['model']->getGist($this->request->get['gist']);
 
                 if ($gist) {
-                    $editors = array('controller', 'model', 'template', 'modification', 'event');
+                    $editors = array('controller', 'model', 'template', 'modification', 'event', 'admin_controller');
 
                     foreach ($editors as $editor) {
                         if ($gist[$editor]) {
                             $data['architect']['setting'][$editor] = $gist[$editor];
+                            $data['architect']['setting']['meta']['editor'][$editor] = 1;
                         } else {
                             $data['architect']['setting']['meta']['editor'][$editor] = 0;
                         }
