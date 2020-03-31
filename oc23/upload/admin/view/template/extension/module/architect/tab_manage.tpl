@@ -1,7 +1,8 @@
 <table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th class="text-center" style="width:80px"><?php echo $i18n['text_id']; ?></th>
+            <th class="text-center" style="width:60px"><?php echo $i18n['text_id']; ?></th>
+            <th class="text-left" style="width:160px"><?php echo $i18n['text_identifier']; ?></th>
             <th class="text-left" style="min-width:200px"><?php echo $i18n['text_name']; ?></th>
             <th class="text-center" style="width:100px"><?php echo $i18n['text_status']; ?></th>
             <th class="text-center" style="width:120px">

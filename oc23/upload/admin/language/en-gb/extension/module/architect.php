@@ -24,6 +24,7 @@ $_['text_publish']              = 'Publish';
 $_['text_unpublish']            = 'Unpublish';
 $_['text_id']                   = 'ID';
 $_['text_name']                 = 'Name';
+$_['text_identifier']           = 'Identifier';
 $_['text_status']               = 'Status';
 $_['text_action']               = 'Action';
 $_['text_information']          = 'Information';
