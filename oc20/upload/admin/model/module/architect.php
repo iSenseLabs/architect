@@ -591,6 +591,13 @@ class ModelModuleArchitect extends Model
         return $data;
     }
 
+    /**
+     * Get annotation info for Events setting
+     *
+     * @param  string $string
+     *
+     * @return array
+     */
     protected function getEventAnnotation($string)
     {
         $i = 0;
