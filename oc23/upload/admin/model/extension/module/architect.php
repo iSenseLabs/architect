@@ -152,7 +152,6 @@ class ModelExtensionModuleArchitect extends Model
 
                 // Repeat to update module_id
                 $codetags['{module_id}'] = $data['module_id'];
-                $codetags['{module_id}'] = 'Architect #' . $data['module_id'] . ' - ' . $data['name'];
 
                 $tags_search    = array_keys($codetags);
                 $tags_replace   = array_values($codetags);

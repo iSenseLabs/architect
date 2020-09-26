@@ -25,17 +25,22 @@ class {controller_class} extends Controller
     }
 
     /**
-     * Used to handle multi-language case
+     * Multi-language
      */
     protected function language($data = array())
     {
+        // Base language (en/ en-gb)
         $_['heading']  = 'Architect';
         $_['greeting'] = 'Hello World';
 
-        // Multi language
-        if ($this->config->get('config_language_id') == 99) {
+        // Bulgaria
+        if ($this->language->get('code') == 'bg') {
             $_['heading']  = 'архитект';
-            $_['greeting'] = 'Здравей свят';
+        }
+
+        // Japanese
+        if ($this->language->get('code') == 'jp') {
+            $_['heading']  = '建築家';
         }
 
         return array_merge($data, $_);
