@@ -21,12 +21,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Changed
 - Move default editor config to Alpha gist
-- Delete sub-module content when there is an error saving
+- Delete sub-module data and files on error
 - Change default visibile editor
 
 ### Fixed
-- Properly handle invalid ocmod xml on sub-module save
 - Fix module_id codetags on insert sub-module
+- Fix invalid ocmod xml handler
 
 ## [v2.0.0] - 2019-10-07
 ### Added
