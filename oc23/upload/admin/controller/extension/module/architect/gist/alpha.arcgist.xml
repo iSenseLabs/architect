@@ -129,7 +129,7 @@ class {admin_controller_class} extends Controller
     }
 
     /**
-     * Executed when sub-module deleted
+     * Executed when sub-module deleted or Architect uninstalled
      */
     public function onDelete()
     {

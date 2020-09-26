@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 ### Added
 - Sub-module gist
+- Admin controller editor
 
 ### Changed
 - Move default editor config to Alpha gist

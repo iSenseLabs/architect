@@ -55,6 +55,9 @@
                             <div class="checkbox">
                                 <label><input type="checkbox" name="meta[editor][event]" value="1" <?php echo $architect['setting']['meta']['editor']['event'] ? 'checked' : ''; ?> data-arc-tab-visible='event'> <?php echo $i18n['text_event']; ?></label>
                             </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="meta[editor][admin_controller]" value="1" <?php echo $architect['setting']['meta']['editor']['admin_controller'] ? 'checked' : ''; ?> data-arc-tab-visible='admin-controller'> <?php echo $i18n['text_admin_controller']; ?></label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -90,6 +93,9 @@
                                 <li style="<?php echo !$architect['setting']['meta']['editor']['event'] ? 'display:none' : ''; ?>">
                                     <a href="#tab-event" data-toggle="tab" class="js-editor-event"><?php echo $i18n['text_event']; ?></a>
                                 </li>
+                                <li style="<?php echo !$architect['setting']['meta']['editor']['admin_controller'] ? 'display:none;' : ''; ?>">
+                                    <a href="#tab-admin-controller" data-toggle="tab" class="js-editor-admin-controller" style="padding-left:15px; padding-right:15px;"><?php echo $i18n['text_admin_controller']; ?></a>
+                                </li>
                                 <li>
                                     <a href="#tab-option" data-toggle="tab" class="js-editor-option"><?php echo $i18n['text_options']; ?></a>
                                 </li>
@@ -115,6 +121,9 @@
                             </div>
                             <div id="tab-event" class="tab-pane fade">
                                 <textarea name="event" id="cm-event" cols="50" rows="10" class="form-control" data-arc-codemirror='{"mode":"application/x-httpd-php"}'><?php echo $architect['setting']['event']; ?></textarea>
+                            </div>
+                            <div id="tab-admin-controller" class="tab-pane fade">
+                                <textarea name="admin_controller" id="cm-admin-controller" cols="50" rows="10" class="form-control" data-arc-codemirror='{"mode":"application/x-httpd-php"}'><?php echo $architect['setting']['admin_controller']; ?></textarea>
                             </div>
                             <div id="tab-option" class="tab-pane fade">
                                 <?php echo $tab_option; ?>

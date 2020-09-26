@@ -184,6 +184,8 @@ class ControllerExtensionModuleArchitect extends Controller
      */
     public function manage()
     {
+        $this->update();
+
         $this->document->setTitle($this->arc['title']);
 
         $this->document->addStyle('view/javascript/architect/style.css');
@@ -372,5 +374,6 @@ class ControllerExtensionModuleArchitect extends Controller
 
     public function update()
     {
+        $this->arc['model']->update();
     }
 }

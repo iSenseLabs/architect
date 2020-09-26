@@ -1,6 +1,5 @@
 <?php
 defined('ARCHITECT') or define('ARCHITECT', '2.0.0');
-defined('ARC_CATALOG') or define('ARC_CATALOG', realpath(DIR_APPLICATION . './../') . '/catalog/');
 
 $_['architect'] = array(
     'title'           => 'Architect',
@@ -31,11 +30,12 @@ $_['architect'] = array(
             'note'      => '',
             'gist'      => '',
             'editor'    => array(
-                'controller'   => 0,
-                'model'        => 0,
-                'template'     => 0,
-                'modification' => 0,
-                'event'        => 0
+                'controller'       => 0,
+                'model'            => 0,
+                'template'         => 0,
+                'modification'     => 0,
+                'event'            => 0,
+                'admin_controller' => 0
             )
         ),
         'publish'       => date('Y-m-d'),
@@ -61,6 +61,11 @@ class {model_class} extends Model
         'modification'  => '',
         'event'         => '<?php
 class {event_class} extends Controller
+{
+
+}',
+        'admin_controller' => '<?php
+class {admin_controller_class} extends Controller
 {
 
 }',

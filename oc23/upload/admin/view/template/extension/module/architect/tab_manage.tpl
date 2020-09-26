@@ -13,7 +13,7 @@
     </thead>
     <tbody id="manage-list">
         <tr>
-            <td colspan="4" class="table-process"><i class="fa fa-spinner fa-spin"></i> <?php echo $i18n['text_processing']; ?></td>
+            <td colspan="5" class="table-process"><i class="fa fa-spinner fa-spin"></i> <?php echo $i18n['text_processing']; ?></td>
         </tr>
     </tbody>
 </table>
@@ -26,7 +26,7 @@
 <script>
 var urlManageList   = 'index.php?route=<?php echo $architect["path_module"]; ?>/manageList&<?php echo $architect["url_token"]; ?>',
     urlManageUpdate = 'index.php?route=<?php echo $architect["path_module"]; ?>/manageUpdate&<?php echo $architect["url_token"]; ?>',
-    tableManageProcess = '<tr><td colspan="4" class="table-process">{string}</td></tr>';
+    tableManageProcess = '<tr><td colspan="5" class="table-process">{string}</td></tr>';
 
 $(document).ready(function()
 {
