@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - Properly handle invalid ocmod xml on sub-module save
+- Fix module_id codetags on insert sub-module
 
 ## [v2.0.0] - 2019-10-07
 ### Added

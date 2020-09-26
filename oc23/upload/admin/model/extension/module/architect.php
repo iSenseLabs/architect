@@ -85,7 +85,7 @@ class ModelExtensionModuleArchitect extends Model
          */
 
         $codetags = array(
-            '{module_id}'        => $data['module_id'],
+            '{module_id}'        => $data['module_id'] ?: '{module_id}',
             '{identifier}'       => $data['identifier'],
             '{author}'           => $this->user->getUserName(),
             '{controller_class}' => 'ControllerExtensionArchitect' . $data['identifier'],
@@ -93,7 +93,7 @@ class ModelExtensionModuleArchitect extends Model
             '{model_path}'       => 'extension/architect/' . $data['identifier'],
             '{model_call}'       => 'model_extension_architect_' . $data['identifier'],
             '{template_path}'    => 'extension/architect/' . $data['identifier'],
-            '{ocmod_name}'       => 'Architect #' . $data['module_id'] . ' - ' . $data['name'],
+            '{ocmod_name}'       => 'Architect #' . ($data['module_id'] ?: '{module_id}') . ' - ' . $data['name'],
             '{ocmod_code}'       => $data['identifier'],
             '{event_class}'      => 'ControllerExtensionArchitectEvent' . $data['identifier'],
             '{event_path}'       => 'extension/architect/event/' . $data['identifier'],
@@ -149,6 +149,20 @@ class ModelExtensionModuleArchitect extends Model
             if (!$data['module_id']) {
                 $data['module_id'] = $this->model_extension_module->addModule('architect', $this->queryForm('module', $data));
                 $this->db->query("INSERT INTO `" . DB_PREFIX . "architect` SET " . $this->queryForm('architect', $data) . ", `created` = NOW()");
+
+                // Repeat to update module_id
+                $codetags['{module_id}'] = $data['module_id'];
+                $codetags['{module_id}'] = 'Architect #' . $data['module_id'] . ' - ' . $data['name'];
+
+                $tags_search    = array_keys($codetags);
+                $tags_replace   = array_values($codetags);
+
+                $controller       = $controller       ? str_replace($tags_search, $tags_replace, trim($controller) . "\n") : '';
+                $model            = $model            ? str_replace($tags_search, $tags_replace, trim($model) . "\n") : '';
+                $template         = $template         ? str_replace($tags_search, $tags_replace, trim($template) . "\n") : '';
+                $modification     = $modification     ? str_replace($tags_search, $tags_replace, trim($modification) . "\n") : '';
+                $event            = $event            ? str_replace($tags_search, $tags_replace, trim($event) . "\n") : '';
+                $admin_controller = $admin_controller ? str_replace($tags_search, $tags_replace, trim($admin_controller) . "\n") : '';
             } else {
                 $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
                 $this->db->query("UPDATE `" . DB_PREFIX . "architect` SET " . $this->queryForm('architect', $data) . " WHERE `module_id` = '" . (int)$data['module_id'] . "'");

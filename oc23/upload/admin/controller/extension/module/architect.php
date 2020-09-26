@@ -92,7 +92,7 @@ class ControllerExtensionModuleArchitect extends Controller
 
         // Quick Reference
         $data['docs'] = array(
-            'module_id'  => '00',
+            'module_id'  => '0',
             'author'     => 'johndoe',
             'identifier' => $this->arc['setting']['identifier']
         );
@@ -274,7 +274,8 @@ class ControllerExtensionModuleArchitect extends Controller
         if (!$response['error']) {
             switch ($post['action']) {
                 case 'delete':
-                    $this->arc['model']->deleteModule($post['module_id']);
+                    $this->load->model('extension/module');
+                    $this->model_extension_module->deleteModule($post['module_id']);
                     break;
 
                 default:
@@ -335,6 +336,7 @@ class ControllerExtensionModuleArchitect extends Controller
                         border-radius: 36px;
                         text-shadow: 0 1px 1px rgba(0,0,0,.2);
                     ">A</span>
+                    <style>a[href*="' . $this->arc['path_module'] . '"]:hover .arc-visit { color: #ffde06 !important; }</style>
                     <i class="hidden',
                 'name'     => 'Architect',
                 'href'     => $this->arc['url_module_manage'] . '" title="Architect by iSenseLabs',
