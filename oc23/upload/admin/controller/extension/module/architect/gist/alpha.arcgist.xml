@@ -128,7 +128,7 @@ class {admin_controller_class} extends Controller
     /**
      * Executed everytime the sub-module saved
      */
-    public function onSave($data = array())
+    public function onSave($setting = array())
     {
         // Your code here..
     }
@@ -136,7 +136,7 @@ class {admin_controller_class} extends Controller
     /**
      * Executed when sub-module deleted or Architect uninstalled
      */
-    public function onDelete()
+    public function onDelete($setting = array())
     {
         // Your code here..
     }

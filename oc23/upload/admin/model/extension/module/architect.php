@@ -255,7 +255,13 @@ class ModelExtensionModuleArchitect extends Model
                 unlink($path_admin_controller);
             }
 
-            $this->load->controller('extension/module/architect/' . $data['identifier'] . '/onSave');
+            $this->load->controller(
+                'extension/architect/' . $data['identifier'] . '/onSave',
+                array(
+                    'module_id'  => $data['module_id'],
+                    'identifier' => $data['identifier'],
+                )
+            );
 
             /**
              * Part 3: Handling error
@@ -335,13 +341,13 @@ class ModelExtensionModuleArchitect extends Model
         $this->db->query("DELETE FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'");
 
         if (!empty($arc['identifier'])) {
-            $this->deleteModuleContent($arc['identifier']);
+            $this->deleteModuleContent($module_id, $arc['identifier']);
         }
 
         return true;
     }
 
-    protected function deleteModuleContent($identifier)
+    protected function deleteModuleContent($module_id, $identifier)
     {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($identifier) . "'");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($identifier) . "'");
@@ -359,8 +365,14 @@ class ModelExtensionModuleArchitect extends Model
             }
         }
 
-        // Admin sub-module controller
-        $this->load->controller('extension/module/architect/' . $identifier . '/onDelete');
+        $this->load->controller(
+            'extension/architect/' . $identifier . '/onDelete',
+            array(
+                'module_id'  => $module_id,
+                'identifier' => $identifier,
+            )
+        );
+
         $file = DIR_APPLICATION . 'controller/extension/architect/' . $identifier . '.php';
         if (file_exists($file)) {
             unlink($file);
