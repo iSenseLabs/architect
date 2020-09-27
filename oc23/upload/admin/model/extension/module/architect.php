@@ -382,7 +382,7 @@ class ModelExtensionModuleArchitect extends Model
     public function getGist($file)
     {
         $gist = array();
-        $file = DIR_APPLICATION . '/controller/' . $this->arc['path_module'] . '/gist/' . $file . '.arcgist.xml';
+        $file = DIR_CONFIG . 'architect/' . $file . '.arcgist.xml';
 
         if (file_exists($file)) {
             $xml  = file_get_contents($file);
@@ -399,7 +399,7 @@ class ModelExtensionModuleArchitect extends Model
     public function getGists()
     {
         $gists = array();
-        $files = glob(DIR_APPLICATION . '/controller/' . $this->arc['path_module'] . '/gist/*.arcgist.xml');
+        $files = glob(DIR_CONFIG . 'architect/*.arcgist.xml');
 
         if ($files) {
             foreach ($files as $file) {
