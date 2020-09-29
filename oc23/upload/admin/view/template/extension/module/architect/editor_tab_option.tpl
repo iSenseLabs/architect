@@ -1,7 +1,7 @@
 <div class="tab-panel form-horizontal">
     <div class="form-group">
-        <label class="col-sm-3 control-label"><?php echo $i18n['entry_customer_group']; ?></label>
-        <div class="col-sm-9 js-toggle">
+        <label class="col-sm-2 control-label"><?php echo $i18n['entry_customer_group']; ?></label>
+        <div class="col-sm-10 js-toggle">
 
             <div class="radio">
                 <label>
@@ -34,8 +34,8 @@
     </div>
 
     <div class="form-group date-duration">
-        <label class="col-sm-3 control-label"><?php echo $i18n['entry_date_duration']; ?></label>
-        <div class="col-sm-9">
+        <label class="col-sm-2 control-label"><?php echo $i18n['entry_date_duration']; ?></label>
+        <div class="col-sm-10">
             <div class="col-sm-4" style="padding-left:0">
                 <div class="input-group js-date">
                     <input type="text" name="publish" value="<?php echo date('Y-m-d', strtotime($architect['setting']['publish'])); ?>" data-date-format="YYYY-MM-DD" class="form-control" data-toggle="tooltip" title="<?php echo $i18n['text_publish']; ?>">

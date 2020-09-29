@@ -60,8 +60,8 @@ class ControllerModuleArchitect extends Controller
         $this->document->addScript('view/javascript/architect/codemirror/mode/clike/clike.js');
         $this->document->addScript('view/javascript/architect/codemirror/mode/php/php.js');
 
-        $this->document->addStyle('view/javascript/architect/style.css');
-        $this->document->addScript('view/javascript/architect/script.js');
+        $this->document->addStyle('view/javascript/architect/style.css?v=' . $this->arc['version']);
+        $this->document->addScript('view/javascript/architect/script.js?v=' . $this->arc['version']);
 
         $data = array(
             'i18n'          => $this->i18n,
@@ -92,12 +92,12 @@ class ControllerModuleArchitect extends Controller
 
         // Quick Reference
         $data['docs'] = array(
-            'module_id'  => '00',
+            'module_id'  => '0',
             'author'     => 'johndoe',
             'identifier' => $this->arc['setting']['identifier']
         );
 
-        // Sub-module Form
+        // Edit Sub-module
         if ($this->arc['setting']['module_id']) {
             $data['architect']['setting'] = array_replace_recursive(
                 $this->arc['setting'],
@@ -113,22 +113,23 @@ class ControllerModuleArchitect extends Controller
                 'author'     => $data['architect']['setting']['meta']['author'],
                 'identifier' => $data['architect']['setting']['identifier']
             );
-        } else {
-            $data['architect']['setting']['meta']['editor'] = array_map(function($val) { return 1; }, $data['architect']['setting']['meta']['editor']);
 
-            if (version_compare(VERSION, '2.2.0', '<')) {
-                $data['architect']['setting']['meta']['editor']['event'] = 0;
-            }
+        // New Sub-module
+        } else {
+            $data['architect']['setting']['meta']['editor']['controller'] = 1;
+            $data['architect']['setting']['meta']['editor']['model'] = 1;
+            $data['architect']['setting']['meta']['editor']['template'] = 1;
 
             if (isset($this->request->get['gist'])) {
                 $gist = $this->arc['model']->getGist($this->request->get['gist']);
 
                 if ($gist) {
-                    $editors = array('controller', 'model', 'template', 'modification', 'event');
+                    $editors = array('controller', 'model', 'template', 'modification', 'event', 'admin_controller');
 
                     foreach ($editors as $editor) {
                         if ($gist[$editor]) {
                             $data['architect']['setting'][$editor] = $gist[$editor];
+                            $data['architect']['setting']['meta']['editor'][$editor] = 1;
                         } else {
                             $data['architect']['setting']['meta']['editor'][$editor] = 0;
                         }
@@ -189,6 +190,8 @@ class ControllerModuleArchitect extends Controller
      */
     public function manage()
     {
+        $this->update();
+
         $this->document->setTitle($this->arc['title']);
 
         $this->document->addStyle('view/javascript/architect/style.css');
@@ -277,7 +280,8 @@ class ControllerModuleArchitect extends Controller
         if (!$response['error']) {
             switch ($post['action']) {
                 case 'delete':
-                    $this->arc['model']->deleteModule($post['module_id']);
+                    $this->load->model('extension/module');
+                    $this->model_extension_module->deleteModule($post['module_id']);
                     break;
 
                 default:
@@ -338,6 +342,7 @@ class ControllerModuleArchitect extends Controller
                         border-radius: 36px;
                         text-shadow: 0 1px 1px rgba(0,0,0,.2);
                     ">A</span>
+                    <style>a[href*="' . $this->arc['path_module'] . '"]:hover .arc-visit { color: #ffde06 !important; }</style>
                     <i class="hidden',
                 'name'     => 'Architect',
                 'href'     => $this->arc['url_module_manage'] . '" title="Architect by iSenseLabs',
@@ -384,5 +389,6 @@ class ControllerModuleArchitect extends Controller
 
     public function update()
     {
+        $this->arc['model']->update();
     }
 }

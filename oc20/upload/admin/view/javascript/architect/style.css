@@ -18,6 +18,9 @@
     padding-bottom: 0;
 }
 #footer {
+    padding-top: 35px;
+}
+.arc-editor #footer {
     display: none;
 }
 
@@ -69,6 +72,7 @@ hr {
 }
 
 .table > thead > tr > th {
+    font-size: 14px;
     font-weight: 600;
     border-bottom: 2px solid #ccc;
 }
@@ -555,9 +559,9 @@ label input[type="checkbox"] {
 
 /* Arc logo sidebar */
 .arc-visit {
-    color: #a1d613 !important;
-    color: #ffd706 !important;
+    color: #ffde06 !important;
 }
+
 .arc-note {
     resize: vertical;
     font-size: 12px;

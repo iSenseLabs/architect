@@ -330,7 +330,6 @@ class ModelExtensionModuleArchitect extends Model
      * Delete architect database entry and files
      *
      * @param  int  $module_id
-     * @param  bool $chain      Delete module before architect sub-module
      *
      * @return bool             True on success
      */

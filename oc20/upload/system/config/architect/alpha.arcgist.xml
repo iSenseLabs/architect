@@ -6,7 +6,7 @@
     <link>https://github.com/iSenseLabs/architect</link>
 
     <description>Skeleton codes as a starter to using Architects.</description>
-    <opencart>2.3.0.2, 2.3.0.1, 2.3.0.0</opencart>
+    <opencart>2.2.0.0, 2.1.0.2, 2.1.0.1, 2.0.3.1, 2.0.2.0</opencart>
 
     <controller><![CDATA[
 <?php
@@ -21,7 +21,11 @@ class {controller_class} extends Controller
 
         // Your code here..
 
-        return $this->load->view('{template_path}', $data);
+        if (version_compare(VERSION, '2.2.0', '>=')) {
+            return $this->load->view('{template_path}', $data);
+        } else {
+            return $this->load->view('default/template/{template_path}.tpl', $data);
+        }
     }
 
     /**

@@ -13,7 +13,6 @@ class ModelModuleArchitect extends Model
 
         $this->arc['url_token'] = sprintf($this->arc['token_url'], $this->session->data[$this->arc['token_part']]);
 
-        $this->load->model('extension/module');
         $this->load->language($this->arc['path_module']);
     }
 
@@ -86,7 +85,7 @@ class ModelModuleArchitect extends Model
          */
 
         $codetags = array(
-            '{module_id}'        => $data['module_id'],
+            '{module_id}'        => $data['module_id'] ?: '{module_id}',
             '{identifier}'       => $data['identifier'],
             '{author}'           => $this->user->getUserName(),
             '{controller_class}' => 'ControllerArchitect' . $data['identifier'],
@@ -94,10 +93,11 @@ class ModelModuleArchitect extends Model
             '{model_path}'       => 'architect/' . $data['identifier'],
             '{model_call}'       => 'model_architect_' . $data['identifier'],
             '{template_path}'    => 'architect/' . $data['identifier'],
-            '{ocmod_name}'       => 'Architect #' . $data['module_id'] . ' - ' . $data['name'],
+            '{ocmod_name}'       => 'Architect #' . ($data['module_id'] ?: '{module_id}') . ' - ' . $data['name'],
             '{ocmod_code}'       => $data['identifier'],
             '{event_class}'      => 'ControllerArchitectEvent' . $data['identifier'],
-            '{event_path}'       => 'architect/event/' . $data['identifier']
+            '{event_path}'       => 'architect/event/' . $data['identifier'],
+            '{admin_controller_class}' => 'ControllerArchitect' . $data['identifier']
         );
 
         $tags_search    = array_keys($codetags);
@@ -106,11 +106,12 @@ class ModelModuleArchitect extends Model
         // === Validate
 
         // Editor content
-        $controller     = $data['meta']['editor']['controller']   ? str_replace($tags_search, $tags_replace, trim($data['controller']) . "\n") : '';
-        $model          = $data['meta']['editor']['model']        ? str_replace($tags_search, $tags_replace, trim($data['model']) . "\n") : '';
-        $template       = $data['meta']['editor']['template']     ? str_replace($tags_search, $tags_replace, trim($data['template']) . "\n") : '';
-        $modification   = $data['meta']['editor']['modification'] ? str_replace($tags_search, $tags_replace, trim($data['modification']) . "\n") : '';
-        $event          = $data['meta']['editor']['event']        ? str_replace($tags_search, $tags_replace, trim($data['event']) . "\n") : '';
+        $controller       = $data['meta']['editor']['controller']       ? str_replace($tags_search, $tags_replace, trim($data['controller']) . "\n") : '';
+        $model            = $data['meta']['editor']['model']            ? str_replace($tags_search, $tags_replace, trim($data['model']) . "\n") : '';
+        $template         = $data['meta']['editor']['template']         ? str_replace($tags_search, $tags_replace, trim($data['template']) . "\n") : '';
+        $modification     = $data['meta']['editor']['modification']     ? str_replace($tags_search, $tags_replace, trim($data['modification']) . "\n") : '';
+        $event            = $data['meta']['editor']['event']            ? str_replace($tags_search, $tags_replace, trim($data['event']) . "\n") : '';
+        $admin_controller = $data['meta']['editor']['admin_controller'] ? str_replace($tags_search, $tags_replace, trim($data['admin_controller']) . "\n") : '';
 
         // Class name
         if ($controller && strpos($controller, $codetags['{controller_class}']) === false) {
@@ -131,22 +132,43 @@ class ModelModuleArchitect extends Model
                 'message' => $this->language->get('error_event_class')
             );
         }
+        if (!$error['status'] && $admin_controller && strpos($admin_controller, $codetags['{admin_controller_class}']) === false) {
+            $error = array(
+                'status'  => true,
+                'message' => $this->language->get('error_admin_controller_class')
+            );
+        }
 
         if (!$error['status']) {
             /**
              * Part 2: Save
              */
 
+            $this->load->model('extension/module');
+
             if (!$data['module_id']) {
                 $data['module_id'] = $this->model_extension_module->addModule('architect', $this->queryForm('module', $data));
                 $this->db->query("INSERT INTO `" . DB_PREFIX . "architect` SET " . $this->queryForm('architect', $data) . ", `created` = NOW()");
+
+                // Repeat to update module_id
+                $codetags['{module_id}'] = $data['module_id'];
+
+                $tags_search    = array_keys($codetags);
+                $tags_replace   = array_values($codetags);
+
+                $controller       = $controller       ? str_replace($tags_search, $tags_replace, trim($controller) . "\n") : '';
+                $model            = $model            ? str_replace($tags_search, $tags_replace, trim($model) . "\n") : '';
+                $template         = $template         ? str_replace($tags_search, $tags_replace, trim($template) . "\n") : '';
+                $modification     = $modification     ? str_replace($tags_search, $tags_replace, trim($modification) . "\n") : '';
+                $event            = $event            ? str_replace($tags_search, $tags_replace, trim($event) . "\n") : '';
+                $admin_controller = $admin_controller ? str_replace($tags_search, $tags_replace, trim($admin_controller) . "\n") : '';
             } else {
                 $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
                 $this->db->query("UPDATE `" . DB_PREFIX . "architect` SET " . $this->queryForm('architect', $data) . " WHERE `module_id` = '" . (int)$data['module_id'] . "'");
             }
 
             // Controller
-            $path_controller = ARC_CATALOG . 'controller/architect/' . $data['identifier'] . '.php';
+            $path_controller = DIR_CATALOG . 'controller/architect/' . $data['identifier'] . '.php';
 
             if (!$error['status'] && $controller) {
                 $error = $this->saveToFile($path_controller, $controller);
@@ -155,7 +177,7 @@ class ModelModuleArchitect extends Model
             }
 
             // Model
-            $path_model = ARC_CATALOG . 'model/architect/' . $data['identifier'] . '.php';
+            $path_model = DIR_CATALOG . 'model/architect/' . $data['identifier'] . '.php';
 
             if (!$error['status'] && $model) {
                 $error = $this->saveToFile($path_model, $model);
@@ -164,7 +186,7 @@ class ModelModuleArchitect extends Model
             }
 
             // Template
-            $path_template = ARC_CATALOG . 'view/theme/default/template/architect/' . $data['identifier'] . '.tpl';
+            $path_template = DIR_CATALOG . 'view/theme/default/template/architect/' . $data['identifier'] . '.tpl';
 
             if (!$error['status'] && $template) {
                 $error = $this->saveToFile($path_template, $template);
@@ -196,10 +218,9 @@ class ModelModuleArchitect extends Model
             }
 
             // Event
-            $path_event = ARC_CATALOG . 'controller/architect/event/' . $data['identifier'] . '.php';
+            $path_event = DIR_CATALOG . 'controller/architect/event/' . $data['identifier'] . '.php';
             $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
 
-            // only add event if status enabled
             if (!$error['status'] && $event) {
                 $events = $this->getEventAnnotation($event);
 
@@ -223,6 +244,23 @@ class ModelModuleArchitect extends Model
                 unlink($path_event);
             }
 
+            // Admin Controller
+            $path_admin_controller = DIR_APPLICATION . 'controller/architect/' . $data['identifier'] . '.php';
+
+            if (!$error['status'] && $admin_controller) {
+                $error = $this->saveToFile($path_admin_controller, $admin_controller);
+            } elseif (file_exists($path_admin_controller)) {
+                unlink($path_admin_controller);
+            }
+
+            $this->load->controller(
+                'architect/' . $data['identifier'] . '/onSave',
+                array(
+                    'module_id'  => $data['module_id'],
+                    'identifier' => $data['identifier'],
+                )
+            );
+
             /**
              * Part 3: Handling error
              */
@@ -230,8 +268,9 @@ class ModelModuleArchitect extends Model
             if ($error['status']) {
                 $data['status'] = 0;
 
+                $this->load->model('extension/module');
                 $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
-                $this->deleteModuleContent($data['identifier']);
+                $this->deleteModuleContent($data['identifier']); // Safety first, remove sub-module content
             }
         }
 
@@ -264,20 +303,21 @@ class ModelModuleArchitect extends Model
             $data['meta']['author'] = $this->user->getUserName();
 
             return "
-                `module_id`     = '" . (int)$data['module_id'] . "',
-                `identifier`    = '" . $this->db->escape($data['identifier']) . "',
-                `name`          = '" . $this->db->escape($data['name']) . "',
-                `controller`    = '" . $this->db->escape($data['controller']) . "',
-                `model`         = '" . $this->db->escape($data['model']) . "',
-                `template`      = '" . $this->db->escape($data['template']) . "',
-                `modification`  = '" . $this->db->escape($data['modification']) . "',
-                `event`         = '" . $this->db->escape($data['event']) . "',
-                `option`        = '" . $this->db->escape(json_encode($data['option'])) . "',
-                `meta`          = '" . $this->db->escape(json_encode($data['meta'])) . "',
-                `status`        = '" . (int)$data['status'] . "',
-                `publish`       = '" . $this->db->escape($data['publish']) . "',
-                `unpublish`     = '" . $this->db->escape($data['unpublish']) . "',
-                `updated`       = NOW()
+                `module_id`        = '" . (int)$data['module_id'] . "',
+                `identifier`       = '" . $this->db->escape($data['identifier']) . "',
+                `name`             = '" . $this->db->escape($data['name']) . "',
+                `controller`       = '" . $this->db->escape($data['controller']) . "',
+                `model`            = '" . $this->db->escape($data['model']) . "',
+                `template`         = '" . $this->db->escape($data['template']) . "',
+                `modification`     = '" . $this->db->escape($data['modification']) . "',
+                `event`            = '" . $this->db->escape($data['event']) . "',
+                `admin_controller` = '" . $this->db->escape($data['admin_controller']) . "',
+                `option`           = '" . $this->db->escape(json_encode($data['option'])) . "',
+                `meta`             = '" . $this->db->escape(json_encode($data['meta'])) . "',
+                `status`           = '" . (int)$data['status'] . "',
+                `publish`          = '" . $this->db->escape($data['publish']) . "',
+                `unpublish`        = '" . $this->db->escape($data['unpublish']) . "',
+                `updated`          = NOW()
             ";
         }
 
@@ -288,37 +328,32 @@ class ModelModuleArchitect extends Model
      * Delete architect database entry and files
      *
      * @param  int  $module_id
-     * @param  bool $chain      Delete module before architect sub-module
      *
      * @return bool             True on success
      */
-    public function deleteModule($module_id, $chain = true)
+    public function deleteModule($module_id)
     {
-        if ($chain) {
-            $this->model_extension_module->deleteModule($module_id);
-        }
-
         $arc = $this->db->query("SELECT identifier FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'")->row;
 
         $this->db->query("DELETE FROM `" . DB_PREFIX . "architect` WHERE `module_id` = '" . (int)$module_id . "'");
 
         if (!empty($arc['identifier'])) {
-            $this->deleteModuleContent($arc['identifier']);
+            $this->deleteModuleContent($module_id, $arc['identifier']);
         }
 
         return true;
     }
 
-    protected function deleteModuleContent($identifier)
+    protected function deleteModuleContent($module_id, $identifier)
     {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($identifier) . "'");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($identifier) . "'");
 
         $files = array(
-            ARC_CATALOG . 'model/architect/' . $arc['identifier'] . '.php',
-            ARC_CATALOG . 'controller/architect/' . $arc['identifier'] . '.php',
-            ARC_CATALOG . 'controller/architect/event/' . $arc['identifier'] . '.php',
-            ARC_CATALOG . 'view/theme/default/template/architect/' . $arc['identifier'] . '.tpl',
+            DIR_CATALOG . 'model/architect/' . $identifier . '.php',
+            DIR_CATALOG . 'controller/architect/' . $identifier . '.php',
+            DIR_CATALOG . 'controller/architect/event/' . $identifier . '.php',
+            DIR_CATALOG . 'view/theme/default/template/architect/' . $identifier . '.tpl',
         );
 
         foreach ($files as $file) {
@@ -326,12 +361,25 @@ class ModelModuleArchitect extends Model
                 unlink($file);
             }
         }
+
+        $this->load->controller(
+            'extension/architect/' . $identifier . '/onDelete',
+            array(
+                'module_id'  => $module_id,
+                'identifier' => $identifier,
+            )
+        );
+
+        $file = DIR_APPLICATION . 'controller/architect/' . $identifier . '.php';
+        if (file_exists($file)) {
+            unlink($file);
+        }
     }
 
     public function getGist($file)
     {
         $gist = array();
-        $file = DIR_APPLICATION . '/controller/' . $this->arc['path_module'] . '/gist/' . $file . '.arcgist.xml';
+        $file = DIR_CONFIG . 'architect/' . $file . '.arcgist.xml';
 
         if (file_exists($file)) {
             $xml  = file_get_contents($file);
@@ -345,21 +393,18 @@ class ModelModuleArchitect extends Model
         return $gist;
     }
 
-    public function getGists($count = false)
+    public function getGists()
     {
         $gists = array();
-        $files = glob(DIR_APPLICATION . '/controller/' . $this->arc['path_module'] . '/gist/*.arcgist.xml');
+        $files = glob(DIR_CONFIG . 'architect/*.arcgist.xml');
 
-        if ($count) {
-            return count($files);
-        }
         if ($files) {
             foreach ($files as $file) {
                 $xml  = file_get_contents($file);
                 $gist = $this->getGistInfo($xml);
 
                 if (!empty($gist)) {
-                    $gist['file'] = str_replace('.arcgist.xml', '', basename($file));
+                    $gist['codename'] = $gist['file'] = str_replace('.arcgist.xml', '', basename($file));
                     $gists[] = $gist;
                 }
             }
@@ -386,17 +431,18 @@ class ModelModuleArchitect extends Model
         }
 
         $gist = array(
-            'name'         => $this->getDOMTag($dom, 'name'),
-            'version'      => $this->getDOMTag($dom, 'version'),
-            'author'       => $this->getDOMTag($dom, 'author'),
-            'link'         => $this->getDOMTag($dom, 'link'),
-            'description'  => substr(strip_tags($this->getDOMTag($dom, 'description')), 0, 200),
-            'opencart'     => $ocCompatible,
-            'controller'   => $this->getDOMTag($dom, 'controller'),
-            'model'        => $this->getDOMTag($dom, 'model'),
-            'template'     => $this->getDOMTag($dom, 'template'),
-            'modification' => $this->getDOMTag($dom, 'modification'),
-            'event'        => $this->getDOMTag($dom, 'event'),
+            'name'             => $this->getDOMTag($dom, 'name'),
+            'version'          => $this->getDOMTag($dom, 'version'),
+            'author'           => $this->getDOMTag($dom, 'author'),
+            'link'             => $this->getDOMTag($dom, 'link'),
+            'description'      => substr(strip_tags($this->getDOMTag($dom, 'description')), 0, 200),
+            'opencart'         => $ocCompatible,
+            'controller'       => $this->getDOMTag($dom, 'controller'),
+            'model'            => $this->getDOMTag($dom, 'model'),
+            'template'         => $this->getDOMTag($dom, 'template'),
+            'modification'     => $this->getDOMTag($dom, 'modification'),
+            'event'            => $this->getDOMTag($dom, 'event'),
+            'admin_controller' => $this->getDOMTag($dom, 'admin_controller'),
         );
 
         return $gist;
@@ -431,7 +477,8 @@ class ModelModuleArchitect extends Model
                     `model` MEDIUMTEXT NOT NULL,
                     `template` MEDIUMTEXT NOT NULL,
                     `modification` MEDIUMTEXT NOT NULL,
-                    `event` TEXT NOT NULL COMMENT 'encoded',
+                    `event` MEDIUMTEXT NOT NULL,
+                    `admin_controller` MEDIUMTEXT NOT NULL,
                     `option` TEXT NOT NULL COMMENT 'encoded',
                     `meta` TEXT NOT NULL COMMENT 'encoded',
                     `status` TINYINT(1) NOT NULL,
@@ -448,41 +495,43 @@ class ModelModuleArchitect extends Model
 
         // Used to simplify check if Architect is installed
         $this->load->model('setting/setting');
-
         $this->model_setting_setting->editSetting(
             'architect',
             array(
-                'architect_install' => true
+                'architect_install' => true,
+                'architect_version' => $this->arc['version'],
             )
         );
     }
 
     public function uninstall()
     {
+        $architects = $this->db->query("SELECT module_id FROM `" . DB_PREFIX . "architect`")->rows;
+        
         $this->load->model('setting/setting');
-
         $this->model_setting_setting->deleteSetting('architect');
 
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "architect`");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` LIKE 'architect_arc%'");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` LIKE 'architect_arc%'");
 
-        $paths = array(
-            ARC_CATALOG . 'model/architect/*.php',
-            ARC_CATALOG . 'controller/architect/*.php',
-            ARC_CATALOG . 'controller/architect/event/*.php',
-            ARC_CATALOG . 'view/theme/default/template/architect/*.tpl',
-        );
-
-        foreach ($paths as $path) {
-            $files = glob($path);
-
-            foreach ($files as $file) {
-                if (is_file($file)) {
-                    unlink($file);
-                }
-            }
+        $this->load->model('extension/module');
+        foreach ($architects as $subModule) {
+            $this->model_extension_module->deleteModule($subModule['module_id']);
         }
+    }
+
+    public function update()
+    {
+        // v2.1.0
+        if (!$this->config->get('architect_version') && !$this->checkTableColumn('architect', 'admin_controller')) {
+            $this->db->query("ALTER TABLE `" . DB_PREFIX . "architect` ADD COLUMN `admin_controller` MEDIUMTEXT NOT NULL AFTER `event`");
+
+            $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET `code` = 'architect', `key` = 'architect_version', `value` = '" . $this->db->escape($this->arc['version']) . "'");
+        }
+
+        $this->load->model('setting/setting');
+        $this->model_setting_setting->editSettingValue('architect', 'architect_version', $this->arc['version']);
     }
 
 

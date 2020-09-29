@@ -1,5 +1,5 @@
 <?php
-defined('ARCHITECT') or define('ARCHITECT', '2.0.0');
+defined('ARCHITECT') or define('ARCHITECT', '2.1.0-b');
 
 $_['architect'] = array(
     'title'           => 'Architect',
@@ -35,7 +35,7 @@ $_['architect'] = array(
                 'template'         => 0,
                 'modification'     => 0,
                 'event'            => 0,
-                'admin_controller' => 0
+                'admin_controller' => 0,
             )
         ),
         'publish'       => date('Y-m-d'),
