@@ -270,9 +270,8 @@ class ModelExtensionModuleArchitect extends Model
             if ($error['status']) {
                 $data['status'] = 0;
 
-                $this->load->model('extension/module');
                 $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
-                $this->deleteModuleContent($data['identifier']); // Safety first, remove sub-module content
+                $this->deleteModuleContent($data['module_id'], $data['identifier']);
             }
         }
 

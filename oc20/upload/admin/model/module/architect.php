@@ -268,9 +268,8 @@ class ModelModuleArchitect extends Model
             if ($error['status']) {
                 $data['status'] = 0;
 
-                $this->load->model('extension/module');
                 $this->model_extension_module->editModule($data['module_id'], $this->queryForm('module', $data));
-                $this->deleteModuleContent($data['identifier']); // Safety first, remove sub-module content
+                $this->deleteModuleContent($data['module_id'], $data['identifier']);
             }
         }
 
@@ -507,7 +506,7 @@ class ModelModuleArchitect extends Model
     public function uninstall()
     {
         $architects = $this->db->query("SELECT module_id FROM `" . DB_PREFIX . "architect`")->rows;
-        
+
         $this->load->model('setting/setting');
         $this->model_setting_setting->deleteSetting('architect');
 
