@@ -329,9 +329,6 @@ label input[type="checkbox"] {
 .thumbnail {
     padding: 4px 4px 10px;
 }
-.small {
-
-}
 .text-muted {
     color: #888;
 }
@@ -561,7 +558,6 @@ label input[type="checkbox"] {
 .arc-visit {
     color: #ffde06 !important;
 }
-
 .arc-note {
     resize: vertical;
     font-size: 12px;
