@@ -127,11 +127,11 @@ class ControllerModuleArchitect extends Controller
                     $editors = array('controller', 'model', 'template', 'modification', 'event', 'admin_controller');
 
                     foreach ($editors as $editor) {
+                        $data['architect']['setting']['meta']['editor'][$editor] = 0;
+
                         if ($gist[$editor]) {
                             $data['architect']['setting'][$editor] = $gist[$editor];
                             $data['architect']['setting']['meta']['editor'][$editor] = 1;
-                        } else {
-                            $data['architect']['setting']['meta']['editor'][$editor] = 0;
                         }
                     }
                 }
