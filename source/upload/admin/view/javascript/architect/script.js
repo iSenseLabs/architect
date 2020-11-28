@@ -159,7 +159,7 @@ $(document).ready(function()
                         $('.breadcrumb li:last-child').html('<a href="' + architect.url_module.replace('&amp;', '&') + '&module_id=' + resp.module_id + '">' + architect.i18n.text_edit + ' #' + resp.module_id + '</a>');
 
                         if ($('input[name="meta[editor][modification]"]').is(':checked') && $.trim($('textarea[name="modification"]').val()).length > 1) {
-                            notify('primary', architect.msg_ocmod_refresh, 5000);
+                            notify('primary', architect.msg_ocmod_refresh, 10000);
                         }
 
                         history.pushState(null, '', architect.url_module.replace('&amp;', '&') + '&module_id=' + resp.module_id);   

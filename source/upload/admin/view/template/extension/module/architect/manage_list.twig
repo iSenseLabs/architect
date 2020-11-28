@@ -1,6 +1,7 @@
 {% for item in items %}
     <tr class="text-center">
         <td>{{ item.module_id }}</td>
+        <td class="text-left">{{ item.identifier }}</td>
         <td class="text-left">
             <a href="{{ item.url_edit }}">{{ item.name }}</a>
             {% if item.meta.note %}

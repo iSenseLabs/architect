@@ -12,6 +12,7 @@ $_['text_model']                = 'Model';
 $_['text_template']             = 'Template';
 $_['text_modification']         = 'Modification';
 $_['text_event']                = 'Event';
+$_['text_admin_controller']     = 'Admin Controller';
 $_['text_options']              = 'Options';
 
 $_['text_insert']               = 'Insert';
@@ -24,6 +25,7 @@ $_['text_publish']              = 'Publish';
 $_['text_unpublish']            = 'Unpublish';
 $_['text_id']                   = 'ID';
 $_['text_name']                 = 'Name';
+$_['text_identifier']           = 'Identifier';
 $_['text_status']               = 'Status';
 $_['text_action']               = 'Action';
 $_['text_information']          = 'Information';
@@ -38,7 +40,7 @@ $_['text_open_ticket']          = 'Open a ticket';
 $_['text_open_ticket_info']     = 'Want to communicate one-to-one with our tech people? Then open a support ticket.';
 $_['text_pre_sale']             = 'Pre-sale';
 $_['text_bump_the_sales']       = 'Bump the sales';
-$_['text_pre_sale_info']        = 'Have a brilliant idea for your webstore? Our team of top-notch developers can make it real.';
+$_['text_pre_sale_info']        = 'Have a brilliant idea for your webstore?<br>Our team of top-notch developers can make it real.';
 $_['tab_help_info']             = 'Architect is an OpenCart module for rapid extension development. It can be considered as an extension that provides access to OpenCart API to make a prototype, build a minimum viable product or specific custom function.';
 
 // Form
@@ -74,3 +76,4 @@ $_['error_ocmod_xml']           = 'Oops, modification xml invalid!';
 $_['error_controller_class']    = 'Oops, unable to find correct controller class name!';
 $_['error_model_class']         = 'Oops, unable to find correct model class name!';
 $_['error_event_class']         = 'Oops, unable to find correct event class name!';
+$_['error_admin_controller_class'] = 'Oops, unable to find correct admin controller class name!';

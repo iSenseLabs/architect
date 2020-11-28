@@ -16,15 +16,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 ### Added
-- A sub-module skeleton: Gist
+- Sub-module gist
+- Admin controller editor
 
 ### Changed
-- Add xml version and encoding to default ocmod skeleton
-- Change method sequence for admin model
-- When saving sub-module get an error, only delete sub-module content
+- Move default editor config to Alpha gist
+- Delete sub-module data and files on error
+- Change default visibile editor
 
 ### Fixed
-- Properly handle invalid ocmod xml on sub-module save
+- Fix module_id codetags on insert sub-module
+- Fix invalid ocmod xml handler
 
 ## [v3.0.0] - 2019-10-07
 ### Added
