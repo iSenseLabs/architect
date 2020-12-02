@@ -449,7 +449,7 @@ label input[type="checkbox"] {
     border-color: rgba(0,0,0,.15);
 }
 .panel-sidebar .form-group + .form-group {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 .panel-sidebar .has-error .form-control {
     background: #ffd5d4;
@@ -457,6 +457,9 @@ label input[type="checkbox"] {
 }
 .panel-sidebar .control-label {
     text-shadow: 0 1px 1px rgba(0,0,0,.4);
+}
+.panel-sidebar .checkbox:first-child {
+    padding-top: 0 !important;
 }
 
 .panel-auto {
