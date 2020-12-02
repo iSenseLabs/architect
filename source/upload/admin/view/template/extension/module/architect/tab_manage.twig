@@ -85,7 +85,7 @@ function fetchManageList(url) {
         dataType: 'json',
         cache: false,
         beforeSend: function() {
-            $('.fa-refresh').addClass('fa-spin');
+            $('.js-manage-refresh .fa-refresh').addClass('fa-spin');
             $('#manage-list').html(tableManageProcess.replace('{string}', '<i class="fa fa-spinner fa-spin"></i> ' + architect.i18n.text_processing));
             $('.pagination-wrapper').hide(10);
         },

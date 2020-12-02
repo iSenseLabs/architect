@@ -36,7 +36,7 @@ function fetchGistList(url) {
         dataType: 'json',
         cache: false,
         beforeSend: function() {
-            $('.fa-refresh').addClass('fa-spin');
+            $('.js-gist-refresh .fa-refresh').addClass('fa-spin');
             $('#gist-list').html(tableGistProcess.replace('{string}', '<i class="fa fa-spinner fa-spin"></i> ' + architect.i18n.text_processing));
         },
         success: function(data) {
