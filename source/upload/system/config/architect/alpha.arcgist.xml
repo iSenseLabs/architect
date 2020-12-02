@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <architect>
     <name>Alpha</name>
-    <version>2.1.0</version>
+    <version>3.1.0</version>
     <author>iSenseLabs</author>
     <link>https://github.com/iSenseLabs/architect</link>
 
+    <note>Architect starter code.</note>
     <description>Skeleton codes as a starter to using Architects.</description>
     <opencart>3.0.3.6, 3.0.3.3, 3.0.3.2, 3.0.3.1, 3.0.3.0, 3.0.2.0</opencart>
 
