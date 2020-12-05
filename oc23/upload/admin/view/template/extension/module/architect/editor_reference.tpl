@@ -56,7 +56,7 @@
     <tbody>
         <tr>
             <td>{module_id}</td>
-            <td><b><?php echo $docs['module_id']; ?></b></td>
+            <td><b class="doc-module-id"><?php echo $docs['module_id']; ?></b></td>
         </tr>
         <tr>
             <td>{identifier}</td>
@@ -88,7 +88,7 @@
         </tr>
         <tr>
             <td>{ocmod_name}</td>
-            <td>Architect #<code><?php echo $docs['module_id']; ?></code> - Sub-module name</td>
+            <td>Architect #<code class="doc-module-id"><?php echo $docs['module_id']; ?></code> - Sub-module name</td>
         </tr>
         <tr>
             <td>{ocmod_code}</td>

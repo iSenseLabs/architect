@@ -156,6 +156,7 @@ $(document).ready(function()
                 success : function(resp, status, xhr) {
                     if (!resp.error.status) {
                         $('.module_id').val(resp.module_id);
+                        $('.doc-module-id').html(resp.module_id);
                         $('.breadcrumb li:last-child').html('<a href="' + architect.url_module.replace('&amp;', '&') + '&module_id=' + resp.module_id + '">' + architect.i18n.text_edit + ' #' + resp.module_id + '</a>');
 
                         if ($('input[name="meta[editor][modification]"]').is(':checked') && $.trim($('textarea[name="modification"]').val()).length > 1) {
