@@ -126,6 +126,10 @@ class ControllerExtensionModuleArchitect extends Controller
                 if ($gist) {
                     $editors = array('controller', 'model', 'template', 'modification', 'event', 'admin_controller');
 
+                    $data['architect']['setting']['name'] = $gist['name'] . ' v' . $gist['version'];
+                    $data['architect']['setting']['meta']['note'] = $gist['note'];
+                    $data['architect']['setting']['meta']['gist'] = $gist['codename'];
+
                     foreach ($editors as $editor) {
                         $data['architect']['setting']['meta']['editor'][$editor] = 0;
 

@@ -5,6 +5,7 @@
     <author>iSenseLabs</author>
     <link>https://github.com/iSenseLabs/architect</link>
 
+    <note>Architect starter code.</note>
     <description>Skeleton codes as a starter to using Architects.</description>
     <opencart>2.3.0.2, 2.3.0.1, 2.3.0.0</opencart>
 
