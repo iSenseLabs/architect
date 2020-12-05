@@ -425,7 +425,6 @@ class ModelExtensionModuleArchitect extends Model
             'note'             => substr(strip_tags($this->getDOMTag($dom, 'note')), 0, 140),
             'description'      => substr(strip_tags($this->getDOMTag($dom, 'description'), '<a><br>'), 0, 280),
             'opencart'         => $ocCompatible,
-
             'controller'       => $this->getDOMTag($dom, 'controller'),
             'model'            => $this->getDOMTag($dom, 'model'),
             'template'         => $this->getDOMTag($dom, 'template'),

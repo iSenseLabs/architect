@@ -236,7 +236,7 @@ class ControllerExtensionModuleArchitect extends Controller
     public function manageList()
     {
         $limit      = 25;
-        $page       = isset($this->request->get) && (int)$this->request->get > 0 ? (int)$this->request->get : 1;
+        $page       = isset($this->request->get['page']) ? max(1, (int)$this->request->get['page']) : 1;
         $response   = array();
         $params     = array(
             'page'  => $page,
