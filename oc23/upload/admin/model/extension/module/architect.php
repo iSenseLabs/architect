@@ -379,19 +379,7 @@ class ModelExtensionModuleArchitect extends Model
 
     public function getGist($file)
     {
-        $gist = array();
-        $file = DIR_CONFIG . 'architect/' . $file . '.arcgist.xml';
-
-        if (file_exists($file)) {
-            $xml  = file_get_contents($file);
-            $gist = $this->getGistInfo($xml);
-
-            if (!$gist) {
-                return;
-            }
-        }
-
-        return $gist;
+        return $this->gistParser(DIR_CONFIG . 'architect/' . $file . '.arcgist.xml');
     }
 
     public function getGists()
@@ -399,27 +387,24 @@ class ModelExtensionModuleArchitect extends Model
         $gists = array();
         $files = glob(DIR_CONFIG . 'architect/*.arcgist.xml');
 
-        if ($files) {
-            foreach ($files as $file) {
-                $xml  = file_get_contents($file);
-                $gist = $this->getGistInfo($xml);
-
-                if (!empty($gist)) {
-                    $gist['codename'] = $gist['file'] = str_replace('.arcgist.xml', '', basename($file));
-                    $gists[] = $gist;
-                }
-            }
+        foreach ($files as $file) {
+            $gists[] = $this->gistParser($file);
         }
 
-        return $gists;
+        return array_filter($gists);
     }
 
-    protected function getGistInfo($xml)
+    protected function gistParser($file)
     {
-        $gist = array();
+        $data = array();
 
+        if (!file_exists($file)) {
+            return $data;
+        }
+
+        $xml = file_get_contents($file);
         if (empty($xml)) {
-            return $gist;
+            return $data;
         }
 
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -428,15 +413,17 @@ class ModelExtensionModuleArchitect extends Model
 
         $ocCompatible = array_map('trim', explode(',', $this->getDOMTag($dom, 'opencart')));
         if (!in_array(VERSION, $ocCompatible)) {
-            return $gist;
+            return $data;
         }
 
-        $gist = array(
+        $data = array(
             'name'             => $this->getDOMTag($dom, 'name'),
+            'codename'         => str_replace('.arcgist.xml', '', basename($file)),
             'version'          => $this->getDOMTag($dom, 'version'),
             'author'           => $this->getDOMTag($dom, 'author'),
             'link'             => $this->getDOMTag($dom, 'link'),
-            'description'      => substr(strip_tags($this->getDOMTag($dom, 'description')), 0, 200),
+            'note'             => substr(strip_tags($this->getDOMTag($dom, 'note')), 0, 140),
+            'description'      => substr(strip_tags($this->getDOMTag($dom, 'description'), '<a><br>'), 0, 280),
             'opencart'         => $ocCompatible,
             'controller'       => $this->getDOMTag($dom, 'controller'),
             'model'            => $this->getDOMTag($dom, 'model'),
@@ -446,7 +433,7 @@ class ModelExtensionModuleArchitect extends Model
             'admin_controller' => $this->getDOMTag($dom, 'admin_controller'),
         );
 
-        return $gist;
+        return $data;
     }
 
     protected function getDOMTag($dom, $tag)
