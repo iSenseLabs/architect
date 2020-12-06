@@ -59,6 +59,9 @@ hr {
     border-top: 1px solid rgba(0,0,0,0.16);
     border-bottom: 4px solid rgba(0,0,0,0.08);
 }
+.small {
+    font-size: 11px;
+}
 
 .panel-default {
     border: 1px solid #dcdcdc;
@@ -128,7 +131,7 @@ form {
 .checkbox {
     font-size: 13px;
     margin: 0;
-    padding-top: 5px !important;
+    padding-top: 8px !important;
 }
 input[type="radio"],
 .radio input[type="radio"] {
@@ -385,7 +388,7 @@ label input[type="checkbox"] {
     position: relative;
 }
 .arc-base .content-head {
-    margin: 10px 0 20px;
+    margin: 10px 0 15px;
     padding: 10px 0;
 }
 .content-head h1 {
@@ -470,6 +473,17 @@ label input[type="checkbox"] {
     /* min-height: calc(100vh - 54px); */
     background: #f4f6f7;
     z-index: 10;
+}
+
+/* Table list */
+.table .label {
+    font-size: 10px;
+    font-weight: normal;
+    padding: 1px 5px 2px;
+}
+.sub-module-note, 
+.gist-description {
+    padding: 2px 0 0;
 }
 
 
