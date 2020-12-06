@@ -58,6 +58,9 @@
                             <div class="checkbox">
                                 <label><input type="checkbox" name="meta[editor][admin_controller]" value="1" <?php echo $architect['setting']['meta']['editor']['admin_controller'] ? 'checked' : ''; ?> data-arc-tab-visible='admin-controller'> <?php echo $i18n['text_admin_controller']; ?></label>
                             </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="meta[editor][option]" value="1" <?php echo $architect['setting']['meta']['editor']['option'] ? 'checked' : ''; ?> data-arc-tab-visible='option'> <?php echo $i18n['text_options']; ?></label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -96,8 +99,8 @@
                                 <li style="<?php echo !$architect['setting']['meta']['editor']['admin_controller'] ? 'display:none;' : ''; ?>">
                                     <a href="#tab-admin-controller" data-toggle="tab" class="js-editor-admin-controller" style="padding-left:15px; padding-right:15px;"><?php echo $i18n['text_admin_controller']; ?></a>
                                 </li>
-                                <li>
-                                    <a href="#tab-option" data-toggle="tab" class="js-editor-option"><?php echo $i18n['text_options']; ?></a>
+                                <li style="<?php echo !$architect['setting']['meta']['editor']['option'] ? 'display:none;' : ''; ?>">
+                                    <a href="#tab-option" data-toggle="tab" class="js-editor-option" title="Controller::index"><?php echo $i18n['text_options']; ?></a>
                                 </li>
                             </ul>
 

@@ -36,6 +36,7 @@ $_['architect'] = array(
                 'modification'     => 0,
                 'event'            => 0,
                 'admin_controller' => 0,
+                'option'           => 0,
             )
         ),
         'publish'       => date('Y-m-d'),
@@ -45,7 +46,7 @@ $_['architect'] = array(
         'controller'    => '<?php
 class {controller_class} extends Controller
 {
-    public function index($param = array())
+    public function index($setting = array())
     {
         // Your code here..
     }

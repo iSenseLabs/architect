@@ -14,9 +14,12 @@
 class {controller_class} extends Controller
 {
     /**
-     * Module entrance if you assigned it to Design > Layouts
+     * Module entrance if you assigned it to Design > Layouts.
+     * Optional validation at tab Options.
+     *
+     * @param  array  $setting All sub-module setting
      */
-    public function index($param = array())
+    public function index($setting = array())
     {
         $data = $this->language();
 
@@ -114,7 +117,7 @@ class {event_class} extends Controller
     }
 }
 ]]></event>
-<admin_controller><![CDATA[
+    <admin_controller><![CDATA[
 <?php
 class {admin_controller_class} extends Controller
 {
@@ -143,4 +146,8 @@ class {admin_controller_class} extends Controller
     }
 }
 ]]></admin_controller>
+    <option><![CDATA[{
+    "customer_group": 1,
+    "customer_group_ids": [0,1]
+}]]></option>
 </architect>

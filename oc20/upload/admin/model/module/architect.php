@@ -429,6 +429,7 @@ class ModelModuleArchitect extends Model
             'modification'     => $this->getDOMTag($dom, 'modification'),
             'event'            => $this->getDOMTag($dom, 'event'),
             'admin_controller' => $this->getDOMTag($dom, 'admin_controller'),
+            'option'           => json_decode($this->getDOMTag($dom, 'option'), true),
         );
 
         return $data;

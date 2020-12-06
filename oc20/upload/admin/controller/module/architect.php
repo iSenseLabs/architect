@@ -119,12 +119,13 @@ class ControllerModuleArchitect extends Controller
             $data['architect']['setting']['meta']['editor']['controller'] = 1;
             $data['architect']['setting']['meta']['editor']['model'] = 1;
             $data['architect']['setting']['meta']['editor']['template'] = 1;
+            $data['architect']['setting']['meta']['editor']['option'] = 1;
 
             if (isset($this->request->get['gist'])) {
                 $gist = $this->arc['model']->getGist($this->request->get['gist']);
 
                 if ($gist) {
-                    $editors = array('controller', 'model', 'template', 'modification', 'event', 'admin_controller');
+                    $editors = array('controller', 'model', 'template', 'modification', 'event', 'admin_controller', 'option');
 
                     $data['architect']['setting']['name'] = $gist['name'] . ' v' . $gist['version'];
                     $data['architect']['setting']['meta']['note'] = $gist['note'];
