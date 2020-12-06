@@ -5,7 +5,7 @@
                 <?php echo $gist['name']; ?> v<?php echo $gist['version']; ?>
             </div>
             <?php if ($gist['description']): ?>
-                <div class="gist-description small text-muted hidden-xs"><?php echo $gist['description']; ?></div>
+                <div class="small text-muted hidden-xs gist-description"><?php echo $gist['description']; ?></div>
             <?php endif ?>
         </td>
         <td><?php echo $gist['author']; ?></td>
