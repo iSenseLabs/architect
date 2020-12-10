@@ -61,6 +61,7 @@ hr {
 }
 .small {
     font-size: 11px;
+    font-size: 11.4px;
 }
 
 .panel-default {
@@ -480,6 +481,24 @@ label input[type="checkbox"] {
     font-size: 10px;
     font-weight: normal;
     padding: 1px 5px 2px;
+}
+
+.gist-image {
+    width: 20%;
+    min-width: 140px;
+    margin-right: 12px;
+}
+.gist-image img {
+    padding: 3px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+.sub-module-name {
+    font-size: 13.4px;
+}
+.gist-name {
+    font-size: 14px;
+        margin: 5px 0 0;
 }
 .sub-module-note, 
 .gist-description {

@@ -3,7 +3,7 @@
         <td>{{ item.module_id }}</td>
         <td class="text-left">{{ item.identifier }}</td>
         <td class="text-left">
-            <a href="{{ item.url_edit }}">{{ item.name }}</a>
+            <a href="{{ item.url_edit }}" class="sub-module-name">{{ item.name }}</a>
             {% if item.meta.note %}
                 <div class="small text-muted sub-module-note">{{ item.meta.note }}</div>
             {% endif %}

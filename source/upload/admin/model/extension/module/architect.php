@@ -416,9 +416,19 @@ class ModelExtensionModuleArchitect extends Model
             return $data;
         }
 
+        $codename = str_replace('.arcgist.xml', '', basename($file));
+
+        $imageUrl = '';
+        if (is_file(DIR_IMAGE . 'architect' . DIRECTORY_SEPARATOR . $codename . '.png')) {
+            $imageUrl = HTTP_CATALOG . 'image/architect/' . $codename . '.png';
+            if ($this->request->server['HTTPS']) {
+                $imageUrl = HTTPS_CATALOG . 'image/architect/' . $codename . '.png';
+            }
+        }
+
         $data = array(
             'name'             => $this->getDOMTag($dom, 'name'),
-            'codename'         => str_replace('.arcgist.xml', '', basename($file)),
+            'codename'         => $codename,
             'version'          => $this->getDOMTag($dom, 'version'),
             'author'           => $this->getDOMTag($dom, 'author'),
             'link'             => $this->getDOMTag($dom, 'link'),
@@ -432,6 +442,7 @@ class ModelExtensionModuleArchitect extends Model
             'event'            => $this->getDOMTag($dom, 'event'),
             'admin_controller' => $this->getDOMTag($dom, 'admin_controller'),
             'option'           => json_decode($this->getDOMTag($dom, 'option'), true),
+            'image_url'         => $imageUrl,
         );
 
         return $data;

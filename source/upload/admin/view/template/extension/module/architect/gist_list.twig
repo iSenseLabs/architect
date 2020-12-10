@@ -1,12 +1,23 @@
 {% for gist in gists %}
     <tr>
         <td>
-            <div class="gist-name">
-                {{ gist.name }} v{{ gist.version }}
+            <div class="arc-flex">
+                {% if gist.image_url %}
+                <div class="gist-image">
+                    <a href="{{ gist.image_url }}" target="_blank">
+                        <img class="img-responsive" src="{{ gist.image_url }}" alt="">
+                    </a>
+                </div>
+                {% endif %}
+                <div class="gist-info">
+                    <div class="gist-name">
+                        {{ gist.name }} v{{ gist.version }}
+                    </div>
+                    {% if gist.description %}
+                        <div class="small text-muted gist-description">{{ gist.description }}</div>
+                    {% endif %}
+                </div>
             </div>
-            {% if gist.description %}
-                <div class="small text-muted hidden-xs gist-description">{{ gist.description }}</div>
-            {% endif %}
         </td>
         <td>{{ gist.author }}</td>
         <td class="text-center"><a href="{{ architect.url_module }}&module_id=0&gist={{ gist.codename }}" class="btn btn-primary btn-sm">Insert</a></td>
