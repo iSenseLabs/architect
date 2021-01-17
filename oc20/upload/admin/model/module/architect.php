@@ -623,7 +623,8 @@ class ModelModuleArchitect extends Model
 
         $dom = new DOMDocument('1.0', 'UTF-8');
 
-        if (@$dom->loadXml($xml) !== false) {
+        if (@$dom->loadXml($xml) !== false && $dom->getElementsByTagName('name')->length && $dom->getElementsByTagName('version')->length
+            && $dom->getElementsByTagName('author')->length && $dom->getElementsByTagName('link')->length) {
             $data['name']    = $dom->getElementsByTagName('name')->item(0)->nodeValue;
             $data['version'] = $dom->getElementsByTagName('version')->item(0)->nodeValue;
             $data['author']  = $dom->getElementsByTagName('author')->item(0)->nodeValue;

@@ -67,7 +67,7 @@ $_['confirm_delete']            = 'Are you sure want to delete? This action cann
 
 $_['notify_success']            = 'Great, the module successfully saved!';
 $_['notify_arch_ocmod']         = 'Archited OcMod not yet applied!';
-$_['notify_ocmod_refresh']      = 'Apply modification by click <a href="%s" target="_blank">refresh <i class="fa fa-external-link" style="font-size:11px;"></i></a>.';
+$_['notify_ocmod_refresh']      = 'To reflect module status, <a href="%s" target="_blank">refresh<i class="fa fa-external-link" style="font-size:11px;"></i> modification</a>.';
 
 $_['error_permission']          = 'Oops, you not permitted to modify Architect module!';
 $_['error_action_type']         = 'Oops, action type is not recognized!';
