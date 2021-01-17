@@ -15,13 +15,16 @@ This is an extension that can be used by developers to write custom functionalit
 - Complete editor: Controller, Model, Template, Modification, and Events
 - Automatically add/remove events and modification into OpenCart workflow
 - Multi-store support
+- Redistribute sub-module in a Gist package
 - Compatible with all OpenCart themes
 - Top-notch module architecture, no files overwritten
 
 ## Download
 
 * [Installer package](https://isenselabs.com/products/view/architect-customize-your-opencart-on-the-go) for most user (Extension installer)
-* [Releases package](https://github.com/iSenseLabs/architect/releases) (source code)
+* [Releases package](https://github.com/iSenseLabs/architect/releases) by tags for manual installation
+  * Tags v3.x.x for OpenCart 3x
+  * Tags v2.x.x for OpenCart 2x
 * Latest build (non-production)
   * [OpenCart 3x](https://github.com/iSenseLabs/architect/archive/master.zip)
   * [OpenCart 2x](https://github.com/iSenseLabs/architect/archive/oc2x.zip)
@@ -32,6 +35,7 @@ This is an extension that can be used by developers to write custom functionalit
 * [Installation](https://github.com/iSenseLabs/architect/wiki/Installation)
 * [Concepts](https://github.com/iSenseLabs/architect/wiki/Concepts)
 * [Usages](https://github.com/iSenseLabs/architect/wiki/Usages)
+* [Gists](https://github.com/iSenseLabs/architect/wiki/Gists)
 * [FAQs](https://github.com/iSenseLabs/architect/wiki/FAQs)
 
 ## Development
