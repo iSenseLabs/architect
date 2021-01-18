@@ -419,10 +419,10 @@ class ModelExtensionModuleArchitect extends Model
         $codename = str_replace('.arcgist.xml', '', basename($file));
 
         $imageUrl = '';
-        if (is_file(DIR_IMAGE . 'architect' . DIRECTORY_SEPARATOR . $codename . '.png')) {
-            $imageUrl = HTTP_CATALOG . 'image/architect/' . $codename . '.png';
+        if (is_file(DIR_IMAGE . 'catalog/architect/' . $codename . '.png')) {
+            $imageUrl = HTTP_CATALOG . 'image/catalog/architect/' . $codename . '.png';
             if ($this->request->server['HTTPS']) {
-                $imageUrl = HTTPS_CATALOG . 'image/architect/' . $codename . '.png';
+                $imageUrl = HTTPS_CATALOG . 'image/catalog/architect/' . $codename . '.png';
             }
         }
 
