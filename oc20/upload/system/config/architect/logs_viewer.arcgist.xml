@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<architect>
+    <name>Logs Viewer</name>
+    <version>1.0.0</version>
+    <author>iSenseLabs</author>
+    <link>https://github.com/iSenseLabs/architect/tree/gist</link>
+
+    <note>Show log files dropdown at Error Logs page.</note>
+    <description><![CDATA[Show log files dropdown at Error Logs page.<br>Need more features like filter by keyword and date? consider to try the Free <a href="https://isenselabs.com/products/view/errorlog-manager-multiple-error-log-files-manager" target="_blank">ErrorLog Manager</a>]]></description>
+    <opencart>2.2.0.0</opencart>
+
+    <modification><![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>{ocmod_name}</name>
+    <version>1.0.0</version>
+    <author>iSenseLabs</author>
+    <link>https://github.com/iSenseLabs/architect/tree/gist</link>
+    <code>{ocmod_code}</code>
+
+    <file path="admin/controller/tool/error_log.php">
+        <operation info="Method index and clear">
+            <search><![CDATA[$file = DIR_LOGS . $this->config->get('config_error_filename');]]]]><![CDATA[></search>
+            <add position="replace"><![CDATA[
+            // Architect - Logs Viewer
+            # $file = DIR_LOGS . $this->config->get('config_error_filename');
+            $log_file = !empty($this->request->get['file']) ? $this->request->get['file'] : $this->config->get('config_error_filename');
+            $file = DIR_LOGS . $log_file;
+            // Architect - Logs Viewer :: end
+            ]]]]><![CDATA[></add>
+        </operation>
+        <operation info="Method index">
+            <search><![CDATA[$data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);]]]]><![CDATA[></search>
+            <add position="replace"><![CDATA[
+            // Architect - Logs Viewer
+            # $data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
+            $data['log'] = htmlentities(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
+            // Architect - Logs Viewer :: end
+            ]]]]><![CDATA[></add>
+        </operation>
+        <operation info="Method index">
+            <search><![CDATA[$data['header'] = $this->load->controller('common/header');]]]]><![CDATA[></search>
+            <add position="before"><![CDATA[
+            // Architect - Logs Viewer
+            $data['viewLogFile']  = $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], true);
+            $data['logFiles'] = array();
+
+            $logFiles = glob(DIR_LOGS . '*.{log,txt}', GLOB_BRACE);
+            foreach ($logFiles as $file) {
+                $filename = basename($file);
+                $fileinfo = $this->fileInfo($file);
+                $data['logFiles'][$filename] = array(
+                    'name'  => $filename,
+                    'size'  => $fileinfo['size'],
+                    'label' => $fileinfo['label'],
+                    'view'  => $data['viewLogFile'] . '&file=' . $filename
+                );
+            }
+
+            $log_file = !empty($this->request->get['file']) ? $this->request->get['file'] : $this->config->get('config_error_filename');
+            $data['currentLogFile'] = array();
+            if (!empty($data['logFiles'][$log_file])) {
+                $data['currentLogFile'] = $data['logFiles'][$log_file];
+                $data['download'] = $data['download'] . '&file=' . $data['logFiles'][$log_file]['name'];
+                $data['clear'] = $data['clear'] . '&file=' . $data['logFiles'][$log_file]['name'];
+            }
+            // Architect - Logs Viewer :: end
+            ]]]]><![CDATA[></add>
+        </operation>
+        
+        <operation info="Method download">
+            <search><![CDATA[public function download() {]]]]><![CDATA[></search>
+            <add position="after"><![CDATA[
+            // Architect - Logs Viewer
+            # $file = DIR_LOGS . $this->config->get('config_error_filename');
+            $log_file = !empty($this->request->get['file']) ? $this->request->get['file'] : $this->config->get('config_error_filename');
+            $file = DIR_LOGS . $log_file;
+            // Architect - Logs Viewer :: end
+            ]]]]><![CDATA[></add>
+        </operation>
+        <operation info="Method download">
+            <search><![CDATA['_error.log']]]]><![CDATA[></search>
+            <add position="replace"><![CDATA['_' . $log_file]]]]><![CDATA[></add>
+        </operation>
+        <operation info="Method download">
+            <search><![CDATA[file_get_contents(DIR_LOGS . $this->config->get('config_error_filename')]]]]><![CDATA[></search>
+            <add position="replace"><![CDATA[file_get_contents($file]]]]><![CDATA[></add>
+        </operation>
+        <operation info="Method clear">
+            <search><![CDATA[$this->response->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], true));]]]]><![CDATA[></search>
+            <add position="replace"><![CDATA[
+            // Architect - Logs Viewer
+            if (!empty($log_file)) {
+                $this->response->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'] . '&file=' . basename($file), true));
+            } else {
+                $this->response->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], true));
+            }
+            // Architect - Logs Viewer :: end
+            ]]]]><![CDATA[></add>
+        </operation>
+        <operation>
+            <search><![CDATA[public function download() {]]]]><![CDATA[></search>
+            <add position="before"><![CDATA[
+            /**
+             * Architect - Logs Viewer fileinfo
+             */
+            protected function fileInfo($file) {
+                $size = $rawsize = filesize($file);
+                $suffix = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+
+                $i = 0;
+                while (($size / 1024) > 1) {
+                    $size = $size / 1024;
+                    $i++;
+                }
+
+                $label = 'success';
+                if ($rawsize > 5242880) {  // 5 MB
+                    $label = 'danger';
+                } elseif ($rawsize > 1572864) { // 1.5 MB
+                    $label = 'warning';
+                }
+
+                return array(
+                    'label' => $label,
+                    'raw'   => $size,
+                    'size'  => round(substr($size, 0, strpos($size, '.') + 4), 2) . ' ' . $suffix[$i],
+                );
+            }
+            ]]]]><![CDATA[></add>
+        </operation>
+    </file>
+    <file path="admin/view/template/tool/error_log.tpl">
+        <operation>
+            <search><![CDATA[<h3 class="panel-title">]]]]><![CDATA[></search>
+            <add position="after"><![CDATA[
+            <!-- Architect - Logs Viewer -->
+            <div class="btn-group architect-log-select">
+              <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                <?php if ($currentLogFile) { ?>
+                  <?php echo $currentLogFile['name']; ?> <span class="label label-<?php echo $currentLogFile['label']; ?>"><?php echo $currentLogFile['size']; ?></span>
+                <?php } else { ?>
+                  Select logs file
+                <?php } ?>
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <?php foreach ($logFiles as $file) { ?>
+                  <li><a href="<?php echo $file['view']; ?>"><span class="label label-<?php echo $file['label']; ?>"><?php echo $file['size']; ?></span> <?php echo $file['name']; ?></a></li>
+                <?php } ?>
+              </ul>
+            </div>
+            <style>
+              .architect-log-select {
+                float: right;
+                margin-top: -5px;
+                margin-right: -8px;
+              }
+              .architect-log-select .btn-sm {
+                padding-left: 6px;
+                padding-right: 10px;
+                line-height: 19px;
+              }
+              .architect-log-select .fa-caret-down {
+                margin-left: 8px;
+              }
+              .architect-log-select .dropdown-menu > li > a {
+                padding: 5px 15px;
+              }
+
+              .architect-log-select .label {
+                font-weight: normal;
+                display: inline-block;
+                min-width: 40px;
+                padding: 3px 6px 3px;
+              }
+              .architect-log-select .btn .label {
+                margin-left: 6px;
+              }
+              .architect-log-select .dropdown-menu .label {
+                min-width: 64px;
+                margin-right: 6px;
+              }
+            </style>
+            <!-- Architect - Logs Viewer :: end -->
+            ]]]]><![CDATA[></add>
+        </operation>
+        <operation>
+            <search><![CDATA[rows="15"]]]]><![CDATA[></search>
+            <add position="replace"><![CDATA[rows="26"]]]]><![CDATA[></add>
+        </operation>
+    </file>
+</modification>
+
+]]></modification>
+</architect>
