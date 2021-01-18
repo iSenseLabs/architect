@@ -479,6 +479,7 @@ class ModelExtensionModuleArchitect extends Model
                     `modification` MEDIUMTEXT NOT NULL,
                     `event` MEDIUMTEXT NOT NULL,
                     `admin_controller` MEDIUMTEXT NOT NULL,
+                    `option` TEXT NOT NULL COMMENT 'encoded',
                     `meta` TEXT NOT NULL COMMENT 'encoded',
                     `status` TINYINT(1) NOT NULL,
                     `publish` DATETIME NULL DEFAULT NULL,
