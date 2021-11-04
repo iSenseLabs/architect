@@ -506,7 +506,7 @@ label input[type="checkbox"] {
 
 /* Dashboard */
 .arc-nav-base {
-    background: #435058;
+    background: #455159;
     padding: 8px 15px 0 15px;
     margin: -21px -21px 0;
     border: 0;
@@ -592,7 +592,7 @@ label input[type="checkbox"] {
 
 /* Arc logo sidebar */
 .arc-visit {
-    color: #ffde06 !important;
+    color: #84df0d !important;
 }
 .arc-note {
     resize: vertical;

@@ -330,18 +330,23 @@ class ControllerExtensionModuleArchitect extends Controller
                         color: #e8e8e8;
                         background: rgba(0,0,0,.3);
                         font-weight: 600;
-                        font-size: 17px;
+                        font-size: 20px;
                         font-family: \'Open Sans\', sans-serif;
                         text-align: center;
                         line-height: 17px;
                         width: 21px;
                         height: 21px;
                         margin-left: -2px;
+                        margin-right: 5px;
                         padding: 1px 2px 3px 2px;
                         border-radius: 36px;
+                        vertical-align: middle;
                         text-shadow: 0 1px 1px rgba(0,0,0,.2);
                     ">A</span>
-                    <style>a[href*="' . $this->arc['path_module'] . '"]:hover .arc-visit { color: #ffde06 !important; }</style>
+                    <style>
+                        #menu a[href*="' . $this->arc['path_module'] . '"] { height:40px; }
+                        #menu a[href*="' . $this->arc['path_module'] . '"]:hover .arc-visit { color:#92f50b !important; }
+                    </style>
                     <i class="hidden',
                 'name'     => 'Architect',
                 'href'     => $this->arc['url_module_manage'] . '" title="Architect by iSenseLabs',
