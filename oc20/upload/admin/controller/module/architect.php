@@ -29,7 +29,7 @@ class ControllerModuleArchitect extends Controller
     }
 
     /**
-     * Sub-module editor
+     * Widget editor
      */
     public function index()
     {
@@ -97,7 +97,7 @@ class ControllerModuleArchitect extends Controller
             'identifier' => $this->arc['setting']['identifier']
         );
 
-        // Edit Sub-module
+        // Edit widget
         if ($this->arc['setting']['module_id']) {
             $data['architect']['setting'] = array_replace_recursive(
                 $this->arc['setting'],
@@ -114,7 +114,7 @@ class ControllerModuleArchitect extends Controller
                 'identifier' => $data['architect']['setting']['identifier']
             );
 
-        // New Sub-module
+        // New widget
         } else {
             $data['architect']['setting']['meta']['editor']['controller'] = 1;
             $data['architect']['setting']['meta']['editor']['model'] = 1;
@@ -201,7 +201,6 @@ class ControllerModuleArchitect extends Controller
 
         $this->document->addStyle('view/javascript/architect/style.css?v=' . $this->arc['version']);
         $this->document->addScript('view/javascript/architect/script.js?v=' . $this->arc['version']);
-
 
         $data = array(
             'i18n'          => $this->i18n,

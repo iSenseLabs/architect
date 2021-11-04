@@ -16,7 +16,7 @@ class ControllerModuleArchitect extends Controller
 
     public function index($setting = array())
     {
-        if (empty($setting['identifier']) || !$params = $this->arc['model']->getSubModule($setting['identifier'])) {
+        if (empty($setting['identifier']) || !$params = $this->arc['model']->getWidget($setting['identifier'])) {
             return null;
         }
 

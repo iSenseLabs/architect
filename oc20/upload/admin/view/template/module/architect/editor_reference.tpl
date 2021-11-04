@@ -44,7 +44,7 @@
 
 
 <h3 class="legend">Codetags</h3>
-<p>Custom tags that replaced when save sub-module and it's available to all editors.</p>
+<p>Custom tags that will be replaced when save the widget. The codetags available to all editors to use.</p>
 
 <table class="table table-striped mt-10">
     <thead>
@@ -88,7 +88,7 @@
         </tr>
         <tr>
             <td>{ocmod_name}</td>
-            <td>Architect #<code class="doc-module-id"><?php echo $docs['module_id']; ?></code> - Sub-module name</td>
+            <td>Architect #<code class="doc-module-id"><?php echo $docs['module_id']; ?></code> - Widget name</td>
         </tr>
         <tr>
             <td>{ocmod_code}</td>
@@ -111,8 +111,8 @@
 
 <p><b>Notes:</b></p>
 <ul>
-    <li>The <code>{identifier}</code> replacement above is the real identifier for current sub-module.</li>
-    <li>For consistency, Modification and Event <code>code</code> always replaced with a prefixed sub-module identifier.</li>
-    <li>Admin controller have special method <code>onSave()</code> and <code>onDelete</code> as a hook for sub-module action.</li>
-    <li>Tab Options: when all options evaluated to true then sub-module entrance <code>catalog controller::index()</code> will be executed. This options not affecting Model, Template, Modification, Event or Admin Controller.</li>
+    <li>The <code>{identifier}</code> replacement above is the real identifier for the current widget.</li>
+    <li>For consistency, Modification and Event <code>code</code> always replaced with a prefixed widget identifier.</li>
+    <li>Admin controller have special method <code>onSave()</code> and <code>onDelete</code> as a hook for widget action.</li>
+    <li>Tab Options: when all options evaluated to true then widget entrance <code>catalog controller::index()</code> will be executed. This options not affecting Model, Template, Modification, Event or Admin Controller.</li>
 </ul>

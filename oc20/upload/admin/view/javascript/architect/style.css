@@ -323,6 +323,17 @@ label input[type="checkbox"] {
     border-bottom-right-radius: 2px !important;
 }
 
+.breadcrumb {
+    margin: 0;
+    padding: 0 10px;
+}
+.breadcrumb li a {
+    color: #999999;
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
+}
+
 .modal h2 {
     margin-bottom: 20px;
 }
@@ -482,14 +493,14 @@ label input[type="checkbox"] {
     border: 1px solid #ddd;
     background-color: #fff;
 }
-.sub-module-name {
+.widget-name {
     font-size: 13.4px;
 }
 .gist-name {
     font-size: 14px;
         margin: 5px 0 0;
 }
-.sub-module-note, 
+.widget-note,
 .gist-description {
     padding: 2px 0 0;
 }
