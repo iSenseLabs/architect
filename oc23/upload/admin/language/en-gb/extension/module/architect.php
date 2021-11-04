@@ -24,7 +24,7 @@ $_['text_default']              = 'Default';
 $_['text_publish']              = 'Publish';
 $_['text_unpublish']            = 'Unpublish';
 $_['text_id']                   = 'ID';
-$_['text_name']                 = 'Name';
+$_['text_name']                 = 'Widget Name';
 $_['text_identifier']           = 'Identifier';
 $_['text_status']               = 'Status';
 $_['text_action']               = 'Action';
@@ -44,7 +44,7 @@ $_['text_pre_sale_info']        = 'Have a brilliant idea for your webstore?<br>O
 $_['tab_help_info']             = 'Architect is an OpenCart module for rapid extension development. It can be considered as an extension that provides access to OpenCart API to make a prototype, build a minimum viable product or specific custom function.';
 
 // Form
-$_['entry_name']                = 'Name';
+$_['entry_name']                = 'Widget Name';
 $_['entry_note']                = 'Note';
 $_['entry_editor']              = 'Editor';
 $_['entry_status']              = 'Status';
@@ -61,7 +61,7 @@ $_['text_guest_visitor']           = 'Guest visitor';
 $_['text_selected_customer_group'] = 'Customers within the following customer groups.';
 
 // Notification
-$_['validate_name']             = 'Sub-module name must be at least 3 characters!';
+$_['validate_name']             = 'Widget name must be at least 3 characters!';
 
 $_['confirm_delete']            = 'Are you sure want to delete? This action cannot be undone.';
 
@@ -71,7 +71,7 @@ $_['notify_ocmod_refresh']      = 'To reflect module status, <a href="%s" target
 
 $_['error_permission']          = 'Oops, you not permitted to modify Architect module!';
 $_['error_action_type']         = 'Oops, action type is not recognized!';
-$_['error_save_file']           = 'Oops, unable to save sub-module files!';
+$_['error_save_file']           = 'Oops, unable to save widget files!';
 $_['error_ocmod_xml']           = 'Oops, modification xml invalid!';
 $_['error_controller_class']    = 'Oops, unable to find correct controller class name!';
 $_['error_model_class']         = 'Oops, unable to find correct model class name!';

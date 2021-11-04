@@ -11,7 +11,7 @@ class ModelExtensionModuleArchitect extends Model
         $this->arc = $this->config->get('architect');
     }
 
-    public function getSubModule($identifier)
+    public function getWidget($identifier)
     {
         $data   = array();
         $result = $this->db->query(

@@ -17,7 +17,7 @@ class {controller_class} extends Controller
      * Module entrance if you assigned it to Design > Layouts.
      * Optional validation at tab Options.
      *
-     * @param  array  $setting All sub-module setting
+     * @param  array  $setting All widget setting
      */
     public function index($setting = array())
     {
@@ -130,7 +130,7 @@ class {admin_controller_class} extends Controller
     }
 
     /**
-     * Executed everytime the sub-module saved
+     * Executed everytime the widget saved
      */
     public function onSave($setting = array())
     {
@@ -138,7 +138,7 @@ class {admin_controller_class} extends Controller
     }
 
     /**
-     * Executed when sub-module deleted or Architect uninstalled
+     * Executed when widget deleted or Architect uninstalled
      */
     public function onDelete($setting = array())
     {
