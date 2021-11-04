@@ -7,7 +7,7 @@
 
     <note>Architect starter code.</note>
     <description>Skeleton codes as a starter to using Architects.</description>
-    <opencart>3.0.3.6, 3.0.3.3, 3.0.3.2, 3.0.3.1, 3.0.3.0, 3.0.2.0, 3.0.1.3, 3.0.1.2, 3.0.1.1</opencart>
+    <opencart>3.0.3.8, 3.0.3.7, 3.0.3.6, 3.0.3.3, 3.0.3.2, 3.0.3.1, 3.0.3.0, 3.0.2.0, 3.0.1.3, 3.0.1.2, 3.0.1.1</opencart>
 
     <controller><![CDATA[
 <?php
@@ -17,7 +17,7 @@ class {controller_class} extends Controller
      * Module entrance if you assigned it to Design > Layouts.
      * Optional validation at tab Options.
      *
-     * @param  array  $setting All sub-module setting
+     * @param  array  $setting All widget setting
      */
     public function index($setting = array())
     {
@@ -132,7 +132,7 @@ class {admin_controller_class} extends Controller
     }
 
     /**
-     * Executed everytime the sub-module saved
+     * Executed everytime the widget saved
      */
     public function onSave($setting = array())
     {
@@ -140,7 +140,7 @@ class {admin_controller_class} extends Controller
     }
 
     /**
-     * Executed when sub-module deleted or Architect uninstalled
+     * Executed when widget deleted or Architect uninstalled
      */
     public function onDelete($setting = array())
     {

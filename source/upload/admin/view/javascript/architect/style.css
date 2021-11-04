@@ -493,14 +493,14 @@ label input[type="checkbox"] {
     border: 1px solid #ddd;
     background-color: #fff;
 }
-.sub-module-name {
+.widget-name {
     font-size: 13.4px;
 }
 .gist-name {
     font-size: 14px;
         margin: 5px 0 0;
 }
-.sub-module-note, 
+.widget-note,
 .gist-description {
     padding: 2px 0 0;
 }
@@ -517,7 +517,7 @@ label input[type="checkbox"] {
 
 /* Dashboard */
 .arc-nav-base {
-    background: #435058;
+    background: #455159;
     padding: 8px 15px 0 15px;
     margin: -21px -21px 0;
     border: 0;

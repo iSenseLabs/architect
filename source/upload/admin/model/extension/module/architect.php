@@ -518,8 +518,8 @@ class ModelExtensionModuleArchitect extends Model
         $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` LIKE 'architect_arc%'");
 
         $this->load->model('setting/module');
-        foreach ($architects as $subModule) {
-            $this->model_setting_module->deleteModule($subModule['module_id']);
+        foreach ($architects as $widget) {
+            $this->model_setting_module->deleteModule($widget['module_id']);
         }
     }
 

@@ -15,7 +15,7 @@ This is an extension that can be used by developers to write custom functionalit
 - Complete editor: Controller, Model, Template, Modification, and Events
 - Automatically add/remove events and modification into OpenCart workflow
 - Multi-store support
-- Redistribute sub-module in a Gist package
+- Redistribute widget in a Gist package
 - Compatible with all OpenCart themes
 - Top-notch module architecture, no files overwritten
 

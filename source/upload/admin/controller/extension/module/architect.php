@@ -29,7 +29,7 @@ class ControllerExtensionModuleArchitect extends Controller
     }
 
     /**
-     * Sub-module editor
+     * Widget editor
      */
     public function index()
     {
@@ -97,7 +97,7 @@ class ControllerExtensionModuleArchitect extends Controller
             'identifier' => $this->arc['setting']['identifier']
         );
 
-        // Edit Sub-module
+        // Edit widget
         if ($this->arc['setting']['module_id']) {
             $data['architect']['setting'] = array_replace_recursive(
                 $this->arc['setting'],
@@ -114,7 +114,7 @@ class ControllerExtensionModuleArchitect extends Controller
                 'identifier' => $data['architect']['setting']['identifier']
             );
 
-        // New Sub-module
+        // New widget
         } else {
             $data['architect']['setting']['meta']['editor']['controller'] = 1;
             $data['architect']['setting']['meta']['editor']['model'] = 1;

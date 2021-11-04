@@ -7,7 +7,7 @@
 
     <note>Show log files dropdown at Error Logs page.</note>
     <description><![CDATA[Show log files dropdown at Error Logs page.<br>Need more features like filter by keyword and date? consider to try the Free <a href="https://isenselabs.com/products/view/errorlog-manager-multiple-error-log-files-manager" target="_blank">ErrorLog Manager</a>]]></description>
-    <opencart>3.0.3.6, 3.0.3.3, 3.0.3.2, 3.0.3.1, 3.0.3.0, 3.0.2.0, 3.0.1.3, 3.0.1.2, 3.0.1.1</opencart>
+    <opencart>3.0.3.8, 3.0.3.7, 3.0.3.6, 3.0.3.3, 3.0.3.2, 3.0.3.1, 3.0.3.0, 3.0.2.0, 3.0.1.3, 3.0.1.2, 3.0.1.1</opencart>
 
     <modification><![CDATA[
 <?xml version="1.0" encoding="utf-8"?>

@@ -16,17 +16,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 ### Added
-- Sub-module gist
+- Widget gist
 - Admin controller editor
 - Gist log_viewer
 
 ### Changed
 - Move default editor config to Alpha gist
-- Delete sub-module data and files on error
+- Delete widget data and files on error
 - Change default visibile editor
 
 ### Fixed
-- Fix module_id codetags on insert sub-module
+- Fix module_id codetags on insert widget
 - Fix invalid ocmod xml handler
 
 ## [v3.0.0] - 2019-10-07
