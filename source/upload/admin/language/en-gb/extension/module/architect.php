@@ -31,6 +31,9 @@ $_['text_action']               = 'Action';
 $_['text_information']          = 'Information';
 $_['text_author']               = 'Author';
 
+$_['text_gist_information']     = 'To use Gist, click the Insert button to create a new widget with predefined content from the Gist package.<br>
+    Further info read <a href="https://github.com/iSenseLabs/architect/wiki/Gists#how-to-use" target="_blank">how to use Gist</a>, 
+    check more Gist collection at <a href="https://github.com/iSenseLabs/architect/tree/gist" target="_blank">Gist Repository</a>.';
 $_['text_not_compatible']       = 'Not compatible!';
 $_['text_not_compatible_info']  = sprintf('This Gist is not compatible with your OpenCart v%s', VERSION);
 
