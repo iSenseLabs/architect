@@ -417,16 +417,7 @@ class ModelExtensionModuleArchitect extends Model
         }
 
         $codename = str_replace('.arcgist.xml', '', basename($file));
-
-        $imageUrl = '';
-        if (is_file(DIR_IMAGE . 'catalog/architect/' . $codename . '.png')) {
-            $imageUrl = HTTP_CATALOG . 'image/catalog/architect/' . $codename . '.png';
-            if ($this->request->server['HTTPS']) {
-                $imageUrl = HTTPS_CATALOG . 'image/catalog/architect/' . $codename . '.png';
-            }
-        }
-
-        $data = array(
+        $data     = array(
             'name'             => $this->getDOMTag($dom, 'name'),
             'codename'         => $codename,
             'version'          => $this->getDOMTag($dom, 'version'),
@@ -434,6 +425,7 @@ class ModelExtensionModuleArchitect extends Model
             'link'             => $this->getDOMTag($dom, 'link'),
             'note'             => substr(strip_tags($this->getDOMTag($dom, 'note')), 0, 140),
             'description'      => substr(strip_tags($this->getDOMTag($dom, 'description'), '<a><br>'), 0, 280),
+            'image'            => $this->getDOMTag($dom, 'image'),
             'opencart'         => $ocCompatible,
             'controller'       => $this->getDOMTag($dom, 'controller'),
             'model'            => $this->getDOMTag($dom, 'model'),
@@ -442,7 +434,6 @@ class ModelExtensionModuleArchitect extends Model
             'event'            => $this->getDOMTag($dom, 'event'),
             'admin_controller' => $this->getDOMTag($dom, 'admin_controller'),
             'option'           => json_decode($this->getDOMTag($dom, 'option'), true),
-            'image_url'         => $imageUrl,
         );
 
         return $data;
