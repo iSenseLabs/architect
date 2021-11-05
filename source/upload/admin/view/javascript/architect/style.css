@@ -29,7 +29,7 @@
 
 /* #content.arc-module */
 .arc-module {
-    color: #444;
+    color: #333;
     font-size: 13px;
     line-height: 1.6;
 }
@@ -42,8 +42,20 @@ h1, h2, h3, h4, h5, h6,
     color: #333;
 }
 h1 span {
-    font-weight: normal;
-    font-size: 21px;
+    font-weight: 400;
+    font-size: 19px;
+}
+h2 small {
+    font-size: 16px;
+}
+a {
+    color: #0a7ae9;
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover, a:focus {
+    color: #0f6ecd;
+    text-decoration: underline;
 }
 p {
     margin: 0;
@@ -60,14 +72,14 @@ hr {
     border-bottom: 4px solid rgba(0,0,0,0.08);
 }
 .small {
-    font-size: 11px;
-    font-size: 11.4px;
+    font-size: 11.6px;
 }
 
 .panel-default {
     border: 1px solid #dcdcdc;
 }
 .panel-body {
+    margin: 0;
     padding: 20px;
 }
 .panel-body .panel-heading {
@@ -164,7 +176,7 @@ label input[type="checkbox"] {
 
 .alert {
     font-family: 'Open Sans', arial, sans-serif;
-    color: #444;
+    color: #333;
     line-height: 1.8;
     padding: 10px 15px;
     margin: 0 auto 10px;
@@ -213,10 +225,9 @@ label input[type="checkbox"] {
     height: 35px;
 }
 .btn-sm, .btn-group-sm > .btn {
-    padding: 3px 7px;
-    font-size: 12px;
+    padding: 3px 8px;
+    font-size: 12.7px;
     line-height: 1.3;
-    border-radius: 2px;
 }
 .btn-lg, .btn-group-lg > .btn {
     padding: 10px 24px;
@@ -342,10 +353,11 @@ label input[type="checkbox"] {
 }
 
 .thumbnail {
-    padding: 4px 4px 10px;
+    padding: 5px 5px 10px;
+    border-radius: 2px;
 }
 .text-muted {
-    color: #888;
+    color: #777
 }
 .pagination-info {
     font-size: 12px;
@@ -370,13 +382,25 @@ label input[type="checkbox"] {
     cursor: pointer !important;
 }
 
+/* RTL */
+html[dir=rtl] .breadcrumb li + li:before {
+  float: right;
+  margin-top: 2px;
+}
+
+html[dir=rtl] .checkbox label {
+  padding: 0;
+  padding-right: 20px;
+}
+html[dir=rtl] .checkbox label input {
+  margin: 0;
+  margin-right: -20px;
+}
+
 
 /* ===== Head & Layouts ===== */
 
 .arc-flex {
-    margin: 0;
-    padding: 0;
-
     display: flex;
     flex-wrap: wrap;
 }
@@ -388,12 +412,14 @@ label input[type="checkbox"] {
     z-index: 30;
     position: relative;
 }
+.content-head .pull-right {
+    margin-top: 2px;
+}
 .arc-base .content-head {
-    margin: 10px 0 15px;
-    padding: 10px 0;
+    padding: 20px 0;
 }
 .content-head h1 {
-    color: #444;
+    color: #333;
     font-size: 30px;
     line-height: 30px;
     margin: 0;
@@ -407,6 +433,9 @@ label input[type="checkbox"] {
 }
 
 .content-body {}
+.isl-main-panel {
+    min-height: 350px;
+}
 
 .arc-panel {
     flex-direction: row-reverse;
@@ -476,35 +505,6 @@ label input[type="checkbox"] {
     z-index: 10;
 }
 
-/* Table list */
-.table .label {
-    font-size: 10px;
-    font-weight: normal;
-    padding: 1px 5px 2px;
-}
-
-.gist-image {
-    width: 20%;
-    min-width: 140px;
-    margin-right: 12px;
-}
-.gist-image img {
-    padding: 3px;
-    border: 1px solid #ddd;
-    background-color: #fff;
-}
-.widget-name {
-    font-size: 13.4px;
-}
-.gist-name {
-    font-size: 14px;
-        margin: 5px 0 0;
-}
-.widget-note,
-.gist-description {
-    padding: 2px 0 0;
-}
-
 
 /* === Tab navigation */
 
@@ -521,6 +521,9 @@ label input[type="checkbox"] {
     padding: 8px 15px 0 15px;
     margin: -21px -21px 0;
     border: 0;
+}
+.arc-nav-base a {
+    font-size: 14px;
 }
 .arc-nav-base > li {
     margin-bottom: 0;
@@ -565,7 +568,7 @@ label input[type="checkbox"] {
 }
 .arc-nav-editor > li > a:hover,
 .arc-nav-editor > li > a:focus {
-    color: #444;
+    color: #333;
     background: #fff;
     border-color: transparent;
     border-bottom-color: #ddd;
@@ -614,7 +617,6 @@ label input[type="checkbox"] {
     position: absolute;
     top: 5px;
     right: 8px;
-    cursor: pointer;
 }
 .arc-help-editor a {
     color: #bbb;
@@ -635,6 +637,127 @@ label input[type="checkbox"] {
     top: 5px;
     left: calc(50vw - 200px);
     z-index: 1001;
+}
+
+/* Widget manage list */
+.tab-manage .table {
+    margin-top: -7px;
+}
+.tab-manage .label {
+    font-size: 11px;
+    font-weight: normal;
+    padding: 1px 7px 2px;
+    border-radius: 2px;
+}
+
+.widget-name {
+    font-size: 13.4px;
+}
+.widget-note {
+    padding: 2px 0 0;
+}
+
+/* Widget gist */
+
+.tab-gist {
+    margin-bottom: -15px;
+    position: relative;
+}
+.tab-gist .row.arc-flex {
+    margin: 0 -10px;
+}
+.tab-gist [class*='col-'] {
+    padding: 0 10px;
+}
+
+.gist-reff {
+    padding-bottom: 15px;
+    margin-top: -10px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #ccc;
+}
+.gist-reff-icon {
+    font-size: 14px;
+    position: absolute;
+    top: -11px;
+    right: -12px;
+}
+.gistlist-inner {
+    width: 100%;
+    text-align: center;
+    padding: 40px 0 60px;
+}
+
+.tab-gist .thumbnail {
+    padding: 0;
+}
+.tab-gist .caption {
+    padding: 7px 9px;
+}
+
+.gist-image {
+    width: 100%;
+    padding: 5px 5px 0;
+    height: 140px;
+    overflow: hidden;
+}
+.gist-name {
+    font-size: 16px;
+    margin: 5px 0 0;
+}
+.gist-description {
+    margin-top: 10px;
+    font-size: 12.6px;
+    line-height: 18px;
+}
+.gist-description p {
+    margin-top: 5px;
+}
+.gist-footer {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 9px;
+    margin-top: 3px;
+    border-top: 1px solid #e4e4e4;
+    background: #f2f3f4;
+}
+.gist-footer .btn {
+    float: right;
+    margin-top: -4px;
+}
+
+#lightbox-modal .modal-dialog {
+    text-align: center;
+}
+#lightbox-modal .close {
+    font-size: 36px;
+    line-height: 18px;
+    color: #ddd;
+    padding: 8px;
+    margin: 0;
+    top: 5px;
+    right: 5px;
+    position: absolute;
+    opacity: .8;
+    z-index: 1060;
+    border-radius: 5px;
+    text-shadow: none;
+    background: rgba(0,0,0,.6);
+}
+#lightbox-modal .close:hover {
+    opacity: 1;
+    color: #f8f8f8;
+    background: rgba(0,0,0,.8);
+}
+#lightbox-modal img {
+    -webkit-box-shadow: 0 2px 6px rgb(0 0 0 / 50%);
+    box-shadow: 0 2px 6px rgb(0 0 0 / 50%);
+}
+@media (max-width: 992px) {
+    #lightbox-modal img {
+        width: 100%;
+        height: auto;
+    }
 }
 
 

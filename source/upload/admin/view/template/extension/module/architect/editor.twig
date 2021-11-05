@@ -6,7 +6,7 @@
     <script>var architect = {{ architect|json_encode() }}; delete architect.model;</script>
 
     <div class="content-head head-shadow">
-        <h1>{{ architect.title }}</h1>
+        <h1>{{ architect.title }} <span>v{{ architect.version }}</span></h1>
 
         <ul class="breadcrumb">
             {% for breadcrumb in breadcrumbs %}

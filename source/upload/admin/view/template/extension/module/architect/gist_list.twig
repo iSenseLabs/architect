@@ -1,25 +1,24 @@
 {% for gist in gists %}
-    <tr>
-        <td>
-            <div class="arc-flex">
-                {% if gist.image_url %}
-                <div class="gist-image">
-                    <a href="{{ gist.image_url }}" target="_blank">
-                        <img class="img-responsive" src="{{ gist.image_url }}" alt="">
-                    </a>
-                </div>
-                {% endif %}
-                <div class="gist-info">
-                    <div class="gist-name">
-                        {{ gist.name }} v{{ gist.version }}
-                    </div>
-                    {% if gist.description %}
-                        <div class="small text-muted gist-description">{{ gist.description }}</div>
-                    {% endif %}
-                </div>
-            </div>
-        </td>
-        <td>{{ gist.author }}</td>
-        <td class="text-center"><a href="{{ architect.url_module }}&module_id=0&gist={{ gist.codename }}" class="btn btn-primary btn-sm">Insert</a></td>
-    </tr>
+
+<div class="col-xs-4 col-md-3">
+    <div class="thumbnail">
+        <div class="gist-image">
+            <a data-lightbox>
+                <img src="{{ gist.image }}" alt="{{ gist.name }} v{{ gist.version }} by {{ gist.author }}">
+            </a>
+        </div>
+        <div class="caption">
+            <h3 class="gist-name">{{ gist.name }} v{{ gist.version }}</h3>
+            {% if gist.description %}
+                <div class="gist-description">{{ gist.description }}</div>
+            {% endif %}
+
+        </div>
+        <div class="gist-footer">
+            <a href="{{ gist.link }}" target="_blank" title="Developed by {{ gist.author }}" data-toggle="tooltip">{{ gist.author }}</a>
+            <a href="{{ architect.url_module }}&module_id=0&gist={{ gist.codename }}" class="btn btn-primary btn-sm">Insert</a>
+        </div>
+    </div>
+</div>
+
 {% endfor %}
