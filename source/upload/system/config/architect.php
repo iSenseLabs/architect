@@ -29,6 +29,7 @@ $_['architect'] = array(
             'author'    => '',
             'note'      => '',
             'gist'      => '',
+            'oc_compatible' => true,
             'editor'    => array(
                 'controller'       => 0,
                 'model'            => 0,

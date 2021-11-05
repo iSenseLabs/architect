@@ -411,9 +411,10 @@ class ModelExtensionModuleArchitect extends Model
         $dom->preserveWhiteSpace = false;
         $dom->loadXml($xml);
 
-        $ocCompatible = array_map('trim', explode(',', $this->getDOMTag($dom, 'opencart')));
-        if (!in_array(VERSION, $ocCompatible)) {
-            return $data;
+        $ocSupported = array_map('trim', explode(',', $this->getDOMTag($dom, 'opencart')));
+        $isCompatible = true;
+        if (!in_array(VERSION, $ocSupported)) {
+            $isCompatible = false;
         }
 
         $codename = str_replace('.arcgist.xml', '', basename($file));
@@ -423,29 +424,36 @@ class ModelExtensionModuleArchitect extends Model
             'version'          => $this->getDOMTag($dom, 'version'),
             'author'           => $this->getDOMTag($dom, 'author'),
             'link'             => $this->getDOMTag($dom, 'link'),
-            'note'             => substr(strip_tags($this->getDOMTag($dom, 'note')), 0, 140),
-            'image'            => $this->getDOMTag($dom, 'image'),
-            'description'      => substr(strip_tags($this->getDOMTag($dom, 'description'), '<a><p>'), 0, 360),
-            'opencart'         => $ocCompatible,
-            'controller'       => $this->getDOMTag($dom, 'controller'),
-            'model'            => $this->getDOMTag($dom, 'model'),
-            'template'         => $this->getDOMTag($dom, 'template'),
-            'modification'     => $this->getDOMTag($dom, 'modification'),
-            'event'            => $this->getDOMTag($dom, 'event'),
-            'admin_controller' => $this->getDOMTag($dom, 'admin_controller'),
-            'option'           => json_decode($this->getDOMTag($dom, 'option'), true),
+            'note'             => substr($this->getDOMTag($dom, 'note'), 0, 140),
+            'image'            => $this->getDOMTag($dom, 'image', false),
+            'description'      => substr(strip_tags($this->getDOMTag($dom, 'description', false), '<a><p>'), 0, 360),
+            'opencart'         => $ocSupported,
+            'oc_compatible'    => $isCompatible,
+            'controller'       => $this->getDOMTag($dom, 'controller', false),
+            'model'            => $this->getDOMTag($dom, 'model', false),
+            'template'         => $this->getDOMTag($dom, 'template', false),
+            'modification'     => $this->getDOMTag($dom, 'modification', false),
+            'event'            => $this->getDOMTag($dom, 'event', false),
+            'admin_controller' => $this->getDOMTag($dom, 'admin_controller', false),
+            'option'           => json_decode($this->getDOMTag($dom, 'option', false), true),
         );
 
         return $data;
     }
 
-    protected function getDOMTag($dom, $tag)
+    protected function getDOMTag($dom, $tag, $stripTags = true)
     {
+        $value = '';
+
         if ($dom->getElementsByTagName($tag)->item(0)) {
-            return $dom->getElementsByTagName($tag)->item(0)->textContent;
+            $value = $dom->getElementsByTagName($tag)->item(0)->textContent;
         }
 
-        return '';
+        if ($value && $stripTags) {
+            $value = strip_tags($value);
+        }
+
+        return $value;
     }
 
 

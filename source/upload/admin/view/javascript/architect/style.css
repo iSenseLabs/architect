@@ -691,6 +691,17 @@ html[dir=rtl] .checkbox label input {
 .tab-gist .thumbnail {
     padding: 0;
 }
+.tab-gist .thumbnail .alert {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+    padding: 4px 8px;
+    border: 0 !important;
+    border-top: 2px solid #db180a !important;
+    margin-top: -1px;
+    box-shadow: none;
+}
 .tab-gist .caption {
     padding: 7px 9px;
 }

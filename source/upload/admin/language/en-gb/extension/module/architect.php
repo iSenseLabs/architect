@@ -31,6 +31,9 @@ $_['text_action']               = 'Action';
 $_['text_information']          = 'Information';
 $_['text_author']               = 'Author';
 
+$_['text_not_compatible']       = 'Not compatible!';
+$_['text_not_compatible_info']  = sprintf('This Gist is not compatible with your OpenCart v%s', VERSION);
+
 $_['text_processing']           = 'Processing..';
 $_['text_no_data']              = 'Data not available!';
 $_['text_pagination']           = 'Show %d to %d of %d (%d Pages)';
