@@ -3,16 +3,18 @@
 **Table of Contents**
 
 * [Installation](#installation)
+* [Documentation](#documentation)
 * [Package Collections](#package-collections)
-    * [OpenCart 3.x](#opencart-3.x)
-    * [OpenCart 2.3.x](#opencart-2.3.x)
-    * [OpenCart 2.0-2.2](#opencart-2.0-2.2)
 
 ***
 
 ## Installation
 
 To install the gist, download the Gist in the available folder to your OpenCart path `system/config/architect/`. The gist will be automatically added/ updated on the Architect admin setting Gist tab.
+
+## Documentation
+
+To use or create Gist package, please refer to [Gist Wiki](https://github.com/iSenseLabs/architect/wiki/Gists).
 
 ## Package Collections
 
