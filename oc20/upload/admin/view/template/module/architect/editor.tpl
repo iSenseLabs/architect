@@ -20,6 +20,10 @@
         </div>
     </div> <!-- /.content-head -->
 
+    <?php if (!$architect['setting']['meta']['oc_compatible']) { ?>
+        <div class="alert alert-danger" style="margin:0;padding:5px 10px 3px;"><?php echo $i18n['text_not_compatible_info']; ?> !</div>
+    <?php } ?>
+
     <div class="content-body">
         <form id="form-architect" action="<?php echo $architect['url_module_save']; ?>" method="post" enctype="multipart/form-data">
 

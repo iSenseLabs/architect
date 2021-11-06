@@ -2,22 +2,32 @@
 <architect>
     <name>Alpha</name>
     <version>2.1.0</version>
-    <author>iSenseLabs</author>
+    <author>Architect</author>
     <link>https://github.com/iSenseLabs/architect</link>
 
-    <note>Architect starter code.</note>
-    <description>Skeleton codes as a starter to using Architects.</description>
     <opencart>2.2.0.0, 2.1.0.2, 2.1.0.1, 2.0.3.1, 2.0.2.0, 2.0.1.1, 2.0.1.0, 2.0.0.0</opencart>
+    <note>Architect skeleton widget.</note>
+    <description>Skeleton codes as a starter to create Architects widget.</description>
+    <image><![CDATA[data:image/png;base64,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]]></image>
 
     <controller><![CDATA[
 <?php
 class {controller_class} extends Controller
 {
     /**
+     * Provide widget configuration in one place.
+     */
+    protected $config = array(
+        'image_width'  => 200,
+        'image_height' => 200,
+        'limit' => 10,
+    );
+
+    /**
      * Module entrance if you assigned it to Design > Layouts.
      * Optional validation at tab Options.
      *
-     * @param  array  $setting All widget setting
+     * @param  array  $setting    The widget setting
      */
     public function index($setting = array())
     {
@@ -25,11 +35,7 @@ class {controller_class} extends Controller
 
         // Your code here..
 
-        if (version_compare(VERSION, '2.2.0', '>=')) {
-            return $this->load->view('{template_path}', $data);
-        } else {
-            return $this->load->view('default/template/{template_path}.tpl', $data);
-        }
+        return $this->load->view($this->template('{template_path}'), $data);
     }
 
     /**
@@ -52,6 +58,18 @@ class {controller_class} extends Controller
         }
 
         return array_merge($data, $_);
+    }
+
+    /**
+     * Template path seeker
+     */
+    private function template($path)
+    {
+        if (version_compare(VERSION, '2.2.0', '<')) {
+            $path = 'default/template/{template_path}.tpl';
+        }
+
+        return $template;
     }
 }
 ]]></controller>
@@ -126,7 +144,7 @@ class {event_class} extends Controller
 class {admin_controller_class} extends Controller
 {
     /**
-     * Here to avoid an errors
+     * Here to prevent an error.
      */
     public function index()
     {
@@ -134,7 +152,7 @@ class {admin_controller_class} extends Controller
     }
 
     /**
-     * Executed everytime the widget saved
+     * Executed everytime this widget saved.
      */
     public function onSave($setting = array())
     {
@@ -142,7 +160,7 @@ class {admin_controller_class} extends Controller
     }
 
     /**
-     * Executed when widget deleted or Architect uninstalled
+     * Executed when this widget deleted or Architect uninstalled.
      */
     public function onDelete($setting = array())
     {

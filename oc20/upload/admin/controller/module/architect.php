@@ -130,6 +130,7 @@ class ControllerModuleArchitect extends Controller
                     $data['architect']['setting']['name'] = $gist['name'] . ' v' . $gist['version'];
                     $data['architect']['setting']['meta']['note'] = $gist['note'];
                     $data['architect']['setting']['meta']['gist'] = $gist['codename'];
+                    $data['architect']['setting']['meta']['oc_compatible'] = $gist['oc_compatible'];
 
                     foreach ($editors as $editor) {
                         $data['architect']['setting']['meta']['editor'][$editor] = 0;
