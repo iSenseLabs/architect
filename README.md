@@ -32,6 +32,7 @@ This is an extension that can be used by developers to write custom functionalit
 ## Documentations
 
 * [Home](https://github.com/iSenseLabs/architect/wiki)
+* [Screenshots](https://github.com/iSenseLabs/architect/wiki/Screenshots)
 * [Installation](https://github.com/iSenseLabs/architect/wiki/Installation)
 * [Concepts](https://github.com/iSenseLabs/architect/wiki/Concepts)
 * [Usages](https://github.com/iSenseLabs/architect/wiki/Usages)
