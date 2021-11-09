@@ -37,7 +37,7 @@ To use or create Gist package, please refer to [Gist Wiki](https://github.com/iS
             <td>Skeleton codes as a starter to create Architects widget.</td>
         </tr>
         <tr>
-            <td><img src="./images/logs-viewer.png"  alt="1" width="160px"</td>
+            <td><img src="./images/error-logs-viewer.png"  alt="1" width="160px"</td>
             <td>Logs Viewer</td>
             <td>v1.0.0</td>
             <td>3x, 2x</td>
