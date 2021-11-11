@@ -703,7 +703,9 @@ html[dir=rtl] .checkbox label input {
     box-shadow: none;
 }
 .tab-gist .caption {
+    height: 120px;
     padding: 7px 9px;
+    overflow: hidden;
 }
 
 .gist-image {
@@ -713,13 +715,13 @@ html[dir=rtl] .checkbox label input {
     overflow: hidden;
 }
 .gist-name {
-    font-size: 16px;
+    font-size: 15.6px;
     margin: 5px 0 0;
 }
 .gist-description {
     margin-top: 10px;
     font-size: 12.6px;
-    line-height: 18px;
+    line-height: 17px;
 }
 .gist-description p {
     margin-top: 5px;
