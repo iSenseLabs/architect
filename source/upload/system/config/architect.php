@@ -1,5 +1,5 @@
 <?php
-defined('ARCHITECT') or define('ARCHITECT', '3.1.0-b');
+defined('ARCHITECT') or define('ARCHITECT', '3.1.0');
 
 $_['architect'] = array(
     'title'           => 'Architect',

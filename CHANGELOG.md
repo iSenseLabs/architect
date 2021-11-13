@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ---
 
-## [Unreleased]
+## [v3.1.0] - 2021-11-14
 ### Added
 - Widget gist
 - Admin controller editor
@@ -34,5 +34,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Added
 - Initial Release
 
-[Unreleased]: https://github.com/iSenseLabs/architect/compare/v3.0.0...master
+[Unreleased]: https://github.com/iSenseLabs/architect/compare/v3.1.0...master
+[v3.1.0]: https://github.com/iSenseLabs/architect/releases/tag/v3.0.0..v3.1.0
 [v3.0.0]: https://github.com/iSenseLabs/architect/releases/tag/v3.0.0
