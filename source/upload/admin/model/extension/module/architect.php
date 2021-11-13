@@ -77,7 +77,7 @@ class ModelExtensionModuleArchitect extends Model
         $data  = array_replace_recursive($this->arc['setting'], $data);
         $error = array(
             'status'  => false,
-            'message' => ''
+            'message' => array()
         );
 
         /**
@@ -115,36 +115,24 @@ class ModelExtensionModuleArchitect extends Model
 
         // Class name
         if ($controller && strpos($controller, $codetags['{controller_class}']) === false) {
-            $error = array(
-                'status'  => true,
-                'message' => $this->language->get('error_controller_class')
-            );
+            $error['message'][] = $this->language->get('error_controller_class');
         }
-        if (!$error['status'] && $model && strpos($model, $codetags['{model_class}']) === false) {
-            $error = array(
-                'status'  => true,
-                'message' => $this->language->get('error_model_class')
-            );
+        if ($model && strpos($model, $codetags['{model_class}']) === false) {
+            $error['message'][] = $this->language->get('error_model_class');
         }
-        if (!$error['status'] && $event && strpos($event, $codetags['{event_class}']) === false) {
-            $error = array(
-                'status'  => true,
-                'message' => $this->language->get('error_event_class')
-            );
+        if ($event && strpos($event, $codetags['{event_class}']) === false) {
+            $error['message'][] = $this->language->get('error_event_class');
         }
-        if (!$error['status'] && $admin_controller && strpos($admin_controller, $codetags['{admin_controller_class}']) === false) {
-            $error = array(
-                'status'  => true,
-                'message' => $this->language->get('error_admin_controller_class')
-            );
+        if ($admin_controller && strpos($admin_controller, $codetags['{admin_controller_class}']) === false) {
+            $error['message'][] = $this->language->get('error_admin_controller_class');
         }
 
-        if (!$error['status']) {
+        $this->load->model('setting/module');
+
+        if (empty($error['message'])) {
             /**
              * Part 2: Save
              */
-
-            $this->load->model('setting/module');
 
             if (!$data['module_id']) {
                 $data['module_id'] = $this->model_setting_module->addModule('architect', $this->queryForm('module', $data));
@@ -170,8 +158,12 @@ class ModelExtensionModuleArchitect extends Model
             // Controller
             $path_controller = DIR_CATALOG . 'controller/extension/architect/' . $data['identifier'] . '.php';
 
-            if (!$error['status'] && $controller) {
-                $error = $this->saveToFile($path_controller, $controller);
+            if ($controller) {
+                $result = $this->saveToFile($path_controller, $controller);
+
+                if ($result['error']) {
+                    $error['message'][] = $result['error'];
+                }
             } elseif (file_exists($path_controller)) {
                 unlink($path_controller);
             }
@@ -179,8 +171,12 @@ class ModelExtensionModuleArchitect extends Model
             // Model
             $path_model = DIR_CATALOG . 'model/extension/architect/' . $data['identifier'] . '.php';
 
-            if (!$error['status'] && $model) {
-                $error = $this->saveToFile($path_model, $model);
+            if ($model) {
+                $result = $this->saveToFile($path_model, $model);
+
+                if ($result['error']) {
+                    $error['message'][] = $result['error'];
+                }
             } elseif (file_exists($path_model)) {
                 unlink($path_model);
             }
@@ -188,8 +184,12 @@ class ModelExtensionModuleArchitect extends Model
             // Template
             $path_template = DIR_CATALOG . 'view/theme/default/template/extension/architect/' . $data['identifier'] . '.twig';
 
-            if (!$error['status'] && $template) {
-                $error = $this->saveToFile($path_template, $template);
+            if ($template) {
+                $result = $this->saveToFile($path_template, $template);
+
+                if ($result['error']) {
+                    $error['message'][] = $result['error'];
+                }
             } elseif (file_exists($path_template)) {
                 unlink($path_template);
             }
@@ -197,12 +197,13 @@ class ModelExtensionModuleArchitect extends Model
             // Modification
             $this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
 
-            if (!$error['status'] && $modification) {
+            if ($modification) {
                 $modification = html_entity_decode($modification, ENT_COMPAT, 'UTF-8');
                 $ocmod        = $this->getOcmodInfo($modification, $data['identifier']);
-                $error        = $ocmod['error'];
 
-                if (!$error['status']) {
+                if ($ocmod['error']) {
+                    $error['message'][] = $ocmod['error'];
+                } else {
                     $this->db->query(
                         "INSERT INTO `" . DB_PREFIX . "modification`
                         SET `name`        = '" . $this->db->escape($ocmod['name']) . "',
@@ -221,13 +222,15 @@ class ModelExtensionModuleArchitect extends Model
             $path_event = DIR_CATALOG . 'controller/extension/architect/event/' . $data['identifier'] . '.php';
             $this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = 'architect_" . $this->db->escape($data['identifier']) . "'");
 
-            if (!$error['status'] && $event) {
+            if ($event) {
                 $events = $this->getEventAnnotation($event);
 
                 if ($events) {
-                    $error = $this->saveToFile($path_event, $event);
+                    $result = $this->saveToFile($path_event, $event);
 
-                    if (!$error['status']) {
+                    if ($result['error']) {
+                        $error['message'][] = $result['error'];
+                    } else {
                         foreach ($events as $event) {
                             if ($event['trigger'] && $event['action']) {
                                 $this->db->query(
@@ -249,8 +252,12 @@ class ModelExtensionModuleArchitect extends Model
             // Admin Controller
             $path_admin_controller = DIR_APPLICATION . 'controller/extension/architect/' . $data['identifier'] . '.php';
 
-            if (!$error['status'] && $admin_controller) {
-                $error = $this->saveToFile($path_admin_controller, $admin_controller);
+            if ($admin_controller) {
+                $result = $this->saveToFile($path_admin_controller, $admin_controller);
+                
+                if ($result['error']) {
+                    $error['message'][] = $result['error'];
+                }
             } elseif (file_exists($path_admin_controller)) {
                 unlink($path_admin_controller);
             }
@@ -262,17 +269,19 @@ class ModelExtensionModuleArchitect extends Model
                     'identifier' => $data['identifier'],
                 )
             );
+        }
 
-            /**
-             * Part 3: Handling error
-             */
+        /**
+         * Part 3: Handling error
+         */
 
-            if ($error['status']) {
-                $data['status'] = 0;
+        $error['status'] = !empty($error['message']);
 
-                $this->model_setting_module->editModule($data['module_id'], $this->queryForm('module', $data));
-                $this->deleteModuleContent($data['module_id'], $data['identifier']);
-            }
+        if ($error['status']) {
+            $data['status'] = 0;
+
+            $this->model_setting_module->editModule($data['module_id'], $this->queryForm('module', $data));
+            $this->deleteModuleContent($data['module_id'], $data['identifier']);
         }
 
         return array(
@@ -426,7 +435,7 @@ class ModelExtensionModuleArchitect extends Model
             'link'             => $this->getDOMTag($dom, 'link'),
             'note'             => substr($this->getDOMTag($dom, 'note'), 0, 140),
             'image'            => $this->getDOMTag($dom, 'image', false),
-            'description'      => substr(strip_tags($this->getDOMTag($dom, 'description', false), '<a><p>'), 0, 360),
+            'description'      => substr(strip_tags($this->getDOMTag($dom, 'description', false), '<a><p><br>'), 0, 360),
             'opencart'         => $ocSupported,
             'oc_compatible'    => $isCompatible,
             'controller'       => $this->getDOMTag($dom, 'controller', false),
@@ -588,9 +597,8 @@ class ModelExtensionModuleArchitect extends Model
      */
     protected function saveToFile($target, $content)
     {
-        $error = array(
-            'status'  => false,
-            'message' => ''
+        $data = array(
+            'error' => '',
         );
 
         if (!@file_put_contents($target, html_entity_decode($content, ENT_QUOTES, 'UTF-8'))) {
@@ -598,13 +606,10 @@ class ModelExtensionModuleArchitect extends Model
                 unlink($target);
             }
 
-            $error = array(
-                'status'  => true,
-                'message' => $this->language->get('error_save_file')
-            );
+           $data['error'] = $this->language->get('error_save_file');
         };
 
-        return $error;
+        return $data;
     }
 
     /**
@@ -618,12 +623,10 @@ class ModelExtensionModuleArchitect extends Model
     {
         $data = array(
             'code'  => $identifier,
-            'error' => array(
-                'status'  => false,
-                'message' => ''
-            )
+            'error' => '',
         );
 
+        $libXmlError = libxml_use_internal_errors(true);
         $dom = new DOMDocument('1.0', 'UTF-8');
 
         if (@$dom->loadXml($xml) !== false && $dom->getElementsByTagName('name')->length && $dom->getElementsByTagName('version')->length
@@ -633,11 +636,10 @@ class ModelExtensionModuleArchitect extends Model
             $data['author']  = $dom->getElementsByTagName('author')->item(0)->nodeValue;
             $data['link']    = $dom->getElementsByTagName('link')->item(0)->nodeValue;
         } else {
-            $data['error'] = array(
-                'status'  => true,
-                'message' => $this->language->get('error_ocmod_xml')
-            );
+            $xmlError = libxml_get_last_error();
+            $data['error'] = sprintf($this->language->get('error_ocmod_xml'), $xmlError->message, $xmlError->line);
         }
+        libxml_use_internal_errors($libXmlError);
 
         return $data;
     }

@@ -167,7 +167,10 @@ $(document).ready(function()
 
                         notify('success', architect.i18n.notify_success, 2500);
                     } else {
-                        notify('warning', resp.error.message);
+                        $.each(resp.error.message, function (key, message) {
+                            console.log(message);
+                            notify('warning', message);
+                        });
                     }
                 }
         });

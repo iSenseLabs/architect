@@ -75,11 +75,11 @@ $_['notify_success']            = 'Great, the module successfully saved!';
 $_['notify_arch_ocmod']         = 'Archited OcMod not yet applied!';
 $_['notify_ocmod_refresh']      = 'To reflect module status, <a href="%s" target="_blank">refresh modification <i class="fa fa-external-link" style="font-size:11px;"></i></a>.';
 
-$_['error_permission']          = 'Oops, you not permitted to modify Architect module!';
+$_['error_permission']          = 'Oops, you not have permission to modify Architect!';
 $_['error_action_type']         = 'Oops, action type is not recognized!';
 $_['error_save_file']           = 'Oops, unable to save widget files!';
-$_['error_ocmod_xml']           = 'Oops, modification xml invalid!';
-$_['error_controller_class']    = 'Oops, unable to find correct controller class name!';
-$_['error_model_class']         = 'Oops, unable to find correct model class name!';
-$_['error_event_class']         = 'Oops, unable to find correct event class name!';
-$_['error_admin_controller_class'] = 'Oops, unable to find correct admin controller class name!';
+$_['error_controller_class']    = 'Not found codetags <i>{controller_class}</i>, check Tab Controller!';
+$_['error_model_class']         = 'Not found codetags <i>{model_class}</i>, check Tab Model!';
+$_['error_event_class']         = 'Not found codetags <i>{event_class}</i>, check Tab Event!';
+$_['error_admin_controller_class'] = 'Not found codetags <i>{admin_controller_class}</i>, check Tab Admin Controller!';
+$_['error_ocmod_xml']           = 'Tab Modification XML error:<br>%s - line %s!';
