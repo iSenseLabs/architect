@@ -75,7 +75,7 @@ $_['notify_success']            = 'Great, the module successfully saved!';
 $_['notify_arch_ocmod']         = 'Archited OcMod not yet applied!';
 $_['notify_ocmod_refresh']      = 'To reflect module status, <a href="%s" target="_blank">refresh modification <i class="fa fa-external-link" style="font-size:11px;"></i></a>.';
 
-$_['error_permission']          = 'Oops, you not permitted to modify Architect module!';
+$_['error_permission']          = 'Oops, you not have permission to modify Architect module!';
 $_['error_action_type']         = 'Oops, action type is not recognized!';
 $_['error_save_file']           = 'Oops, unable to save widget files!';
 $_['error_ocmod_xml']           = 'Oops, modification xml invalid!';

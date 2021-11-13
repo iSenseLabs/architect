@@ -205,7 +205,7 @@ label input[type="checkbox"] {
 }
 .alert-warning {
     color: #e45202;
-    background: #fff0d9;
+    background: #fff8ec;
     border-left: 4px solid #e68900 !important;
 }
 
@@ -442,7 +442,7 @@ html[dir=rtl] .checkbox label input {
 }
 .panel-sidebar {
     color: #fafafa;
-    background: #435058;
+    background: #3a454c;
     width: 260px;
     max-width: 100%;
     padding: 10px 15px;

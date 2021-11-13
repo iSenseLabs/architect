@@ -154,7 +154,7 @@ $(document).ready(function()
                     $('.required').removeClass('has-error');
                 },
                 success : function(resp, status, xhr) {
-                    if (!resp.error.status) {
+                    if (!resp.error) {
                         $('.module_id').val(resp.module_id);
                         $('.doc-module-id').html(resp.module_id);
                         $('.breadcrumb li:last-child').html('<a href="' + architect.url_module.replace('&amp;', '&') + '&module_id=' + resp.module_id + '">' + architect.i18n.text_edit + ' #' + resp.module_id + '</a>');
@@ -167,7 +167,7 @@ $(document).ready(function()
 
                         notify('success', architect.i18n.notify_success, 2500);
                     } else {
-                        notify('warning', resp.error.message);
+                        notify('warning', resp.error);
                     }
                 }
         });

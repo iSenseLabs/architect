@@ -166,7 +166,10 @@ class ControllerExtensionModuleArchitect extends Controller
         $post     = $this->request->post;
         $response = array(
             'module_id' => $post['module_id'],
-            'error' => ''
+            'error' => array(
+                'status'  => false,
+                'message' => array(),
+            )
         );
 
         if (!isset($post['module_id'])) {
@@ -174,10 +177,13 @@ class ControllerExtensionModuleArchitect extends Controller
         }
 
         if (!$this->user->hasPermission('modify', $this->arc['path_module'])) {
-            $response['error'] = $this->i18n['error_permission'];
+            $response['error'] = array(
+                'status'  => true,
+                'message' => array($this->i18n['error_permission']),
+            );
         }
 
-        if (!$response['error']) {
+        if (!$response['error']['status']) {
             $response = $this->arc['model']->editModule($post);
         }
 

@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Move default editor config to Alpha gist
 - Delete sub-module data and files on error
 - Change default visibile editor
+- Widget form error notifications
 
 ### Fixed
 - Fix module_id codetags on insert sub-module
