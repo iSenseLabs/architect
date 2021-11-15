@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Changed
 - Move default editor config to Alpha gist
 - Delete widget data and files on error
-- Change default visibile editor
+- Change default visible editor
 - Widget form error notifications
 
 ### Fixed
